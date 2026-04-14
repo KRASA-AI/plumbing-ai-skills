@@ -13,16 +13,25 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 
 | Skill | What it does | Time saved |
 |-------|-------------|------------|
-| 📝 Estimate Writer | Turn rough scope notes into a branded, line-item estimate ready for customer approval. | ~20 min/estimate |
-| 📞 After-Hours Call Summary | Transcribe and triage voicemails so you see the job type, urgency, and callback number first thing. | ~15 min/morning |
-| ⭐ Review Request Drafter | Generate a polite, on-brand review request text or email right after the job closes. | ~5 min/job |
-| 💰 Invoice Follow-Up Sequence | Draft a 3-touch follow-up sequence for unpaid invoices — friendly, firm, then final. | ~10 min/invoice |
-| 🚚 Dispatch Brief Generator | Summarize job scope, customer history, recommended parts, and optimal route for the tech heading out. | ~10 min/dispatch |
-| 📖 Pricebook Q&A | Ask plain-English questions about your pricebook and get instant answers with line-item references. | ~5 min/lookup |
-| 📋 Change Order Tracker | Turn mid-job scope changes into documented change orders with cost breakdowns and customer approval. | ~15 min/change order |
-| 🔧 Parts & Materials List | Generate a complete parts checklist by job type with code-required items flagged and a supply house PO draft. | ~10 min/job |
+| After-Hours Call Summary | Turn a batch of overnight voicemails, missed-call logs, and answering-service notes into a prioritized morning briefing. | ~15 min/morning |
+| Dispatch Brief Generator | Summarize the job scope, customer history, recommended parts, and optimal routing for the technician heading out. | ~10 min/dispatch |
+| Parts & Materials List Generator | Generate a complete parts and materials list for a plumbing job based on the job description, scope notes, or estimate. | ~10 min/job |
+| Pricebook Q&A | Ask plain-English questions about your pricebook and get instant answers with line-item references, price comparisons, and margin analysis. | ~5 min/lookup |
+| Sewer Camera Inspection Report Drafter | Turn a technician's raw sewer-camera notes — the kind they dictate in a truck or scribble on a job ticket after a CCTV inspection — into a structured, customer-facing sewer/drain inspection report that a homeowner, real-estate agent, or commercial property manager can actually understand and act on. | ~25 min/inspection |
+| Technician Performance Debrief | Turn raw call recordings, job notes, and customer feedback into a structured coaching debrief for each technician. | ~20 min/debrief |
+| Estimate Writer | Transform rough scope notes and site visit findings into a branded, professionally formatted estimate with line-item pricing and good/better/best options. | ~20 min/estimate |
+| Job Status Update Drafter | Draft the short, on-brand customer updates that go out across a job's lifecycle — booked, on-the-way, running-late, on-site, delay / parts run, wrapping up, complete, and (when needed) post-visit care notes. | ~3 min/update, ~15 min/job |
+| Pre-Visit Diagnostic Intake | Give the front desk (human dispatcher, AI receptionist, web chatbot, or booking form) a single structured intake that does three jobs at once: (1) triage urgency so emergencies don't sit in a normal schedule slot, (2) capture enough diagnostic detail that the assigned tech arrives with the right parts on the truck, and (3) give the customer clear, safe mitigation guidance while they wait. | ~10 min/call + fewer return trips |
+| Review Request Drafter | Generate a personalized, on-brand review request text message or email right after a job closes. | ~5 min/job |
+| Change Order Tracker | Turn informal scope-change conversations — texts, emails, verbal notes, photos — into a documented change order with updated cost estimates, ready for customer approval. | ~15 min/change order |
+| Invoice Follow-Up Sequence | Draft a professional 3-touch follow-up sequence for unpaid invoices — friendly reminder, firm escalation, then final notice — tailored to plumbing-specific scenarios and payment friction points. | ~15 min/sequence |
+| Safety & Compliance Tracker | Track technician certifications, license renewals, vehicle inspections, and safety training deadlines across your entire team. | ~30 min/audit cycle |
+| Technician Candidate Phone Screen | Turn a raw plumber or apprentice application into a ready-to-run phone screen — a tight, trades-appropriate interview script the hiring owner or recruiter can complete in 8–12 minutes, plus a structured post-call summary with a clear hire/maybe/pass recommendation. | ~20 min/candidate |
+| Email Drafter | Turn rough notes into a professional email matching your company's voice and tone. | ~10 min/use |
+| Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
+| Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~90+ minutes across all skills.**
+**Total time saved per use: ~233+ minutes across all skills.**
 
 ## Quick Start
 
