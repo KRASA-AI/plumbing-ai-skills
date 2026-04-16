@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/sequence"
-version: 2.0
-last_eval_score: 8.8
+version: 2.1
+last_eval_score: 9.0
 ---
 
 # 💰 Invoice Follow-Up Sequence
@@ -434,3 +434,59 @@ FINAL NOTICE: INV-2026-1847 ($2,850) now 35 days overdue. Payment or contact req
 - **Warranty:** If the customer disputes the work, incorporate the warranty policy from config into the escalation
 - **Lien language:** Research your state's mechanic's lien statute; adjust the legal language to match your jurisdiction
 - **Multi-touch timing:** Adjust the day counts (7, 14, 30) to match your business preferences — these are standard but flexible
+
+---
+
+## v2.1 Additions
+
+### State-Lien-Deadline Quick Reference (for Touch 3)
+
+Mechanic's lien filing deadlines vary wildly by state and by whether the owner is a direct customer or a GC subbed you. Use this as a starting-point reference and always confirm the current statute before filing — deadlines change and pre-lien-notice rules (e.g., CA's 20-day preliminary notice) are often stricter than the lien-filing window itself.
+
+| State | Residential lien deadline (from last work/supply) | Pre-lien notice required? |
+|-------|----------------------------------------------------|----------------------------|
+| California | 90 days | Yes — 20-day Preliminary Notice |
+| Texas | 15th day of 3rd month after project ends (residential owner-occupied: 15th of 3rd month after each month of work) | Yes — 3rd month after non-payment |
+| Florida | 90 days | Yes — Notice to Owner within 45 days of first work |
+| Arizona | 120 days | Yes — 20-day Preliminary Notice |
+| Colorado | 4 months (residential) | No statewide pre-notice, but recommended |
+| Georgia | 90 days | Yes — Notice of Commencement response |
+| New York | 4 months (single-family) / 8 months (other) | No pre-notice required |
+| Illinois | 4 months | Yes — Notice within 60 days for owner-occupied |
+| North Carolina | 120 days | Yes — Notice to Lien Agent within 15 days of first work |
+| Washington | 90 days | Yes — Pre-Claim Notice to owner |
+
+**How to use this table in Touch 3:**
+- Pull the user's state from `config.yml`.
+- If the state is in the table and the clock is running out (e.g., Day 30 overdue + 90-day lien window = ~60 days left to file), make the lien language concrete: *"Under [State] law, our lien-filing window on this project closes on [specific date]. We would prefer to resolve this with you directly."*
+- If pre-lien notice was missed, do NOT threaten a lien you can no longer legally file — shift to the collections-agency and credit-reporting language instead.
+- For commercial / GC-subbed work, the deadlines differ — this table is residential-direct only.
+
+### Payment-History-Aware Schedule Adjustment
+
+Not every customer deserves the same 7 / 14 / 30 cadence. Pull payment history from the CRM (or ask the user) and adjust:
+
+| Customer Profile | Recommended Cadence | Rationale |
+|------------------|---------------------|-----------|
+| **Repeat customer, always pays on time** | Stretch: Day 10 / Day 21 / Day 40 | Assume good intent; a stale envelope is more likely than a deadbeat |
+| **Repeat customer, sometimes slow (1–2 prior > 30 days)** | Standard: Day 7 / Day 14 / Day 30 | The default is tuned for this segment |
+| **New customer, no history** | Standard: Day 7 / Day 14 / Day 30 | Default caution |
+| **New customer, high-ticket (> $5K)** | Compress: Day 5 / Day 12 / Day 25 | Risk is elevated; compress the window to preserve lien-filing options |
+| **Prior-disputed or prior-non-pay** | Compress + tone shift: Day 5 / Day 10 / Day 20, Touch 1 skips "assume good intent" warmth | This customer has already told you who they are |
+| **Insurance restoration (waiting on adjuster)** | Parallel track: Day 14 to customer, Day 7 to adjuster | Adjuster delay is common; don't pressure the homeowner for money they can't release yet |
+
+**How to apply:**
+- Ask the user for the customer's prior invoice count and on-time rate, or pull from CRM if available.
+- Adjust the day counts in the Touch 1 / 2 / 3 cover language and in the "Timing" lines of the output.
+- Flag the selected profile in the output so the dispatcher / AR lead can sanity-check.
+
+### Warranty-Dispute Hardening (companion to Scenario A)
+
+When the claim is that "the work failed," use this structure before sending any follow-up:
+
+1. **Request specifics in Touch 1 warmth:** "What exactly isn't working? Is it a leak, a no-flow, a noise, a pressure issue, a temperature issue?"
+2. **Tech-side review BEFORE Touch 2:** Pull the invoice, photos from the job, and any callback record. If the claim is plausible and within warranty, offer a no-cost inspection in Touch 2 before restating the balance.
+3. **Reframe payment and warranty as separate tracks:** "We're sending a tech to look at [specific concern] on [date]. That's our warranty commitment. The invoice for the completed work is due in parallel." This prevents the customer from using a warranty concern as a permanent payment blocker.
+4. **If inspection confirms workmanship defect:** Do NOT send Touch 3. Credit the disputed portion, issue a corrected invoice, and close the loop.
+5. **If inspection rules out workmanship defect:** Document the findings, send a photo/report summary, and proceed with Touch 3 on the full original balance.
+

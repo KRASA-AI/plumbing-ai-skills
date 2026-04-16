@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~3 min/update, ~15 min/job"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.6
 ---
 
 # Job Status Update Drafter

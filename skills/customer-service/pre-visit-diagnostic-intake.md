@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/call + fewer return trips"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.4
 ---
 
 # Pre-Visit Diagnostic Intake

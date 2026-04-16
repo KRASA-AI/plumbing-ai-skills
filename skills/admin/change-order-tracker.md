@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/change order"
-version: 1.0
+version: 1.1
 last_eval_score: 9.0
 ---
 
@@ -111,3 +111,70 @@ During water heater removal, technician discovered the existing gas line is unde
 Name: _________________________ Date: _____________
 
 Signature: _________________________
+
+---
+
+## v1.1 Additions
+
+### Emergency Mid-Job Fast-Path
+
+When the tech cannot safely continue without written approval and the customer is on-site or reachable in the next 15 minutes, use this compressed template. It reduces a full change order to the three things that matter — what, how much, and get-a-signature — and can be texted or handed over on a tablet.
+
+**CHANGE ORDER (Emergency / On-Site)**
+
+- **Job:** [Original job # / address]
+- **What we found:** [One sentence, plain language. e.g., "Existing copper stub-out behind the vanity has a pinhole leak we did not see until the old fixture was out."]
+- **What we need to do:** [One sentence. e.g., "Cut out 12 inches of ½" copper, solder in a new section, pressure-test before reconnecting."]
+- **Additional cost:** $[amount] (labor $[X] + materials $[Y], markup included)
+- **Additional time:** +[hours] on-site today
+- **Risk if we don't:** [One sentence — leak continues, job cannot be completed, water damage, etc.]
+- **Approve to proceed:** Text "OK" to [phone] or sign below.
+
+___________________________  Date: ___________
+
+Follow up within 24 hours with the full formatted change order for records, warranty, and accounting.
+
+### Commercial / GC Multi-Party Sign-Off Template
+
+For commercial work, GC-subbed work, or any job where the property owner is not the decision-maker on-site, a single-signature line is not enough. Use this structure:
+
+**APPROVAL — [Project Name / #]**
+
+| Role | Required? | Name / Title | Signature | Date |
+|------|-----------|--------------|-----------|------|
+| General Contractor (PM) | ✅ Required for scope impact > $500 or schedule impact | ___________________ | ___________________ | ___________________ |
+| Property Owner / Owner's Rep | ✅ Required for code-triggered work or scope changes affecting warranty | ___________________ | ___________________ | ___________________ |
+| Architect / Engineer | Only if the change affects engineered systems (gas, drainage grade, backflow) | ___________________ | ___________________ | ___________________ |
+| Plumbing Contractor (us) | ✅ Always | ___________________ | ___________________ | ___________________ |
+
+**Submittal notes for GC-subbed work:**
+- Reference the prime contract # and the specific section / RFI triggering the change.
+- Attach AIA G701 (Change Order) or the GC's proprietary form if required by the prime contract.
+- If the change affects the critical path, include a revised short-interval schedule (e.g., a 2–5 day look-ahead) — GCs will reject a CO that doesn't name the schedule impact.
+
+### Warranty, Insurance & Code-Compliance Impact Flags
+
+Add this block to Step 4 (Flag Risks) whenever any of the following apply. These are the three categories that cause the most disputes later:
+
+**⚠️ Warranty impact:** Does this change alter what the original warranty covers?
+- **Example — affected:** Substituting customer-supplied fixture voids manufacturer warranty; note clearly that the shop's labor warranty stands but the fixture warranty now runs through the customer's purchase.
+- **Example — not affected:** Upsizing a gas line for code compliance — warranty on our workmanship is unchanged.
+- **Language to include:** *"This change does / does not affect the original 1-year labor warranty. Materials supplied by [Company / Customer] carry the manufacturer warranty of the supplier."*
+
+**⚠️ Insurance / claim impact:** If the job is tied to an insurance claim, does this change the scope under the claim?
+- **Example — affected:** Insurance-approved scope was "replace damaged trap and supply." Customer asks to also replace the vanity faucet. Vanity faucet is not covered by the claim — it becomes an out-of-pocket change.
+- **Language to include:** *"This change is / is not within the insurance-approved scope. Customer-paid portion: $[amount]."*
+
+**⚠️ Code / permit impact:** Does this change trigger a permit, inspection, or a stop-work condition?
+- **Example — affected:** Any gas-line modification, anything affecting the water service, or anything requiring trenching over 12".
+- **Example — stop-work trigger:** If a permit is required and has not yet been issued, work on the change order cannot proceed until the permit is in hand.
+- **Language to include:** *"This change does / does not require a permit. If required: [permit type, fee, estimated approval time]. Work on this portion cannot begin until the permit is issued."*
+
+### Sequential Numbering & Audit Trail
+
+For shops running multiple concurrent jobs, enforce a consistent change-order numbering scheme so the paper trail is defensible in a dispute:
+
+- Format: **CO-[YYYY]-[sequential]-[job#]** — e.g., `CO-2026-0017-4821` is the 17th change order of 2026, tied to Job #4821.
+- Every change order gets its own number, even if it's a $50 adjustment.
+- Never renumber a change order after the customer has seen it — void it and issue a new one with the next sequential number.
+- Store all signed change orders in the customer's job folder and reference them in the final invoice as a line-item list.

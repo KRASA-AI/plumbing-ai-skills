@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min/inspection"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.4
 ---
 
 # Sewer Camera Inspection Report Drafter

@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~5 min/job"
-version: 2.0
+version: 2.1
 last_eval_score: 8.9
 ---
 
@@ -206,3 +206,42 @@ See you next year!
 
 ---
 
+## v2.1 Additions
+
+### New vs. Repeat Customer Timing
+
+One timing window does not fit both segments:
+
+| Customer Type | Preferred Send Time | Why |
+|---------------|---------------------|-----|
+| **New customer (first job)** | Next morning, 9–10 AM | Emotionally over-processing the experience same-day. Morning-after feels thoughtful, not transactional. |
+| **Repeat customer** | Same day, 5–7 PM | Already trusts the brand. Same-day momentum works. |
+| **Emergency job (any customer)** | Next morning, 9–10 AM | Customer is still decompressing the same day. A morning-after ask reads as genuine, not opportunistic. |
+| **Multi-day project** | Day after final walkthrough | Give them time to notice the work is done and working. |
+| **Maintenance agreement renewal** | Within 48 hours | Tie the review ask to the renewal confirmation. |
+
+### Platform Fallback Hierarchy
+
+If the primary platform URL is missing or broken in `config.yml`, fall back in this order rather than blocking the send:
+
+1. **Google Business Profile** (highest SEO and local-pack value)
+2. **Yelp** (best for tech-savvy / urban customers; still high-traffic in service trades)
+3. **Facebook** (best for repeat customers and 50+ demographic)
+4. **Angi / HomeAdvisor** (only if the customer originally found you through that platform)
+5. **Company website testimonial page** (last resort; lowest leverage but still useful social proof)
+
+If all platform URLs are missing, do NOT guess or scaffold a placeholder link — flag the gap to the user and draft the message with a `[ADD REVIEW LINK]` token instead.
+
+### Post-Callback Suppression
+
+If a callback, return visit, or warranty claim is in flight on this job, **do not send a review request** — even if the customer seemed satisfied at first close. A review ask during a known issue reads as tone-deaf and frequently triggers a public negative review that could have been avoided.
+
+**Suppression triggers:**
+- Return visit scheduled within the next 7 days for the same scope
+- Warranty claim opened
+- Customer replied to on-the-way or status text with a concern
+- Invoice is disputed or partially unpaid
+- Tech's job notes include a "monitor" or "follow-up needed" flag
+- Customer survey (if your CRM runs one) came back below 8/10
+
+**Instead of a review ask:** send a personal check-in message ("Wanted to circle back — how's the [work] holding up? Any concerns, text me directly.") and queue the review ask for after the issue is resolved and confirmed by the customer.
