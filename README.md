@@ -21,6 +21,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Technician Performance Debrief | Turn raw call recordings, job notes, and customer feedback into a structured coaching debrief for each technician. | ~20 min/debrief |
 | AI Search Visibility Content Pack | Produce the structured content a plumbing shop needs to get *cited* — not just ranked — by ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Copilot when a homeowner asks "who's the best emergency plumber in [city]?" or "how much does a water heater replacement cost in [ZIP]?". | ~4 hrs per service-area content pack; replaces a one-off agency deliverable at $1,500–$3,500 |
 | Estimate Writer | Transform rough scope notes and site visit findings into a branded, professionally formatted estimate with line-item pricing and good/better/best options. | ~20 min/estimate |
+| Water Heater Standards Briefing | Produce a customer-facing briefing that converts the two looming federal water heater efficiency deadlines — the **October 6, 2026 commercial condensing-only standard** and the **May 6, 2029 residential heat-pump standard for electric storage units over 35 gallons** — into a clear "replace now vs. | ~30 min per customer briefing; replaces a back-and-forth comparison most shops do verbally and inconsistently |
 | Dormant Customer Reactivation Outreach | Turn the shop's long tail of past customers — the 500, 1,000, or 3,000 households that had one job done and then went quiet — into a predictable source of recurring revenue. | ~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs |
 | Job Status Update Drafter | Draft the short, on-brand customer updates that go out across a job's lifecycle — booked, on-the-way, running-late, on-site, delay / parts run, wrapping up, complete, and (when needed) post-visit care notes. | ~3 min/update, ~15 min/job |
 | Pre-Visit Diagnostic Intake | Give the front desk (human dispatcher, AI receptionist, web chatbot, or booking form) a single structured intake that does three jobs at once: (1) triage urgency so emergencies don't sit in a normal schedule slot, (2) capture enough diagnostic detail that the assigned tech arrives with the right parts on the truck, and (3) give the customer clear, safe mitigation guidance while they wait. | ~10 min/call + fewer return trips |
@@ -33,7 +34,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~258+ minutes across all skills.**
+**Total time saved per use: ~288+ minutes across all skills.**
 
 ## Quick Start
 
