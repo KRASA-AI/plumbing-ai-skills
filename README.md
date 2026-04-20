@@ -33,6 +33,8 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Email Drafter | Turn rough notes into a professional email matching your company's voice and tone. | ~10 min/use |
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
+| Plumbing Membership Plan Drafter | Produce a complete, shop-specific membership / maintenance plan package — tiered structure, pricing logic, included services, fine print, customer-facing one-pager, tech kitchen-table sell-in, and renewal / upgrade messaging — in a single pass. | ~2–3 hrs per plan launch; replaces a one-off consultant deliverable at $1,500–$4,000 |
+| Smart Leak Detection Install Briefing | Translate the 2026 home-insurance landscape around smart leak detection (carrier-specific discount and renewal requirements) into a one-customer, one-property, one-insurance-program recommendation — including device comparison, install plan, and the signed letter to the insurer that unlocks the policy discount. | ~45 min per customer briefing; replaces an inconsistent verbal explanation plus a follow-up "what do I tell my insurance?" back-and-forth |
 
 **Total time saved per use: ~288+ minutes across all skills.**
 
