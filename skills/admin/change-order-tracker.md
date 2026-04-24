@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/change order"
-version: 1.1
-last_eval_score: 9.0
+version: 1.2
+last_eval_score: 9.4
 ---
 
 # 📋 Change Order Tracker
@@ -178,3 +178,74 @@ For shops running multiple concurrent jobs, enforce a consistent change-order nu
 - Every change order gets its own number, even if it's a $50 adjustment.
 - Never renumber a change order after the customer has seen it — void it and issue a new one with the next sequential number.
 - Store all signed change orders in the customer's job folder and reference them in the final invoice as a line-item list.
+
+## v1.2 Additions
+
+### Verbal-Approval → Written-Confirmation Bridge
+
+Between the moment a customer says "yeah, go ahead" and the moment the tech gets a signed paper CO is a dangerous gap. Work has started, money is being spent, and the only record is the tech's memory of a nod. This template closes that gap in two minutes and is the single highest-leverage paperwork discipline on a mid-job change.
+
+**Immediate text-back confirmation (send from tech's phone within 5 minutes of the verbal yes):**
+
+> Hi [First Name] — just confirming what we discussed at [time]. You approved:
+>
+> (1) [One-sentence scope of change]
+> (2) Additional cost: $[amount] (labor + materials, markup included)
+> (3) Additional time: +[hours] today
+>
+> Please reply "YES" to this text to confirm before I proceed. Full signed change order will follow by end of day. — [Tech], [Shop]
+
+Three hardening rules:
+
+- **The tech does not continue the work until the customer has texted "YES."** A verbal yes plus a sent confirmation text is not sufficient — the reply is the control. Five minutes of waiting on a reply is cheaper than a dispute on the invoice three weeks later.
+- **Save the thread.** The text exchange goes into the job folder alongside the formal CO. In a dispute, the time-stamped customer "YES" is as good as a signature for the scope and dollar amount discussed.
+- **If the customer does not reply within 30 minutes**, the tech calls and walks through the scope verbally a second time, then resends the confirmation text. If the customer still does not confirm, the tech stops work at a safe logical break and schedules a return visit for after written approval lands.
+
+### Scope-Creep Guardrails
+
+Three patterns eat margin on mid-job change orders. Each gets its own disciplined handling:
+
+**1. The "while you're here" rolling add.** Customer adds one small thing, then another, then a third. Each individually seems too small to write up. By end-of-day the total is $800 of unbilled work and the tech is running 2 hours late on the next call.
+
+- **Rule:** Any single "while you're here" item over $75 *or* the cumulative uninvoiced adds crossing $200 triggers a formal CO before the next item is started. No exceptions, even on repeat customers.
+- **Language to use at the moment:** "Happy to take care of that — it's a [quick / bigger] one. Let me write it up real quick so you know the cost before we go." This protects the tech from the "but you never said it would cost extra" conversation at invoice time.
+
+**2. The discovered-condition cascade.** One unexpected finding (rotted subfloor under a toilet flange) reveals another (mold), reveals another (water damage to the joist). Each is a separate CO but often gets rolled into one verbal estimate.
+
+- **Rule:** Discovered conditions that require sequential remediation get separate numbered COs (or one CO with explicit phases), even if the customer is approving all at once. The audit trail matters if a later claim surfaces.
+- **Language to use:** "I'm going to write this up as CO-[n]a (the subfloor), CO-[n]b (the mold remediation coordination), and CO-[n]c (the joist sister). That way each piece of work has its own scope, cost, and any warranty questions later are easy to sort out."
+
+**3. The customer-supplied-materials change.** Customer decides partway through they want to supply their own fixtures or fittings. Warranty exposure shifts, shop's material markup disappears, and project scope changes quietly.
+
+- **Rule:** Customer-supplied materials require a written CO even if the change *reduces* the total price. The CO documents the warranty shift (see v1.1 Warranty Impact Flag).
+- **Language to use:** "Totally fine to supply your own — let me write that up so it's clear: our labor warranty still stands, the manufacturer warranty on the fixture now runs through your purchase (save the receipt), and I'm crediting the materials back on the original estimate. Sign here and we're good."
+
+### Post-Job Reconciliation Variant
+
+Sometimes a change happens mid-job and gets verbally approved but the formal CO never gets written before the job closes. The v1.2 fix for this is a post-job reconciliation template that gets it on paper after the fact without pretending it was signed in real time.
+
+**POST-JOB CHANGE ORDER RECONCILIATION**
+
+- **Job:** [Original job # / address]
+- **Original Estimate:** #[EST-XXX] — $[amount]
+- **Dates of change:** Changes discussed and performed on [date(s)] during active work
+- **Nature of reconciliation:** This change order documents scope changes verbally approved during the job that were not written up at the time. Customer's verbal approval is reflected in the completed work; this document formalizes the pricing, warranty, and final-invoice alignment.
+- **Itemized changes:** [Same line-item breakdown structure as the main CO]
+- **Customer acknowledgment:** "I acknowledge that the scope changes listed above were discussed and approved verbally during the job and are reflected in the completed work. I approve the revised project total and final invoice amount."
+
+___________________________  Date: ___________
+
+Three hardening rules:
+
+- **Do not backdate the CO.** The date is the date the reconciliation is being written, not the date the change happened. Backdating a CO is the single most common piece of paperwork a state plumbing board or a dispute court calls fraudulent.
+- **Use this variant sparingly.** One or two post-job reconciliations a quarter is a documentation gap. Ten a quarter is an operations problem — the field team needs to be trained on the Verbal-Approval Bridge and the v1.1 Emergency Fast-Path.
+- **If the customer refuses to sign**, do not invoice the uncompleted paperwork as billable work. Route to the owner for a call.
+
+### Change Order Log (Per-Job)
+
+For any job with two or more change orders, maintain a single-row-per-CO log at the top of the job folder:
+
+| CO # | Date | Trigger (customer request / discovered / code / material sub) | Scope (one line) | $ impact | Time impact | Approval method (signature / text / verbal-then-reconciled) | Warranty impact? | Permit impact? |
+|------|------|-------|--------|----|----|---|---|---|
+
+The log becomes the single page the bookkeeper reads when reconciling the final invoice, the single page the owner reads if a dispute surfaces, and the single page a future buyer's inspector reads if they ever ask what work was done on the house beyond the original estimate. Three minutes to maintain per job, saves hours of reconstruction later.

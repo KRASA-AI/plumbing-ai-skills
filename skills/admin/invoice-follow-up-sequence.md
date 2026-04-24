@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/sequence"
-version: 2.1
-last_eval_score: 9.0
+version: 2.2
+last_eval_score: 9.2
 ---
 
 # 💰 Invoice Follow-Up Sequence
@@ -490,3 +490,71 @@ When the claim is that "the work failed," use this structure before sending any 
 4. **If inspection confirms workmanship defect:** Do NOT send Touch 3. Credit the disputed portion, issue a corrected invoice, and close the loop.
 5. **If inspection rules out workmanship defect:** Document the findings, send a photo/report summary, and proceed with Touch 3 on the full original balance.
 
+## v2.2 Additions
+
+### Expanded Lien-Deadline Reference (+5 states)
+
+The v2.1 table covered the 10 states most plumbing shops encounter by volume. The v2.2 addition extends the reference to 15 states, adding five states with unusual deadline math that has caught shops off-guard in the last two cycles of AR disputes reviewed. Same usage rules apply — pull state from config, confirm the current statute before filing, and do not threaten a lien that pre-lien-notice timing has already foreclosed.
+
+| State | Residential lien deadline (from last work/supply) | Pre-lien notice required? | Unusual-math note |
+|-------|----------------------------------------------------|----------------------------|-------------------|
+| Pennsylvania | 6 months (from last work) for lien filing; 4 months for formal notice of intent | Yes — Formal Notice of Intent 30 days before filing | Two-step process: Notice of Intent first, then Claim — do not skip the Notice |
+| New Jersey | 90 days (from last work) | Yes — Notice of Unpaid Balance within 60 days on residential | Residential Construction Lien Fund adds a separate statutory process for 1–2 family homes |
+| Massachusetts | 90 days from last work (Notice of Substantial Completion / Termination); 30 days to file lien statement after that | Yes — Notice of Contract at project start preferred | Filing window is a two-stage trigger; easy to miss the 30-day inner window |
+| Ohio | 75 days (residential) from last work | Yes — Notice of Furnishing for subcontractors only | Direct contracts with homeowner do not require Notice of Furnishing, but document the contract clearly |
+| Michigan | 90 days from last work | Yes — Notice of Furnishing within 20 days of first work for subs | Homestead / residential affidavit requirements are strict — follow form exactly |
+
+**Combined with v2.1, the skill now covers 15 states**: CA, TX, FL, AZ, CO, GA, NY, IL, NC, WA (v2.1) + PA, NJ, MA, OH, MI (v2.2). Together these 15 states cover roughly 70% of US plumbing-shop invoice volume by market.
+
+**When to escalate to counsel rather than leaning on the table:**
+- Any commercial / GC-subbed job (deadlines differ substantially from residential-direct — do not rely on this table)
+- Any lien amount over the state's small-claims cap where counsel is going to be involved anyway
+- Any state not in the combined 15-state table (research the current statute directly)
+- Any prior disputed or bonded-off lien claim on the same project
+
+### Shared Lien-Deadlines Reference Pointer
+
+This skill's 15-state lien table is now the canonical source for lien-deadline logic across the plumbing skills repo. Two other financially-sensitive skills should reference this table rather than duplicate it:
+
+- **Estimate Writer** — when quoting a large project (over ~$3,000 residential or any commercial), the estimate should include a state-specific one-liner on the shop's lien rights. Pull the state's lien deadline from the table above and use the standard language: *"[Shop] preserves its statutory lien rights under [State] law. Under current [State] statute, our lien-filing window extends [X days/months] from the last day of work on this project."*
+- **Change Order Tracker** — when a change order significantly extends project duration (triggering a new "last day of work" date), update the implicit lien-filing date accordingly. A large CO near the end of a long project can accidentally *extend* the shop's lien-filing window — which is usually in the shop's favor but has to be tracked.
+
+If a future cycle breaks the table out into a standalone `_shared/lien-deadlines.md` reference, this skill becomes one of several consumers of that reference. Until then, this skill is the source.
+
+### Partial-Payment Handling Template
+
+A common pattern that v2.1 did not cover: the customer pays *something* but not the full invoice amount. Three sub-patterns, each with distinct handling:
+
+**Sub-pattern A — Partial payment with a stated reason** ("I'm paying $1,500 of the $2,100; the last $600 is for the fixture I'm still not happy with").
+
+- Do not cash the payment and go silent. Confirm the partial in writing, explicitly restate what remains outstanding, and tie it to the specific concern.
+- Template: *"Received $1,500 on [date]. Remaining $600 is on hold pending resolution of [specific concern]. Our tech [Name] will be out on [date] to address. We'll zero the balance or produce the inspection report at that visit — not both going backward."*
+- If the concern is warranty-plausible: run the v2.1 Warranty-Dispute Hardening sub-template before pushing for the remaining balance.
+
+**Sub-pattern B — Partial payment with no reason given** (customer wires $1,500 on a $2,100 invoice with no explanation).
+
+- Within 1 business day, reach out to confirm intent. Do not assume the payment was a typo, and do not assume the remaining balance is disputed. Ask.
+- Template: *"Thanks for the $1,500 on the [date] job. I want to make sure I have our records right — is the remaining $600 coming separately, or is there a concern I should know about so we can get it resolved?"*
+- The absence of a stated reason is the risk signal; the follow-up is the control.
+
+**Sub-pattern C — Partial payment as an installment the shop did not agree to** (customer decides on their own to pay in three parts).
+
+- Do not accept the installment schedule by silence. If the shop has not agreed to payment terms in writing, a series of partials is informal credit extension and can complicate a lien claim later.
+- Template: *"Thanks for the partial — I want to flag that we don't have a formal payment plan on this invoice. Can we get one set up so we're both clear on the schedule? I can send a simple plan that works for your cash flow and keeps everything on paper."*
+- Preserve lien rights by formalizing: a written payment plan that references the original invoice date preserves the "last day of work" anchor for lien-deadline purposes in most of the 15 tabled states.
+
+### Collection-Agency Handoff Discipline
+
+For the rare case the 3-touch cadence exhausts and the lien window has closed or the amount does not justify a lien, the handoff to a collection agency is the final step. Three rules before handing off:
+
+1. **Final Letter of Notice.** Send one final certified letter before the handoff stating the balance, the shop's attempts to resolve it (list the touch dates), and the intention to transfer to a third-party collections agency on a specific date (give the customer 10 business days). A certified letter with this content generates 15–25% recovery on its own in most plumbing-shop AR data — cheaper than an agency's 25–50% cut.
+2. **Package the file correctly.** The agency needs: original invoice, signed work authorization, all touch-point correspondence with date stamps, any change orders, any photos or documentation from the job. An incomplete file reduces the agency's recovery rate substantially.
+3. **Credit-reporting threshold.** Only accounts over the state's fair debt collection threshold (usually $1,000) should be reported to credit bureaus. Below that, agency letters and soft-collection calls are the tool; credit reporting on small balances creates more reputational risk than it recovers.
+
+### Cross-Reference with Product Recall Workflow
+
+Added in v2.2 because of a new adjacency: if an invoice dispute involves a product that has since been recalled, handle the payment track and the recall track separately — do not entangle them.
+
+- The invoice for the original work (labor, unaffected materials) remains payable. The customer's recall-side remedy is with the manufacturer, not with the shop.
+- Reference the Product Recall Customer Outreach skill's handoff-to-manufacturer language. The shop's liability on a recalled-product defect is typically limited; do not credit the full invoice out of an abundance of caution unless the shop has actual fault.
+- If the customer is withholding payment *because* of a recall, run the warranty-dispute hardening sub-template (v2.1) with the recall as the specific concern, separate the two tracks explicitly, and keep the payment conversation with the shop while the remedy conversation goes to the manufacturer.

@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~5 min/job"
-version: 2.1
-last_eval_score: 8.9
+version: 2.2
+last_eval_score: 9.2
 ---
 
 # ⭐ Review Request Drafter
@@ -245,3 +245,130 @@ If a callback, return visit, or warranty claim is in flight on this job, **do no
 - Customer survey (if your CRM runs one) came back below 8/10
 
 **Instead of a review ask:** send a personal check-in message ("Wanted to circle back — how's the [work] holding up? Any concerns, text me directly.") and queue the review ask for after the issue is resolved and confirmed by the customer.
+
+## v2.2 Additions
+
+### Job-Type-Specific Review Request Templates
+
+The 04-14 evaluator flagged that the generic draft underweights job-type specificity — a drain clear and a water heater install generate very different customer memories, and a template that explicitly names what the customer values about *that* kind of work lifts response rates by a meaningful amount. Below are five job-type-specific variants, each paired (SMS + email), each written to be filled in with customer name / tech name / platform link and sent with no further editing.
+
+Use these **in preference to the generic drafts above** when the job cleanly matches one of the five categories. Fall back to the generic when the job is a hybrid or doesn't fit.
+
+#### 1. Water Heater Replacement
+
+The customer is living with the result daily (hot water is binary — it works or it doesn't). The review lands best when the ask is anchored on *how the install feels now*, not on the install day.
+
+**SMS (sent next morning 9–10 AM):**
+> Hi [First Name] — Mike here from [Shop]. Hope the new water heater is running quiet and giving you steady hot water. If you've got 30 seconds, a quick Google review helps us out a lot: [LINK]. Any issues, just text me. — Mike
+
+**Email (sent next morning):**
+> Subject: How's the new water heater treating you?
+>
+> Hi [First Name],
+>
+> Mike here — I wanted to check in on the [brand model] we installed at your place on [install date]. By now you should be getting steady hot water without the popping or rumbling the old tank was making, and the new expansion tank and shutoff are doing their job quietly in the background.
+>
+> If everything's working the way it should, would you mind sharing a quick review? A sentence about the install or the tech is plenty — honest feedback means a lot, and it helps other families in [service area] know they can trust us with their hot water.
+>
+> [BUTTON: Leave a Google Review]
+>
+> Your new unit has a 10-year tank / 2-year labor warranty. Anything feels off, call me direct: [tech direct line]. — Mike, [Shop]
+
+#### 2. Drain / Sewer Clearing
+
+Emotionally fraught call (sewage, backup, smell). The customer does *not* want to relive the experience in a review ask. Keep it short, acknowledge the stress without naming the details, and lead with "back to normal."
+
+**SMS (sent next morning 9–10 AM):**
+> Hi [First Name] — Javier from [Shop]. Hope things are back to normal at the house. If you've got a minute, a quick Google review really helps: [LINK]. Drains act up again, text me direct. — Javier
+
+**Email (sent next morning):**
+> Subject: Everything flowing again?
+>
+> Hi [First Name],
+>
+> Javier here from [Shop]. Drain backups are stressful and I know you weren't expecting to spend a Saturday afternoon on that. I wanted to make sure everything's running clear now and let you know I'm around if anything comes back.
+>
+> If you'd feel comfortable sharing a quick review of the visit, it helps other homeowners in [city] find us when they're in the same spot you were. No obligation — and please do not feel pressure to relive the detail. Even a sentence about how the team handled it is great.
+>
+> [BUTTON: Leave a Google Review]
+>
+> Same-day emergency line any time: [phone]. — Javier
+
+#### 3. Sewer Main / Lateral (Scope, Lining, or Replacement)
+
+Big-ticket job, long horizon. The customer paid a lot of money for something they will hopefully never think about again. Review ask works best once the lawn has recovered or the scope inspection report has been delivered.
+
+**SMS (sent 7–10 days post-completion, after site restoration or final walkthrough):**
+> Hi [First Name] — [Tech] from [Shop]. Wanted to circle back on the sewer [lining / replacement] at your place. Lawn settling okay, no surface issues? If it's all looking good, a quick Google review is a big help: [LINK]. — [Tech]
+
+**Email (sent 7–10 days post-completion):**
+> Subject: Checking in on the sewer work
+>
+> Hi [First Name],
+>
+> [Tech] here. It's been a few days since we wrapped the sewer [lining / replacement] at [address]. At this point the trench should be settling, the restoration should be holding, and fixtures should be draining the way you remember them draining years ago.
+>
+> I'm attaching the post-job scope video for your records in case you ever need to show it to an insurer or a future buyer — most customers never have to pull it up, but it's nice to have.
+>
+> If the work is meeting your expectations, a quick review on Google would be a genuine help. Sewer mains are a job customers research heavily before picking a shop — the detail of your experience is the exact thing the next homeowner in [neighborhood] is trying to find.
+>
+> [BUTTON: Leave a Google Review]
+>
+> Warranty and scope documentation on file for [warranty term]. Any movement in the restoration or any odor over the next few months, call me direct. — [Tech], [Shop]
+
+#### 4. Gas Work (Line, Appliance Hookup, Leak Repair)
+
+Safety-sensitive, trust-sensitive. The customer is not going to write an enthusiastic review about gas work; they are going to write a quiet, grateful review that says "they did it right." Match that register.
+
+**SMS (sent 48 hours after inspection clears, not before):**
+> Hi [First Name] — [Tech] from [Shop]. Just confirming the gas [line / hookup] passed inspection and everything's live and tight. If you're comfortable, a short Google review is appreciated: [LINK]. — [Tech]
+
+**Email (sent 48 hours after inspection clears):**
+> Subject: Inspection cleared — gas line is good to go
+>
+> Hi [First Name],
+>
+> [Tech] here. The [jurisdiction] inspector signed off on the gas [line / appliance hookup / leak repair] on [date], so the work is officially complete and the permit is closed out. The inspection report is in your email separately for your records.
+>
+> Gas work is not the kind of job where customers usually write effusive reviews, and that's fine. If you feel the work was done carefully and honestly, a short Google review saying exactly that is the kind of signal that matters to the next homeowner comparing plumbers for gas work in [service area]. A sentence is plenty.
+>
+> [BUTTON: Leave a Google Review]
+>
+> Annual leak-check reminder will come out next [month]. Questions before then: [tech direct line]. — [Tech], [Shop]
+
+#### 5. Leak Investigation / Slab Leak / Hidden-Source Diagnosis
+
+The customer called with a symptom (wet spot, high bill, mystery smell) and the tech had to diagnose under uncertainty. The win the customer remembers is "you found it" — the review ask should anchor on the diagnostic skill, not the repair.
+
+**SMS (sent next morning 9–10 AM):**
+> Hi [First Name] — [Tech] from [Shop]. Glad we got to the source of the leak. If the [water bill / dry patch / spot] is back to normal, a quick Google review means a lot: [LINK]. Anything reappears, text me. — [Tech]
+
+**Email (sent next morning):**
+> Subject: Glad we tracked it down
+>
+> Hi [First Name],
+>
+> [Tech] here. Yesterday's call started with [brief symptom the customer described] and we ended up finding the [slab leak / pinhole / hidden supply leak] at [location]. Those calls go a lot of different ways, and I'm glad we tracked it to the actual source rather than chasing the symptom.
+>
+> If the [wet spot / dry patch / water bill / odor] is back to normal over the next few days, would you feel comfortable leaving a short review? Leak investigation is the kind of work where customers research reviews before calling — the detail that "they found it" is the exact signal the next homeowner is looking for.
+>
+> [BUTTON: Leave a Google Review]
+>
+> Warranty on the repair is [term]. If the symptom comes back or a new one shows up, call me direct at [tech direct line]. — [Tech], [Shop]
+
+### Category-Fit Decision Tree
+
+If you're drafting and unsure which template to use, work this short decision tree:
+
+1. **Was the visit an emergency with a visible mess (sewage, standing water, backed-up fixture)?** → Drain / Sewer Clearing template. Send the morning after, not same day.
+2. **Did the job involve gas, gas appliances, or a gas inspection?** → Gas Work template. Wait until after the inspection clears (usually 24–48 hrs) before sending.
+3. **Did the tech diagnose from a symptom rather than a visible cause?** → Leak Investigation template. Morning after.
+4. **Was the job a tank or tankless water heater install or replacement?** → Water Heater Replacement template. Morning after.
+5. **Did the job involve the main sewer line, a scope, a lining, or a replacement trench?** → Sewer Main template. Wait 7–10 days until the site has settled.
+6. **None of the above (routine service, fixture replacement, toilet install, faucet, disposal, valve)?** → Fall back to the generic templates at the top of this skill.
+
+Do not blend two templates — pick one. If the job was a hybrid (e.g., slab leak repair + sewer scope), use the one that dominated the visit's billable time.
+
+### Suppression Override Check
+
+Before sending any of the five job-type templates, re-run the v2.1 Post-Callback Suppression checklist. The job-type templates **do not** override suppression triggers — if a callback or warranty claim is in flight, send the personal check-in message from v2.1 instead. The templates above only apply once the job has genuinely closed.

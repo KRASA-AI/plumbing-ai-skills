@@ -27,7 +27,9 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Dormant Customer Reactivation Outreach | Turn the shop's long tail of past customers — the 500, 1,000, or 3,000 households that had one job done and then went quiet — into a predictable source of recurring revenue. | ~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs |
 | Job Status Update Drafter | Draft the short, on-brand customer updates that go out across a job's lifecycle — booked, on-the-way, running-late, on-site, delay / parts run, wrapping up, complete, and (when needed) post-visit care notes. | ~3 min/update, ~15 min/job |
 | Pre-Visit Diagnostic Intake | Give the front desk (human dispatcher, AI receptionist, web chatbot, or booking form) a single structured intake that does three jobs at once: (1) triage urgency so emergencies don't sit in a normal schedule slot, (2) capture enough diagnostic detail that the assigned tech arrives with the right parts on the truck, and (3) give the customer clear, safe mitigation guidance while they wait. | ~10 min/call + fewer return trips |
+| Product Recall Customer Outreach | Produce the complete outreach and on-site protocol packet a plumbing shop needs when a product the shop has sold or installed gets a CPSC, manufacturer, or regulatory recall. | ~45 min per recall event to produce the full outreach packet; avoids the legal and reputational cost of handling a recall ad-hoc and unlocks the service-call attach rate that comes from being the shop that notified the customer |
 | Review Request Drafter | Generate a personalized, on-brand review request text message or email right after a job closes. | ~5 min/job |
+| Vendor Price Increase Customer Communication | Produce the complete decision matrix and customer-facing communication packet a plumbing shop needs when its supply houses and manufacturers push through a wave of price increases. | ~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump |
 | Change Order Tracker | Turn informal scope-change conversations — texts, emails, verbal notes, photos — into a documented change order with updated cost estimates, ready for customer approval. | ~15 min/change order |
 | Invoice Follow-Up Sequence | Draft a professional 3-touch follow-up sequence for unpaid invoices — friendly reminder, firm escalation, then final notice — tailored to plumbing-specific scenarios and payment friction points. | ~15 min/sequence |
 | Safety & Compliance Tracker | Track technician certifications, license renewals, vehicle inspections, and safety training deadlines across your entire team. | ~30 min/audit cycle |
@@ -36,7 +38,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~333+ minutes across all skills.**
+**Total time saved per use: ~468+ minutes across all skills.**
 
 ## Quick Start
 
