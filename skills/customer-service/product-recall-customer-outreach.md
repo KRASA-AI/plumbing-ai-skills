@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min per recall event to produce the full outreach packet; avoids the legal and reputational cost of handling a recall ad-hoc and unlocks the service-call attach rate that comes from being the shop that notified the customer"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.5
 ---
 
 # Product Recall Customer Outreach

@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/call + fewer return trips"
-version: 1.0
-last_eval_score: 9.4
+version: 1.1
+last_eval_score: 9.6
 ---
 
 # Pre-Visit Diagnostic Intake
@@ -192,3 +192,177 @@ Keep it under 300 characters for SMS, or a short email of 80–120 words.
 > "Karen — [Company] here. [Tech name] is on the way, ETA 35–55 min. Main water is OFF, great. While you wait: (1) if the heater is electric, flip its breaker OFF only if dry. (2) Open a hot tap on the lowest floor to relieve pressure. (3) Wet-vac or towels around the unit, not under it. Tracker: [LINK]. Call/text if anything changes."
 
 *(282 characters, SMS-safe)*
+
+---
+
+## v1.1 Additions (2026-04-26)
+
+The v1.0 sections above are unchanged. The four sub-sections below are additive — they extend the skill rather than replace any prior content. Use them in addition to v1.0 when the trigger conditions named in each apply.
+
+### v1.1.A — Photo Capture-Back Protocol
+
+The single highest-leverage data point in a chatbot or text-message intake is a customer-supplied photo of (a) the data plate of the failing equipment, (b) the shutoff valve, or (c) the leak origin. A clean data-plate photo of a water heater eliminates a guess on tank gallons, BTU, fuel type, vent class, and age — and routinely saves a second truck run when the truck-loaded replacement is the wrong unit.
+
+**Photo-request templates by problem class.** Send exactly one request per channel turn; do not ask for three photos in a single message.
+
+**Water-heater problem (any tier):**
+> "If it's safe to reach, can you snap a photo of the silver/yellow sticker on the side of the heater? It's usually near the bottom and lists the model and capacity. Saves us a truck run if a replacement is the right call."
+
+**No water / pressure complaint:**
+> "Two quick photos help us bring the right parts: (1) the main shutoff where the water enters your house — usually in a basement, crawlspace, or near the front hose bib; (2) the pressure regulator if you can see one (looks like a brass bell-shaped valve near the main line). One at a time is fine."
+
+**Leak under sink / vanity:**
+> "A picture of what's leaking — even a quick one with your phone flashlight — helps us prep. The tech will know whether to bring a basin wrench, a faucet pull kit, or just supply lines."
+
+**Toilet running / overflowing:**
+> "If you can lift the tank lid (it's heavy — set it on a towel), a photo inside helps us know whether you need a flapper, a fill valve, or a full kit. If it's overflowing, skip the photo and turn the supply valve behind the toilet clockwise until it stops."
+
+**Sewer / drain backup (especially recurring):**
+> "Two photos help: (1) the cleanout location outside (a 3- or 4-inch black or white pipe stub-out, usually near the foundation); (2) the lowest drain that's backing up. We can route the right truck and whether we need a camera ready."
+
+**Anti-photo rules (do not request):**
+- Gas leak suspected — never have a customer linger to take a photo; safety script + evacuation comes first.
+- Customer is panicked or actively cleaning up water — defer the photo request to the booking-confirmation SMS.
+- Caller is elderly or struggling with the chat tool — defer to a follow-up text after booking.
+
+**File-naming convention for the dispatch record:**
+- `{intake-id}-data-plate.jpg`
+- `{intake-id}-shutoff.jpg`
+- `{intake-id}-leak-origin.jpg`
+- `{intake-id}-cleanout.jpg`
+
+The tech opens the dispatch-ready intake record (Section 2 of v1.0) and the photos are referenced inline by filename in the Photos captured field.
+
+### v1.1.B — Bilingual Intake Variant (Spanish)
+
+In TX, CA, FL, AZ, NV, NM, IL, NY, NJ, GA — and increasingly NC, TN, VA — 20–35% of plumbing emergencies come in from Spanish-first households. The v1.1 Spanish variant carries the same urgency-tier structure with the safety-critical phrases pre-translated. Use this variant when the chatbot detects Spanish input, when the dispatcher recognizes a Spanish-first caller, or when the AI receptionist (Avoca, AgentZap, My AI Front Desk) flips language at the caller's first prompt.
+
+**Tier-defining safety phrases (pre-translated, do not paraphrase):**
+
+| English (v1.0) | Spanish (v1.1) |
+|---|---|
+| "Is water actively flowing or is anyone in immediate danger?" | "¿Hay agua corriendo ahora mismo, o hay alguien en peligro inmediato?" |
+| "Do you smell gas anywhere in the house?" | "¿Huele a gas en cualquier parte de la casa?" |
+| "If you smell gas, leave the house now and call from outside. Do not turn on lights or use any switches." | "Si huele a gas, salga de la casa ahora y llame desde afuera. No prenda luces ni use interruptores." |
+| "Where is your main water shutoff? Usually near the front hose bib, in the garage, or where the line enters the house." | "¿Dónde está la llave principal del agua? Normalmente está cerca de la llave de la manguera al frente, en el garaje, o donde la línea entra a la casa." |
+| "Turn it clockwise until it stops." | "Gírelo a la derecha (sentido del reloj) hasta que pare." |
+| "If the water heater is electric, turn off the breaker labeled 'water heater.' Only if the panel is dry and easy to reach." | "Si el calentador es eléctrico, apague el interruptor (breaker) que diga 'water heater.' Solo si el panel está seco y fácil de alcanzar." |
+| "Don't touch the gas valve yourself — we'll handle it on arrival." | "No toque la válvula de gas usted mismo — la manejamos cuando lleguemos." |
+| "Our after-hours emergency dispatch is $[X] and is applied to the repair if you go forward tonight." | "Nuestra visita de emergencia fuera de horario es $[X], y se aplica a la reparación si decide hacerla esta noche." |
+| "We'll text you a tracker link when the technician is on the way." | "Le mandaremos un mensaje con el enlace para seguir al técnico cuando esté en camino." |
+
+**Tonal note:** Spanish-first plumbing emergencies in 2026 frequently come from multi-generational households where the caller is the bilingual adult child of the homeowner. Do not assume the caller is the homeowner; ask early — *"¿Está usted en la casa, o está hablando por su [familiar]?"* — and route the mitigation script to whoever is physically on-site.
+
+**Dispatch-record language flag:** When the intake runs in Spanish, the dispatch-ready record (Section 2 of v1.0) gets an explicit field: `Customer language: Spanish (intake captured in Spanish; English summary follows for tech).` The tech is told whether to bring a Spanish-speaking partner or use phone translation on arrival.
+
+### v1.1.C — AI-Receptionist Structured-Handoff Format
+
+In 2026, AI receptionists (Avoca, AgentZap, My AI Front Desk, Voiceflow, RingDNA, Smith.ai's AI mode) are the first touch on 30–55% of after-hours calls and 15–30% of business-hours calls at shops that have rolled them out. The v1.1 skill emits a JSON schema the AI platform can ingest directly, eliminating the dispatcher's transcription pass on the way to the booked job.
+
+**Structured handoff JSON shape:**
+
+```json
+{
+  "intake_id": "string (uuid or shop-format)",
+  "channel": "phone | chatbot | web_form | sms",
+  "captured_at": "ISO 8601 timestamp",
+  "customer": {
+    "name": "string",
+    "phone": "E.164 string",
+    "address": "string (one-line)",
+    "address_verified": "boolean",
+    "email": "string or null",
+    "language": "en | es | other",
+    "is_existing": "boolean (CRM lookup result)"
+  },
+  "presenting_problem": {
+    "caller_words": "string (raw, first 1-2 sentences)",
+    "dispatcher_restatement": "string (one-line)"
+  },
+  "urgency_tier": "emergency | urgent | standard | scheduled",
+  "urgency_justification": "string (one-line, why this tier)",
+  "pre_diagnosis": {
+    "likely_causes": ["string", "..."],
+    "rule_out_first": "string"
+  },
+  "truck_load_implications": ["string", "..."],
+  "property": {
+    "type": "single_family | multi_family | condo_hoa | commercial",
+    "year_built": "integer or null",
+    "structure": "basement | slab | crawl_space | multi_story | mixed",
+    "access_method": "string",
+    "pets_on_property": "boolean"
+  },
+  "water_status": {
+    "main_shutoff_known": "boolean",
+    "main_shutoff_state": "on | off | unknown",
+    "shutoff_location": "string or null"
+  },
+  "photos_captured": [
+    { "type": "data_plate | shutoff | leak_origin | cleanout | other", "filename": "string" }
+  ],
+  "fee_expectations_set": {
+    "communicated": "boolean",
+    "amount_quoted": "number or null",
+    "waive_on_repair": "boolean"
+  },
+  "special_handling": ["elderly | language_pref | prior_callback | safety_cue | other_string"],
+  "booked_for": {
+    "tech": "string",
+    "window_start": "ISO 8601",
+    "window_end": "ISO 8601",
+    "confirmation_channel": "sms | email | both | none"
+  },
+  "skill_version": "1.1"
+}
+```
+
+**Validation rules:**
+- `urgency_tier == "emergency"` requires non-null `urgency_justification` and at least one entry in `truck_load_implications`.
+- `pre_diagnosis.likely_causes` minimum length 1 for any non-scheduled tier.
+- `water_status` must be populated; `unknown` is acceptable but never null.
+- `photos_captured` is allowed to be empty; the field must still be present.
+
+**Why JSON, not free text:** AI receptionist platforms in 2026 (Avoca, AgentZap, My AI Front Desk) all accept structured webhooks for booking handoff. A free-text summary forces a transcription pass at the dispatcher; structured JSON skips it. The shop's CRM (ServiceTitan, Housecall Pro, Workiz, Jobber) can also ingest the JSON directly via webhook for the booking record.
+
+### v1.1.D — Repeat-Caller and Red-Flag Detection Rules
+
+A small fraction of calls are not what they appear to be on the first 30 seconds: a third call from the same address in 90 days that was not booked, an inbound that's actually a callback on a workmanship dispute, a caller who flags as a prior-payment problem. The v1.1 detection rules below let the script flag the call for owner review without the dispatcher having to remember every pattern.
+
+**Auto-flag triggers (the script raises a `[FLAG]` in the dispatch-ready record):**
+
+1. **Third inbound from the same address in 90 days that was not booked.** Customer may be price-shopping competitors and bouncing off the diagnostic fee, OR there may be a recurring problem the shop has already declined to fix. Owner reviews before dispatching.
+
+2. **Caller mentions a prior tech's name from the shop's roster, or from a competitor.** Two paths: (a) genuine reference / prior good experience — route to the same tech if available; (b) callback or workmanship complaint — flip to the callback workflow, do not run the v1.0 intake.
+
+3. **Caller asks "how much will it cost to fix X?" before describing the problem.** Almost always a quote-shop. Route to the diagnostic-fee disclosure first; book only if the caller accepts.
+
+4. **Caller mentions an open dispute, refund request, or "the last guy who came out."** Stop the v1.0 intake; route to owner. Never re-book a callback through the standard intake.
+
+5. **Caller mentions another plumber's diagnosis.** Capture verbatim ("[Other plumber] said it's the [X]") and surface it in the dispatch-ready record. Tech should validate independently before agreeing or contradicting.
+
+6. **CRM flag: prior payment dispute, prior do-not-service, prior aggressive behavior.** Stop the v1.0 intake immediately on CRM flag. Route to owner.
+
+7. **Caller asks for invoice / proof of work for an insurance claim, court matter, or HOA dispute.** Capture intent in the dispatch-ready record so the tech arrives knowing the documentation expectation; do not book without owner awareness for active legal-process scenarios.
+
+8. **Multiple-property pattern (caller has had work at 2+ addresses in 6 months).** Could be a real estate investor — route to the commercial / investor pricing path, not residential. The shop's account-management posture differs.
+
+**Output format for flags in Section 2 (Dispatch-ready intake record):**
+
+Add a single line at the top of the record when any flag fires:
+```
+[FLAG: Repeat caller — 3rd inbound from 87 Linden Ave in 90 days, prior two not booked. Owner review before dispatch.]
+```
+
+Or:
+```
+[FLAG: Caller mentions prior tech "Javier R." with negative tone — possible callback. Route to callback workflow, do not run standard intake.]
+```
+
+The flag is the first thing the tech and dispatcher see; it changes the posture of the call before the urgency tier is processed.
+
+**Owner-review escalation channel:** When a flag fires after hours, the Auto-flag triggers send a Slack / Teams / SMS to the owner via the shop's existing on-call rotation in `config.yml`, not a phone interrupt to the dispatcher. The owner decides whether to release the booking or route to callback.
+
+---
+
+**End of v1.1 additions. v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**

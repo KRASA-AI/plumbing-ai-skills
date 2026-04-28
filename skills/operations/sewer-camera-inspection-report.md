@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min/inspection"
-version: 1.0
-last_eval_score: 9.4
+version: 1.1
+last_eval_score: 9.6
 ---
 
 # Sewer Camera Inspection Report Drafter
@@ -207,3 +207,131 @@ Full replacement of the lateral with new HDPE or PVC from the basement cleanout 
 ---
 
 *Report prepared by [COMPANY NAME], [LICENSE #]. Photos referenced in the defect table are attached as separate files.*
+
+---
+
+## v1.1 Additions (2026-04-26)
+
+The v1.0 sections above are unchanged. The four sub-sections below are additive — they extend the skill rather than replace any prior content. Use them in addition to v1.0 when the trigger conditions named in each apply.
+
+### v1.1.A — PACP Code → Homeowner-Readable Severity Translation Table
+
+The v1.0 defect table requires the report to include a plain-language description for every PACP-style code. The v1.1 lookup table below standardizes those translations so two reports out of the same shop, on the same defect, sound consistent — and so the skill produces a defensible, shop-neutral homeowner translation rather than re-inventing language each run.
+
+**Master translation reference (use the Severity 1–5 mapping when the tech provides a numerical grade; otherwise use Minor / Moderate / Severe):**
+
+| PACP code | Defect class | Sev 1 (Minor) — homeowner language | Sev 3 (Moderate) — homeowner language | Sev 5 (Severe / Failing) — homeowner language |
+|---|---|---|---|---|
+| **OB** | Obstacle / obstruction | "A small object or buildup partially blocks flow but the pipe is still draining." | "A foreign object or sediment buildup is significantly restricting flow; needs removal." | "An object or massive buildup is fully blocking flow; line is currently impassable." |
+| **JOM / JOL / JOA** | Joint offset (medial / longitudinal / angular) | "A joint is slightly out of alignment but the pipe is still sealed and flowing." | "A joint has shifted enough to catch debris and may worsen over time." | "A joint has separated; pipe is exposed to the surrounding soil and infiltration / leakage is occurring." |
+| **JSV** | Joint separation, void visible | "Small gap at a joint, pipe still aligned." | "Visible gap at the joint with soil starting to enter the line." | "Joint is fully separated; soil and water are flowing freely between pipe and surrounding ground." |
+| **SAG** | Sag / belly | "A slight low spot is visible but does not currently hold standing water." | "A belly holds standing water that traps debris and accelerates buildup; expect recurring slow drainage." | "A deep belly holds significant standing water; line will trap solids and back up under normal use." |
+| **DS / DSF / DSGV** | Deposits — settled / fine / grease & vegetable | "A thin layer of buildup on the pipe wall; flow not restricted." | "Buildup occupies 15–30% of the pipe; flow restricted under heavy use." | "Buildup occupies more than 50% of the pipe; flow severely restricted, backup risk during heavy use." |
+| **RFC / RFB / RFJ** | Roots — fine / barrel / joint | "Fine roots present at a joint; not currently restricting flow." | "Roots are reducing flow capacity by 25–50%; will worsen and trigger backups." | "Roots occupy more than 50% of the pipe cross-section; backup is likely under normal use." |
+| **RTB** | Roots — tap-break / heavy ball | "Light root mass at a side connection; flow not restricted." | "Substantial root mass restricting flow at a side connection; needs cutting." | "Heavy root ball blocking flow; immediate clearing needed and pipe likely compromised." |
+| **CC** | Crack — circumferential | "Hairline crack visible around the pipe; pipe still structurally sound." | "Crack with separation visible; pipe is leaking but still structurally holding." | "Crack with significant separation; pipe is at high risk of full collapse." |
+| **CL** | Crack — longitudinal | "Hairline lengthwise crack; pipe is still sealed." | "Lengthwise crack with visible separation; leakage likely under load." | "Major lengthwise crack with separation; pipe is failing and at risk of collapse." |
+| **FC / FL** | Fracture — circumferential / longitudinal | "Visible fracture but pipe edges still touching; structurally compromised but holding." | "Fractured pipe with displacement; soil entry occurring." | "Fully fractured pipe with significant displacement; structural integrity lost." |
+| **B** | Broken | "Pipe wall has minor broken pieces visible; flow continuing." | "Pipe wall is broken with visible voids; soil entering the line." | "Pipe wall has collapsed or has missing sections; line is no longer structurally intact." |
+| **X** | Collapse | (rarely used at Sev 1; if Sev 1, treat as severe broken) | "Partial collapse; pipe is restricting flow significantly and at risk of full collapse." | "Full collapse; line is impassable and excavation / replacement is required." |
+| **H** | Hole | "Small hole in pipe wall; flow continuing, soil entry minor." | "Hole with visible soil entry into the line." | "Large hole or wall failure; significant soil entering the line, structural risk." |
+| **I** | Infiltration | "Trace dampness at joint; not currently active." | "Active drip / weep at joint." | "Heavy active flow into the line from the surrounding ground." |
+| **TFA / TFB / TFC** | Tap — factory / break-in / capped | "Side-tap connection in good condition." | "Side-tap connection with minor irregularity (offset or slight intrusion)." | "Side-tap connection failing — broken-in tap, displaced, or missing material." |
+| **MWL / MWLD** | Mineral / water level | "Small puddle at low point, no flow restriction." | "Standing water consistent with belly or stoppage downstream." | "Significant standing water indicating active stoppage or major belly." |
+| **AMH** | Access manhole | (manhole conditions — used in commercial contexts; severity reflects access-point condition) | | |
+
+**How the skill uses the table:** When the tech provides a code + severity, the skill picks the matching row and column for the plain-language description. When the tech provides only a code, the skill picks Sev 3 (Moderate) as the default and explicitly flags this in the report: "Severity not graded by tech — Moderate is shown as the default; PACP-certified verification recommended for insurance / litigation use."
+
+**Why standardize:** The same defect described as "some roots" in one report and "minor root intrusion at 35 ft" in another is the kind of inconsistency that erodes trust during a real-estate transaction or insurance dispute. The v1.1 table holds the language steady across runs and across techs.
+
+### v1.1.B — Year-over-Year Trend Section (Recurring Commercial / HOA / Property Manager Reports)
+
+Property managers, HOAs, and commercial-account customers often run sewer scopes annually or semi-annually under a maintenance program. The v1.1 trend section gives those customers a read on whether the line is stable, slowly degrading, or rapidly degrading — which is the actual question they have, not "what's the condition today?"
+
+**When to add:** Include a "Section 7 — Year-over-Year Trend" only when the customer relationship has at least one prior camera report in the shop's record. Skip the section on any first-time inspection.
+
+**Trend table format:**
+
+| Footage | This inspection | 12 months ago | 24 months ago | 36 months ago | Trend |
+|---|---|---|---|---|---|
+| 0–12 ft | Serviceable | Serviceable | Serviceable | Serviceable | Stable |
+| 12–28 ft | Degraded (DS, 18%) | Degraded (DS, 14%) | Serviceable | Serviceable | Slow degradation |
+| 28–52 ft | Failing (SAG + RFC) | Degraded (RFC, 30%) | Degraded (RFC, 18%) | Serviceable | Rapid degradation |
+| 52–75 ft | Unknown (hard stop) | Unknown (hard stop) | Serviceable | Serviceable | Unknown — recommend trace |
+
+**Trend classifications:**
+- **Stable** — no measurable change across the prior 24+ months.
+- **Slow degradation** — incremental change visible (e.g., scaling thickness increasing by ≤15% per year, or one new minor defect added).
+- **Rapid degradation** — significant change in 12 months (e.g., a Moderate becoming Severe, a new Severe defect, a hard stop where there wasn't one).
+- **Improvement** — the section was previously degraded and has been remediated (e.g., post-jet, post-spot-repair).
+- **Unknown** — section is no longer observable due to a new hard stop or image limit.
+
+**Recommendation block addition:** When trend is `Rapid degradation` on any segment, the recommendation in Section 5 should escalate from `Better` to `Best` (full replacement preferred over CIPP) for that segment. When trend is `Slow degradation`, maintain current recommendation tier and re-inspect in 12 months. When trend is `Stable`, recommend the existing maintenance interval be confirmed (annually for commercial / HOA, every 2–3 years for low-volume residential maintenance contracts).
+
+**Property-manager friendly summary line at the end of Section 7:**
+> "Across the four-year inspection record, the line is degrading from the back of the building outward. The 28–52 ft section has moved from Serviceable to Failing in 24 months. We recommend prioritizing replacement of that segment in the next maintenance budget cycle, with the 52 ft+ unknown segment scoped via a city-side camera run."
+
+### v1.1.C — Real-Estate Transaction Addendum
+
+Pre-sale and pre-purchase sewer scopes are a distinct workflow — the report is not just for the homeowner; it's for the buyer's agent, the seller's agent, the listing inspector, and increasingly the financing underwriter. The v1.1 addendum below extends the v1.0 customer-audience-calibration section for transaction reports specifically.
+
+**Trigger:** Add this addendum only when `customer context` indicates the report is for a real-estate transaction (pre-sale, pre-purchase, due diligence, listing inspection).
+
+**Addendum sections (insert after Section 5, before Section 6):**
+
+**Transaction-Impact Summary (≤6 sentences):**
+- One sentence: bottom-line condition, transaction-relevant only.
+- One sentence: estimated cost band of the recommended remedy.
+- One sentence: who pays — convention is seller (existing condition pre-listing), but negotiable.
+- One sentence: timing impact on closing (does the buyer's lender require completion before close?).
+- One sentence: disclosure obligation under state law (e.g., CA Civil Code 1102, NY RPL 462, TX TREC disclosure).
+- One sentence: insurability and financing impact (FHA / VA / USDA loans flag certain defects more aggressively than conventional).
+
+**Defect-by-defect transaction relevance (one-row-per-Sev-3+ defect):**
+
+| Footage | Defect | Transaction relevance | Likely buyer-inspector finding |
+|---|---|---|---|
+| 32 ft | SAG (Moderate) | Disclosure recommended; not typically a deal-breaker | Will likely be flagged; expect a $500–$1,500 credit request |
+| 48 ft | RFC (Severe) | Disclosure required in most states; routinely re-negotiated | Will be flagged; expect a $3K–$15K credit or remediation demand |
+| 52 ft | Unknown (hard stop) | Should be disclosed; uncertainty creates buyer-inspector risk | Buyer-side may demand a city-side scope as a condition of closing |
+
+**Financing-relevance callout (only if defect set warrants):**
+
+> "FHA and VA buyers: a Severe-rated sewer defect that has not been remediated may require a re-inspection or remediation as a condition of loan approval. Discuss with the lender's underwriter before closing on a financed sale."
+
+**Pre-listing posture recommendation (seller-side reports only):**
+
+> "Pre-listing options: (a) remediate before listing — adds value above remediation cost in most markets; (b) disclose with this report attached and price accordingly — simpler and avoids permit / construction timing risk during listing; (c) offer a credit at closing equal to the recommended remediation — common pattern when seller is not in a position to coordinate the work."
+
+**Defensibility note (always present in transaction reports):**
+> "This report describes the condition observed on [date] using [equipment]. It is not a structural-engineering certification and is not intended as the sole basis for a real-estate transaction decision. A second opinion from a PACP-certified operator and / or a licensed structural engineer is appropriate when the report is contested."
+
+### v1.1.D — Regional Pricing-Band Calibration
+
+The v1.0 recommendation block uses dollar bands (Good $2,800–$3,800; Better $9,500–$12,500; Best $14,000–$18,500) calibrated to a mid-Atlantic / Southeast US market. Bands shift materially by region — Pacific Northwest, Bay Area, NYC metro, Boston metro, and Honolulu run 1.4–1.9× the base; Midwest non-metro and Southeast rural run 0.7–0.85× the base. The v1.1 calibration multiplier below standardizes the regional adjustment so the report is credible to a homeowner whose neighbor's quote it will be compared against.
+
+**Regional multiplier table (apply to v1.0 base bands):**
+
+| Region | Multiplier | Rationale |
+|---|---|---|
+| Bay Area / SF / San Jose / Oakland | 1.6–1.9× | Highest contractor labor rates; permit complexity; restoration cost on hardscape |
+| NYC metro / Long Island / Westchester / NJ inner ring | 1.5–1.8× | Highest labor; constrained access; municipal permit overhead |
+| Boston metro / Cambridge / Brookline | 1.4–1.6× | Old-stock pipe material variety; permit overhead; restoration in dense neighborhoods |
+| LA / Orange County | 1.3–1.5× | Labor + permit overhead; soil / shoring more involved than mid-Atlantic |
+| Pacific Northwest metro (Seattle, Portland) | 1.3–1.5× | Labor; restoration on tree-root remediation cycles |
+| Honolulu / urban Hawaii | 1.7–1.9× | Material logistics; specialized contractor pool |
+| Denver / Phoenix / Austin / Nashville / Charlotte (growing metros) | 1.05–1.20× | Labor inflation outpacing the national mid-Atlantic baseline |
+| Mid-Atlantic / Southeast metro (DC, Baltimore, Richmond, Atlanta) | 1.00× | Base bands as written |
+| Midwest metro (Chicago, Indy, Columbus, KC, Minneapolis) | 0.90–1.00× | Slightly below base on labor; comparable on materials |
+| Florida metro (Miami, Tampa, Orlando, Jacksonville) | 0.95–1.10× | Labor mostly in line; permit overhead by jurisdiction |
+| Texas metro non-Austin (Dallas, Houston, San Antonio) | 0.90–1.05× | Lower labor than coastal; comparable materials |
+| Midwest non-metro / Southeast rural / Plains / rural Mountain West | 0.70–0.85× | Lower labor; smaller restoration / permit overhead |
+
+**Application rule:** The shop's `config.yml` should set `regional_multiplier` once per service area. The skill applies the multiplier to the v1.0 base bands and produces region-correct dollar ranges in the recommendation block. When the shop's primary service area spans more than one band (e.g., the PNW shop that does Seattle + rural Snohomish County), the report is generated for the property's specific region, not the shop's blended band.
+
+**Output format addition:** Add a one-line annotation at the end of Section 5 in v1.0:
+> "Pricing bands calibrated to [region]. For a second opinion in the same market, expect quotes within ±20% of these bands; significantly outside that range is worth discussing with us before signing."
+
+---
+
+**End of v1.1 additions. v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**

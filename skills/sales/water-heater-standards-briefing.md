@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min per customer briefing; replaces a back-and-forth comparison most shops do verbally and inconsistently"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.7
 ---
 
 # Water Heater Standards Briefing

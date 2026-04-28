@@ -4,8 +4,8 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~4 hrs per service-area content pack; replaces a one-off agency deliverable at $1,500–$3,500"
-version: 1.0
-last_eval_score: null
+version: 1.1
+last_eval_score: 9.4
 ---
 
 # AI Search Visibility Content Pack
@@ -232,9 +232,92 @@ In Louisville's water, the anode rod in a tank-style heater typically sacrifices
 
 ---
 
+## Beyond the Pack: Engine-Specific Optimization (v1.1)
+
+The seven sections above produce the on-site, on-GBP, and FAQ content most plumbing shops are missing. By April 2026, however, the gap between *having* AI-search-visibility content and *being cited* by AI answer engines has narrowed enough that a content pack alone is necessary but not sufficient. A 50-state engine-citation study completed in April 2026 — one identical "best plumbers in [state]" prompt sent to ChatGPT, Google Gemini, Google AI Mode, and Perplexity across all 50 states — established the first published baseline of engine-by-engine bias and named the citation graph that actually drives AI plumbing recommendations. The five sections below layer that finding onto the pack.
+
+The headline number from the study: of all plumbing businesses surfaced across the 200 engine-state combinations, only two cleared the bar of being named by all four engines simultaneously in their home state. Most shops that consider themselves "AI-visible" are in fact one-engine visible (typically ChatGPT, which has the lowest citation bar). The work that moves a shop from one-engine to two-engine visibility, and again from two-engine to three-engine, is the work below.
+
+### Engine-Specific Tactical Layer
+
+The four major engines cite the same universe of plumbing-business signals — license, reviews, 24/7 availability, transparent pricing, insurance, warranty — but weight those signals very differently and pull from different parts of the citation graph. A pack tuned for Gemini is not the same pack that wins on Perplexity. After producing sections 1–8, do an engine-specific pass:
+
+**ChatGPT (longevity + service-breadth biased)** — Names the largest set of businesses per answer (10+ per state). Cites Expertise.com and TrustAnalytica directories disproportionately; service-page lists about half as often. Rewards years-in-business statements, owner-named history, and a tightly-scoped "what we do here" list. *Tactic:* Lead the Direct-Answer Block with year-founded, ownership context, and a tight list of services in the geography. Get on Expertise.com's "best plumbers in [city]" listicle and TrustAnalytica before optimizing the about page further.
+
+**Google Gemini (license-and-credential biased)** — Cites specific license classes (e.g., C-36 in California, P-1 in Florida, KY Master Plumber, OH state license) at roughly twice the rate of other engines. Surfaces verification URLs from state contractor boards. Rewards regulatory and government-source citations. *Tactic:* Put the state license number, the license class spelled out, and the public verification URL on the homepage, the about page, and every service page — not buried in the footer. This is the highest-ROI single content change for Gemini visibility.
+
+**Google AI Mode (review-volume biased)** — Cites customer review counts at roughly three times the rate of Gemini. Embeds star ratings and review counts directly in answer prose ("rated 4.8 with 600+ reviews"). Pulls heavily from Yelp and ServiceTitan-hosted booking pages. *Tactic:* Surface the review-count + star-rating language verbatim on the site and in GBP — "over 600 reviews averaging 4.8 stars" is the exact phrase pattern AI Mode tends to lift. Keep the review count current to within 90 days and the star average accurate; AI Mode disqualifies stale review claims fast.
+
+**Perplexity (warranty + local-presence biased, most cautious)** — Highest hedge rate; refuses to recommend anyone in a handful of states. Cites Angi disproportionately and pulls from industry blogs (Plumbing & Mechanical, Contractor Magazine, Supply House Times). Surfaces license-verification warnings most aggressively. *Tactic:* Make warranty terms (length and what is covered) explicit on the service page in the form "10-year tank / 2-year labor" or whatever is actually defendable. Have a fully-claimed Angi profile with current reviews. Avoid any claim that could trip Perplexity's hedge filter — no "guaranteed" or "lifetime" language without specific terms attached.
+
+### Citation Graph Control
+
+Most plumbing shops over-index on owned-site content and under-index on the third-party citation graph. In the 50-state engine-citation study, seven of the top twelve cited domains were curated directories or listicle aggregators — not individual business websites. A complete content pack does not stop at the shop's own site. Claim, complete, and refresh these in priority order:
+
+1. **Expertise.com** — submit for the "best plumbers in [city]" listicle if not already included; ChatGPT cites this domain at roughly 13% of all citations
+2. **Angi** — fully complete profile, current photos, review-count visible, services list matching the shop's actual scope; Perplexity cites Angi at roughly 9%
+3. **Yelp** — claim the listing, respond to every review, photos refreshed within 90 days; AI Mode cites Yelp at roughly 11%
+4. **TrustAnalytica** — submit the shop with full profile data; ChatGPT cites at roughly 7%
+5. **Best Pick Reports / BetterBuyer** — regional curated directories often used by Gemini and AI Mode
+6. **PlumbersUp** — niche plumbing directory cited by ChatGPT
+7. **ServiceTitan booking page** — if the shop runs ServiceTitan, the public booking URL is itself a citation target; AI Mode cites ServiceTitan-hosted pages at roughly 11.5%
+
+After these seven, lower-priority targets include the BBB profile, Google Business Profile, the local PHCC chapter directory, and any city or chamber-of-commerce business directory. Refresh the top seven on a 90-day cycle. Inverting the typical SEO hierarchy — directory work above on-site content — is the highest-yield AEO move for shops that already have a passable service-area page.
+
+### The Consensus-Mention KPI
+
+A shop is not "AI-visible" or "not AI-visible" in the binary. It is mentioned by some number of engines, in some number of cities, with some level of consensus. The cleanest progress metric is the **consensus-mention count**: of the four major engines (ChatGPT, Gemini, Google AI Mode, Perplexity), how many name the shop in response to the standard question "who are the best plumbers in [city]?". Track it monthly by hand or quarterly with a small script. A single shop typically progresses through these stages:
+
+- **0/4** — Invisible. Most shops without an AEO program start here. *Action:* Citation Graph Control above.
+- **1/4** — Single-engine visibility. Usually ChatGPT first because it has the lowest bar. *Action:* claim and complete the next two priority directories.
+- **2/4** — Meaningful visibility. The shop is now a referenced option for at least half of homeowners using AI to research plumbers. *Action:* tighten the engine-specific tactical layer for the two missing engines.
+- **3/4** — Strong visibility. The shop is a default suggestion in the city. *Action:* defend by maintaining content freshness and review-count growth.
+- **4/4** — Full-spectrum visibility. As of April 2026, only two plumbing businesses in the United States had cleared this bar simultaneously. Treat as aspirational; the gap from 3 to 4 is wider than 0 to 3.
+
+Pick three target cities the shop actually serves (not all 50 states). Run the standard prompt against each engine for each city quarterly and record the count. The metric moves slowly — 30 to 90 days between visible deltas — and is the single most useful number to put in front of the shop owner each quarter.
+
+### Red-Flag Phrase Audit and GBP Hygiene
+
+AI engines do not just decide whom to recommend; they also surface warnings — what to avoid when picking a plumber. The 50-state engine-citation study cataloged 622 red-flag phrases across the four engines. If a plumbing shop's own site, GBP, or directory listings contain language that *matches* the warning vocabulary, the shop is auto-disqualified before consideration. Strip the following from every public-facing surface:
+
+- **"Cash only" or "cash discount"** — Gemini and AI Mode cite this as a top warning sign in their consumer-protection posture
+- **"Free phone estimate" or "exact price over the phone"** — engines flag any business that claims to give a firm price without a diagnostic visit; phrase pricing as "ranges starting at" instead
+- **"Lifetime warranty" without specific terms attached** — Perplexity flags vague warranty language; replace with "10-year tank / 2-year labor" or whatever is actually defendable
+- **Comparative claims against named competitors** — engines flag this as low-trust marketing
+- **"Cheapest in [city]"** — engines associate price-leader claims with quality risk
+- **Hidden-fee language patterns** — anything implying optional add-ons that surface only on the invoice; ChatGPT's warning vocabulary is heaviest here
+- **An expired or about-to-expire license on the public verification URL** — every engine drops the shop the moment the public-facing license listing flips status; renew well before the listing visibly approaches expiration
+
+Pair this audit with a **GBP spam-hygiene pass**, because a demoted Google Business Profile cascades into lower citation rates across all four AI engines:
+
+- Confirm the primary GBP category is "Plumber" (not the now-deprecated "Plumbing supplies" category, and not a service-area-business listing for a shop that has a brick-and-mortar address)
+- Confirm the address is the actual shop's address, not a UPS Store or a virtual mailbox — Google's enforcement passes in early 2026 are demoting listings flagged for false brick-and-mortar
+- Confirm the service-area list does not include cities the shop does not actually roll trucks to — service-area sprawl is the most-cited reason for GBP demotions in the 2026 enforcement window
+- Confirm there are no duplicate GBP listings under prior shop names, prior addresses, or prior owners; merge or close them through the GBP support flow before they get auto-flagged
+
+### Climate and Regulatory Vocabulary Map
+
+AI engines cluster their answers around climate and code language that matches the question's geography. A pack written with city names but national vocabulary will lose to a pack written with the regional words a homeowner in that climate would actually type into a chat interface. Apply the table below to the FAQ block, the pricing-transparency block, and the service-page paragraphs:
+
+| Region | Climate vocabulary | Regulatory / code vocabulary | Notable specialty signal |
+|---|---|---|---|
+| Cold-winter (MN, WI, MI, NY, ME, NH, VT, MA, IL, mountain CO) | freeze burst, heat tape, pipe insulation, frost-line depth, winterization, antifreeze in traps | boiler permit, hydronic system, glycol disposal | hot-water boiler service, snowmelt-system installation |
+| Hot-arid (AZ, NV, NM, west TX, inland southern CA) | slab leak, hard water, scale buildup, water-softener sizing, evaporative-cooler bleed line | C-36 (CA), AZ ROC class | slab-leak detection, water-softener install, evap-cooler plumbing |
+| Coastal-humid (FL, coastal GA/SC/NC, TX Gulf, southern LA, HI) | humidity, mold risk, sub-slab moisture, salt-air corrosion, hurricane preparation, well-water iron | FL CFC license, FL workers-comp + workplace-safety subhour CE | sump-pump install, backwater-valve install, well-pump service |
+| Pacific-NW (WA, OR, northern CA coastal) | high-iron well water, septic leach, root-intrusion sewer lateral, low-flow code stricter than national | WA contractor bond + L&I, OR CCB | trenchless sewer, septic-to-sewer conversion, high-efficiency tankless |
+| Mountain-West (CO, UT, ID, MT, WY) | high-altitude combustion derating, water-line freeze depth 5+ ft, well + cistern combinations | mountain-county AHJ variance | well-pump service, propane water heater install |
+| Midwest (OH, IN, KY, MO, KS, IA, NE) | basement drain backup, sump-and-pit, sewer lateral on the homeowner from curb to main | OH 5-hr CE online-only cap, KY Master Plumber, IL 1099 hold-your-own-license rule | sewer-lateral lining, sump-pump and battery-backup install |
+| Southeast non-coastal (TN, AL, MS, AR, OK) | tornado debris in mainline, hard well water, septic-with-no-municipal-sewer | TX 6-hr CE with code-update sub-requirement | well-pump service, septic and grinder pump |
+| Mid-Atlantic (PA, NJ, DE, MD, VA, DC) | freeze-thaw cycles, lead service line replacement (LSL), older housing stock with galvanized re-pipes | EPA LCRI service-line inventory, VA P-1/P-2 license class | LSL replacement, galvanized re-pipe |
+
+Pick the row that matches the service area's actual climate-and-code regime and lift four to eight vocabulary words from the relevant row into the pack. Do not stuff every term — engines penalize keyword density. The goal is for the pack to *sound* like it was written for the actual climate and code regime, because answer engines preferentially cite content that does. A Phoenix shop's pack should not read like a Cleveland shop's pack with the city names swapped.
+
+---
+
 ## Notes for the Shop
 
 - One pack = one service line in one service area. Resist the urge to cram water heaters, drain cleaning, and repipes into a single pack — AI engines synthesize by intent, and a narrow pack wins the citation more often than a broad one.
 - Refresh quarterly. Price bands drift, review signal drifts, and AI engines reward content that is recently dated.
 - Do not publish any of this to a blog in one shot — it's a content *pack* split across a service page, an FAQ section, the GBP Q&A, and supporting paragraphs. Dumping it as a single 3,000-word blog post reads as AI-generated filler to both human readers and the engines.
 - Never let marketing auto-generate these at scale across cities the shop doesn't actually serve. An AI engine that catches a shop claiming service in a city where no truck actually rolls will demote every mention of the shop for months.
+- Rerun the v1.1 engine-specific tactical layer and citation graph control sections once per quarter even if the underlying pack is not being refreshed — the engines change their citation weights faster than service-line content drifts.

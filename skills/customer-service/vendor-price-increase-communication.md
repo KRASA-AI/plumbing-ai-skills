@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.6
 ---
 
 # Vendor Price Increase Customer Communication

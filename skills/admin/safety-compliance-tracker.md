@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min/audit cycle"
-version: 1.0
-last_eval_score: 9.1
+version: 1.1
+last_eval_score: 9.5
 ---
 
 # 🛡️ Safety & Compliance Tracker
@@ -228,3 +228,137 @@ Format a clean compliance summary suitable for:
 
 ═══════════════════════════════════════════════
 ```
+
+---
+
+## v1.1 Additions (2026-04-25)
+
+The v1.0 skill scored 9.1 on the 04-14 and 04-24 evals; the soft spot was personalization (8/10) and efficiency (8/10). The 04-24 summary called out per-tech renewal calendars and tighter state-rule integration as the unlocked lift. The v1.1 additions below are strictly additive — none of the v1.0 content above changes. Use the v1.0 sections for the standing monthly tracker output; use the v1.1 sections when the shop wants per-tech detail, jurisdiction-overlay clarity, or a 12-month renewal-budget projection.
+
+### Per-Tech Renewal Calendar
+
+For any tech the shop wants tracked individually (rather than rolling up to the team matrix), produce a 12-month forward-looking calendar showing every renewal event by month. The calendar is the artifact the tech actually carries home and the one the office uses for a one-on-one renewal conversation.
+
+Format:
+
+```
+─────────────────────────────────────────────────────────────
+  RENEWAL CALENDAR — [Tech Name] — 12 months from [date]
+─────────────────────────────────────────────────────────────
+
+  MONTH    | RENEWAL                          | OWNER     | $
+  ---------|----------------------------------|-----------|------
+  May 2026 | DOT Medical Card                 | Tech      | $125
+  Jun 2026 | CPR / First Aid                  | Tech      | $75
+  Jul 2026 | (clear)                          | —         | —
+  Aug 2026 | (clear)                          | —         | —
+  Sep 2026 | TX Journeyman License (3-yr)     | Office    | $225
+  Oct 2026 | OSHA-10 Refresher                | Tech      | $89
+  Nov 2026 | Medical Gas Cert (2-yr)          | Tech      | $385
+  Dec 2026 | (clear)                          | —         | —
+  Jan 2027 | CE Hours block (8 hrs by Mar)    | Tech      | $160
+  Feb 2027 | (clear)                          | —         | —
+  Mar 2027 | Backflow Cert (annual)           | Tech      | $175
+  Apr 2027 | Vehicle Inspection (state, 1-yr) | Office    | $25
+
+  12-month total: $1,259  |  Tech-paid: $584  |  Office-paid: $675
+  Stacked-renewal months: Sep, Nov (>$300/mo) — schedule budget early
+
+  Tech-side prep ahead of each renewal:
+   • DOT Medical: book exam at clinic 2 weeks before expiration
+   • CPR class: Red Cross or local CC, allow half-day
+   • Journeyman: state portal opens 90 days before expiration
+   • Med Gas: 2-day course + exam, schedule 60 days out
+   • CE hours: TX requires 8 hrs by license anniversary
+─────────────────────────────────────────────────────────────
+```
+
+Discipline notes:
+
+- **One calendar per tech, not one for the whole shop.** A combined calendar is what the v1.0 matrix already produces. The per-tech calendar is for the renewal conversation and for the tech's own file.
+- **Owner column is binary (Tech / Office).** "Tech" means the tech is responsible for booking and submitting; "Office" means the shop runs the renewal on the tech's behalf (most common: license renewals through the state portal where the office holds the credentials, vehicle inspections, anything paid through company AP).
+- **Stacked-renewal-month flag.** Any month with more than $300 in renewal cost or more than two events gets flagged so the office can either re-time one of them (if the cert allows early renewal) or budget the cash flow.
+- **Prep windows.** Each cert has a typical prep window (DOT medical 2 weeks ahead, journeyman portal opens 90 days before, med-gas course is 2 days plus exam scheduling lead time). Surface the prep window so the tech doesn't get caught at T-7-days with no slot available.
+- **Run this any time a tech is hired, promoted, or moved between scopes that change their cert requirements.** Then update at each cycle.
+
+### State-Rule Overlay (License + CE)
+
+Different states impose different renewal cycles, CE-hour requirements, and reciprocity rules. The v1.0 reminder noted this generally; v1.1 names the rules for the 12 states with the largest plumbing-shop populations so the skill can flag the right thing without the office having to look it up.
+
+| State | Master license cycle | Journeyman CE / cycle | Renewal window opens | Notable quirk |
+|---|---|---|---|---|
+| **CA** | Annual (CSLB C-36) | None state-mandated; LMOA recommended | 60 days before expiration | C-36 covers plumbing only; gas connections require separate experience verification under DCA bulletin |
+| **TX** | 1-yr Master / 1-yr Journeyman (TSBPE) | 6 hrs / yr | 90 days before expiration | Backflow tester is separate TCEQ endorsement, not a TSBPE cert; CE must include 1 hr code-update content |
+| **FL** | 2-yr (DBPR Plumbing CFC) | 14 hrs / 2 yrs | 90 days before expiration | 1 hr workers' comp + 1 hr workplace safety mandatory inside the 14 |
+| **NY** | Local (NYC DOB Master Plumber) | NYC: 7 hrs / yr | Varies by jurisdiction | Plumbing license is municipal in NY, not state — NYC, Buffalo, Rochester all separate boards |
+| **PA** | Local (no state license) | Local board sets | Local | Philadelphia and Pittsburgh have separate Master Plumber boards; rural counties often delegate to UCC |
+| **OH** | Annual (OCILB Plumbing) | 10 hrs / yr | 60 days before expiration | CE provider must be OCILB-approved; online-only courses capped at 5 of 10 hrs |
+| **MI** | 3-yr (LARA Master / Journey) | 0 (renewal-only) | 30 days before expiration | Reciprocity with WI, IL, OH on Journey level only; Master is non-reciprocal |
+| **IL** | Annual (IDPH Plumbing) | 4 hrs / yr | 60 days before expiration | 1099-only contractor must hold their own license — not coverable under the shop's license |
+| **GA** | 2-yr (Construction Industry Licensing Board) | 0 (renewal-only) | 90 days before expiration | Master Plumber Restricted vs. Unrestricted distinction matters for water service over 1.25" |
+| **NC** | Annual (State Board of Examiners) | 0 (renewal-only) | 60 days before expiration | P-1 vs. P-2 vs. P-2-restricted classification governs scope; running over scope is a Class 2 violation |
+| **VA** | 2-yr (DPOR Tradesman / Master) | 3 hrs / 2 yrs | 30 days before expiration | Continuing-ed required only for Master; Journeyman (Tradesman level) renews on time only |
+| **WA** | Annual (L&I PL01) | 8 hrs / yr | 60 days before expiration | PL01 (Plumber 01) and Plumber Trainee are the two licenses; Specialty (PR pump) is separate |
+
+State rules that bite shops in practice:
+
+- The five states with mandatory CE (TX, FL, OH, IL, WA) penalize lapse by reverting the license to inactive — the tech cannot perform regulated work until both CE hours and renewal are submitted.
+- States with municipal plumbing licensing (NY, PA, parts of MO) make the "state license" question itself ambiguous — track per-municipality if the shop crosses city lines.
+- Reciprocity is narrower than most shops assume — MI ↔ WI ↔ IL ↔ OH on Journeyman is the largest reciprocal block; CA, NY, FL accept no out-of-state plumbing licenses for Master without re-examination.
+- The renewal-window-opens column matters because most state portals will not accept a renewal earlier than the named window; setting a calendar reminder for 95 days out wastes 5 days when the portal opens at 90.
+
+When the shop's state is in the table above, integrate the state-specific cycle, CE, and quirks into the per-tech calendar and into the alerts. When the state is not in the table, the skill should default to a 1-yr cycle, flag CE as "verify with state board," and instruct the office to add the state to its working list.
+
+### 12-Month Renewal Budget Projection
+
+In addition to the v1.0 quarterly budget block, produce a rolling 12-month projection any time the office is doing annual planning. Format:
+
+```
+─────────────────────────────────────────────────────────────
+  12-MONTH RENEWAL BUDGET PROJECTION
+  Run date: [date]  |  Team size: [N]  |  State: [XX]
+─────────────────────────────────────────────────────────────
+
+  Q1 (Jan–Mar): $[amt]  | [N] events | tech-paid $[amt] / office-paid $[amt]
+  Q2 (Apr–Jun): $[amt]  | [N] events | tech-paid $[amt] / office-paid $[amt]
+  Q3 (Jul–Sep): $[amt]  | [N] events | tech-paid $[amt] / office-paid $[amt]
+  Q4 (Oct–Dec): $[amt]  | [N] events | tech-paid $[amt] / office-paid $[amt]
+
+  Annual total: $[amt]
+  Largest single-month spend: [Month] $[amt]
+  Largest single-event cost:  [Cert + Tech] $[amt]
+
+  PER-TECH BREAKDOWN
+  Tech         | Annual | Tech-paid | Office-paid | Stacked months
+  -------------|--------|-----------|-------------|----------------
+  Marcus R.    | $1,259 | $584      | $675        | Sep, Nov
+  Jake T.      | $   460| $215      | $245        | (none)
+  Dani S.      | $   825| $375      | $450        | Mar
+  Chris M.     | $   910| $510      | $400        | Jan
+  ─────────────|────────|───────────|─────────────|────────────────
+  TOTAL        | $3,454 | $1,684    | $1,770      |
+
+  Cross-team stacked months (>$700 combined):
+   • Sep 2026 — $710 (Marcus journeyman + Dani backflow)
+   • Nov 2026 — $385 + $245 = $630 (Marcus med-gas + Chris CPR)
+─────────────────────────────────────────────────────────────
+```
+
+Use the projection to:
+
+- File the renewal budget into the shop's annual budget cycle (typically Q4 for the upcoming year).
+- Schedule training-eligible techs for shop-paid CE blocks the office can buy in bulk (CPR for 4 techs at one class is cheaper than 4 separate enrollments).
+- Surface stacked-month risks early — a $1,200 cash-flow hit in a single month is manageable if foreseen 9 months out, painful if discovered 9 days out.
+
+### Audit-Mode Variant (insurance / OSHA / GC prequal)
+
+The v1.0 audit-ready report block is suitable for an internal review. When an external party is requesting the report (workers' comp underwriter, GL renewal, OSHA inspector, GC prequalification packet), produce the **audit-mode variant** that adds:
+
+- **Cover page:** Company name, FEIN, primary state license #, insurance certificate references, contact for compliance questions
+- **Date-of-record stamp:** "Compliance position as of [YYYY-MM-DD]" — auditors care about the snapshot date, not the live tracker
+- **Signed-off-by:** Owner name + title; some carriers require a notarized version
+- **Documentation references:** Per-cert, name the issuing body and the verification URL the auditor can hit (state board lookup, Red Cross verification portal, etc.) so the auditor doesn't have to ask
+- **Exclusions and N/As:** State explicitly which certs do NOT apply to this shop's scope (e.g., "Medical gas certification N/A — shop does not perform medical gas installations") so the auditor doesn't read the absence as a missing cert
+- **30/60/90 day forward window only.** Do not surface the full 12-month calendar in an external audit packet — it dilutes the snapshot and gives the auditor more surface area for follow-up questions than necessary
+
+The audit-mode variant is the one to use when the request comes from outside the shop. The v1.0 internal report is the one to run monthly inside the shop.

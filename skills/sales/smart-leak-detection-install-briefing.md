@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min per customer briefing; replaces a verbal explanation + a follow-up 'what do I tell my insurance?' back-and-forth most shops handle inconsistently"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.6
 ---
 
 # Smart Leak Detection Install Briefing

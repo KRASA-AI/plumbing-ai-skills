@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~2–3 hrs per plan launch; replaces a one-off consultant deliverable at $1,500–$4,000"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.7
 ---
 
 # Plumbing Membership Plan Drafter

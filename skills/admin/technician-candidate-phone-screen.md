@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/candidate"
-version: 1.0
-last_eval_score: 9.2
+version: 1.1
+last_eval_score: 9.5
 ---
 
 # Technician Candidate Phone Screen
@@ -224,3 +224,103 @@ A one-page structure the screener fills in during or right after the call:
 **Recommendation:** ☐ HIRE — advance to working interview ☐ MAYBE — ___ ☐ PASS — ___
 
 **Next action / owner / by when:**
+
+---
+
+## v1.1 Additions (2026-04-25)
+
+The v1.0 skill scored 9.2 on the 04-14 and 04-24 evals. The 04-14 and 04-24 Remaining Opportunities both called out a 5-question, 10-minute compressed variant — the v1.0 8–12 question script is the right tool for a deliberate hiring conversation but is longer than what a busy owner can run when a strong candidate calls back at 4:45 PM on a Friday. v1.1 adds the compressed variant, a behind-the-wheel-of-a-truck-now scenario flag, an SMS-pre-screen pattern, and an apprentice-specific compressed track. All v1.0 sections above are unchanged.
+
+### Compressed Variant — 5 Questions, 10 Minutes
+
+Use this variant when:
+
+- The candidate calls back during a 10-minute window between jobs (most common)
+- The owner has back-to-back commitments and needs to either advance or pass on the call before the next meeting
+- The candidate has already passed a sourcing-side screen (referral verified, license verified, recent paystub seen) and the live call is a confirmation, not an investigation
+- The shop's pipeline has 3+ candidates this week and the owner needs to triage faster
+
+The compressed variant **does not replace** the v1.0 full screen for serious candidates. Run the compressed variant as a triage; advance HIRE-track candidates into the full v1.0 script either later that day or in a scheduled second call.
+
+#### The 5 questions (in this order)
+
+**Q1 — License + DL knockout (60 seconds total).** "Quickly — what's your [STATE] license number, and is your driver's license clean?"
+- **Pass:** Reads the number, status is current, DL is clean. Continue.
+- **Fail:** No license, expired license, DUI in last 3 years, no DL. Thank them, end the call respectfully, document the reason.
+
+**Q2 — Last job in their own words (90 seconds).** "Walk me through the last call you ran today" (or yesterday, or last week if they're between jobs).
+- **Listening for:** Specifics over generalities (named the unit, named the diagnostic step, named the customer interaction). Trade vocabulary used naturally. Comfort talking about what went wrong as much as what went right.
+- **Pass shape:** "I had a tankless that wouldn't fire — Navien NPE-240A. Started with the gas pressure — 7" WC at the appliance, that was fine. Pulled the burner, found a corroded ignitor. Swapped it, tested, customer was happy."
+- **Fail shape:** Vague ("just a typical service call"), defensive ("I don't want to badmouth my last shop"), or storytelling without technical content.
+
+**Q3 — Pay range fit (60 seconds).** "Our range for this role is $X to $Y per hour plus performance pay, company truck, [benefits]. How does that compare to what you're targeting?"
+- **Pass:** In-range or close, willing to discuss performance pay structure. Continue.
+- **Soft flag:** $3-5/hr above range, asks about performance pay seriously. Worth the full v1.0 conversation.
+- **Fail:** $10+/hr above range with no flexibility. Thank them, end gracefully — the gap is too large to bridge in a hiring negotiation.
+
+**Q4 — Scenario (3 minutes total: 1 min question, 2 min answer + probe).**
+- Service tech: "Customer called — toilet running constantly, second story, it's leaking through the kitchen ceiling downstairs. Water shutoff is in the basement. What do you do in the first 90 seconds?"
+- Drain tech: "Customer says their main line is backing up, sewage in the basement floor drain. You arrive and there's standing water 2 inches deep. First three things you do?"
+- New-construction: "GC calls — your DWV stack passes air pressure test on the second floor but loses pressure on the third floor. Where do you start looking?"
+- Apprentice: "First day on the truck with me. We get a no-hot-water call. What do you bring inside, and what do you do when we walk in?"
+
+The scenario is **role-calibrated** and **time-pressured** — you want to hear them think out loud, not deliver a polished answer. The probe ("and then what?" "what would you check next?") gets you the second layer.
+
+**Q5 — Knockouts wrap (60 seconds).** "Three quick yes/no's. (1) On-call rotation — one week in four, are you in? (2) Earliest start date? (3) Anything you'd want to ask me before we either move forward or close the loop?"
+
+The third sub-question is the most undervalued in trades hiring. Candidates who ask zero questions are usually not serious; candidates who ask one or two specific questions ("how is your bench-test structured?" "do techs share trucks or each have their own?") are usually serious.
+
+#### Compressed-variant scoring
+
+After the call, the owner records one of three outcomes within 60 seconds:
+
+- **ADVANCE** → schedule the full v1.0 conversation within 48 hours; the compressed call is the green light, not the hire decision
+- **PASS** → document the reason (license fail / pay gap / weak scenario / no-show on questions) and close the loop with the candidate within 24 hours via text
+- **HOLD** → re-screen in 30 days (candidate is technically capable but timing or pay is off this cycle); set the calendar reminder
+
+#### Compressed variant tonal note
+
+The compressed variant is faster but not curter. Open warm ("Thanks for calling back, I've got 10 minutes — let's see if we should keep talking"), close warm ("If you don't hear from me by Tuesday, follow up — I'd rather you ping me than wonder"). Speed should not feel like dismissal.
+
+### SMS Pre-Screen Pattern (2-message exchange, no call)
+
+For candidates who applied through Indeed / ZipRecruiter where the standard reply is an SMS auto-message, send a 2-message qualifier before booking the phone screen:
+
+**Message 1 (within 30 minutes of application):**
+
+> Hi [NAME] — [SHOP] in [CITY]. Saw your application for [ROLE]. Quick 2 questions before we book a call:
+> 1. Is your [STATE] license active? (just yes/no)
+> 2. Earliest you could start if we moved forward fast — 1 week / 2-3 weeks / 30+ days?
+
+**Expected reply window:** 4 hours. No reply in 24 hours = the candidate has likely already accepted somewhere else.
+
+**Message 2 (after candidate replies):**
+
+> Thanks. Got time for a 10-min call [TODAY] [TIME] or [TOMORROW] [TIME]? I'll keep it tight.
+
+The SMS pattern works because it respects the candidate's situation (they're on a job, can't take a call, can text in 30 seconds). It also surfaces three things in two exchanges: license status, urgency, and responsiveness.
+
+### Apprentice-Specific Compressed Track
+
+For apprentice candidates (no license, no journeyman experience), substitute Q4 above with this scenario:
+
+**Q4 (apprentice).** "Walk me through the last time you fixed something at your house — anything. Doesn't have to be plumbing. What broke, and what did you do?"
+
+The answer reveals: do they have hands? Do they think before acting? Do they finish what they start? An apprentice who says "I've never really fixed anything" is a different conversation than one who says "I rebuilt the carb on my brother's lawn mower last summer and now it runs."
+
+Substitute Q3 (pay range) with:
+
+**Q3 (apprentice).** "Apprentices typically start at $18-22 in this market. Are you good with that, knowing the path is $30+ in 3-4 years if you stick with it and pass your hours?"
+
+Apprentices fail this question by either (a) low-balling themselves out of negotiating posture or (b) demanding journeyman pay on day one. Both are early signals. The answer you want is "$20 sounds fine to start; what does the bump cycle look like as I hit hours?"
+
+### When to Skip the Compressed Variant Entirely
+
+Some candidates warrant the full v1.0 conversation from the first call, no triage:
+
+- A referral from a current tech, a vendor rep, or a competitor's owner ("she just left ABC Plumbing, you should call her")
+- A candidate with documented credentials the shop has been hunting (medical gas certification, RPZ tester, master plumber for a market expansion)
+- A candidate who did the SMS pre-screen perfectly and is being offered a phone screen as the formal step
+- A candidate whose last 18 months show the exact role mix the shop is hiring for
+
+For these candidates, skip the compressed variant and run the full v1.0 conversation. Treat the 8-12 question conversation as the respect signal — these candidates have other shops calling them too.

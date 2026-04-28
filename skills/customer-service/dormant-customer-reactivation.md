@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.5
 ---
 
 # Dormant Customer Reactivation Outreach
