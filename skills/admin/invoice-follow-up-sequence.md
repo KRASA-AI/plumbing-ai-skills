@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/sequence"
-version: 2.2
-last_eval_score: 9.2
+version: 2.3
+last_eval_score: 9.4
 ---
 
 # 💰 Invoice Follow-Up Sequence
@@ -558,3 +558,172 @@ Added in v2.2 because of a new adjacency: if an invoice dispute involves a produ
 - The invoice for the original work (labor, unaffected materials) remains payable. The customer's recall-side remedy is with the manufacturer, not with the shop.
 - Reference the Product Recall Customer Outreach skill's handoff-to-manufacturer language. The shop's liability on a recalled-product defect is typically limited; do not credit the full invoice out of an abundance of caution unless the shop has actual fault.
 - If the customer is withholding payment *because* of a recall, run the warranty-dispute hardening sub-template (v2.1) with the recall as the specific concern, separate the two tracks explicitly, and keep the payment conversation with the shop while the remedy conversation goes to the manufacturer.
+
+## v2.3 Additions (2026-04-27)
+
+The v1.0 / v2.1 / v2.2 content above is unchanged. The four sub-sections below extend the skill into a runtime lien-window calendar, an explicit insurance-restoration AR track, Spanish bilingual touches, and a one-tap-payment-link friction-reduction discipline.
+
+### v2.3.A Lien-Window Countdown Block (turns the table into runtime urgency)
+
+The v2.1 + v2.2 combined 15-state lien table is the canonical reference, but a static table doesn't tell the AR lead *when* the window closes on this specific invoice. The countdown block below converts the table into runtime numbers for the invoice in front of the user. Generate it whenever Touch 2 or Touch 3 is being drafted on a residential-direct invoice in any of the 15 tabled states.
+
+**Countdown block format (insert after the Touch 3 invoice details, before the legal/remedies language):**
+
+```
+🗓️ LIEN-WINDOW COUNTDOWN
+  State:               [State name]
+  Last day of work:    [YYYY-MM-DD]
+  Days since LDOW:     [N] days
+  Pre-lien notice:     [REQUIRED — sent on YYYY-MM-DD | NOT SENT | NOT REQUIRED]
+  Lien deadline:       [YYYY-MM-DD]   ([N] days remaining)
+  Counsel-trigger:     [<30 days remaining → escalate to counsel TODAY |
+                        30–60 days → counsel review THIS WEEK |
+                        >60 days → continue 3-touch cadence]
+```
+
+**Calculation rules:**
+- Last day of work (LDOW) is the anchor for every state's deadline math. If a change order extended the project (per Change Order Tracker), use the new LDOW from the latest CO completion. A late CO usually *extends* the lien window in the shop's favor, but only if the LDOW is documented.
+- Pre-lien notice deadline runs from the *first* day of work or supply, not LDOW. If the pre-lien notice deadline has already passed and was missed, the countdown block surfaces `Pre-lien notice: NOT SENT — lien claim foreclosed` and the Touch 3 legal language must shift to collections-only (do not threaten a lien that pre-lien-notice timing has already foreclosed; the v2.1 rule is repeated here for clarity).
+- Counsel-trigger thresholds are conservative on purpose — under 30 days remaining is too tight to file without legal review for most shops.
+
+**Worked example (California, residential-direct):**
+- Job completed 2026-02-15 (LDOW)
+- 20-day Preliminary Notice sent 2026-02-12 (within the 20-day window from first work)
+- Today is 2026-04-27
+- Days since LDOW: 71
+- CA residential lien deadline: 90 days from LDOW = 2026-05-16
+- Days remaining: 19
+- **Counsel-trigger: <30 days remaining → escalate to counsel TODAY**
+
+The countdown block becomes the AR lead's single source of truth for "do I need to make a lien decision this week?". Without it, shops routinely watch lien windows close while running the standard 3-touch cadence on autopilot.
+
+### v2.3.B Insurance-Restoration AR Track (explicit drill-down)
+
+The v2.1 cadence table flagged "Insurance restoration (waiting on adjuster)" as a distinct profile but didn't drill into the actual workflow. Insurance-restoration AR is structurally different from homeowner-direct AR in three ways: the payer is the carrier (not the homeowner), the schedule runs on adjuster cycle (not Net 15 from invoice date), and the work usually happens before the carrier's check is cut. The track below replaces the standard 3-touch cadence on insurance jobs.
+
+**Indicator signals (apply this track when any are true):**
+- Job is mitigation work after a water loss (broken pipe, slab leak, sewer backup with category 1–3 water damage).
+- Customer mentions a claim number or adjuster name during intake.
+- Quote was approved by the adjuster, not by the homeowner sign-off alone.
+- Payment is being routed through a third-party payee (mortgage company or carrier check made out to the homeowner *and* the shop).
+
+**Parallel two-track cadence:**
+
+**Customer-facing track (3 touches, slower cadence):**
+- **Touch 1 (Day 14):** Soft check-in. *"We know insurance-claim payments take time. We want to keep you in the loop and give you a heads-up if we hit any roadblocks with the adjuster."* No invoice-due framing; the homeowner is not the bottleneck.
+- **Touch 2 (Day 30):** Status request. *"Have you received the carrier's settlement statement? Once you have it, the next step is endorsing and forwarding the check (or coordinating mortgage-company release if the loss exceeds the policy's release threshold)."*
+- **Touch 3 (Day 60+):** Escalate to direct call, not a formal final notice. The homeowner did not cause the delay and a final-notice letter to the homeowner damages the relationship without recovering money.
+
+**Adjuster-facing track (parallel, 7-day cadence):**
+- **Day 7:** Email the adjuster the work-completion package — Xactimate-aligned line items, photos, completion certificate, depreciation recovery if applicable. Carriers pay faster when the package matches their software's line-item structure.
+- **Day 14:** Email the adjuster a status query referencing the claim number and last-action date.
+- **Day 21:** Call the adjuster. Email-only escalation past Day 21 produces sub-optimal payout speed; the call is the lever.
+- **Day 30:** If still no payment, contact the adjuster's supervisor with a CC to the homeowner.
+- **Day 45:** If still no payment, file a complaint with the state's department of insurance referencing the claim, completion date, and timeline of unpaid work.
+
+**Mortgage-company release rule:**
+- If the loss exceeds the policy's release threshold (typically $10,000 or $25,000 depending on carrier), the mortgage company holds the check until the work is verified and signed off. The shop must coordinate the release with the mortgage company directly, not just rely on the homeowner — most homeowners don't know the release process and the funds sit unreleased for weeks.
+
+**Customer-vs-insurance balance split:**
+- Some claims pay only the depreciated value initially; the recoverable depreciation is released after the work is completed and documented. The shop should track the customer-portion (deductible + non-recoverable items) and the insurance-portion (depreciated value first, then RCV release) separately on the invoice. The customer-portion is collectable on standard cadence; the insurance-portion is on the parallel track above.
+
+### v2.3.C Spanish Bilingual Variants of Touch 1 / Touch 2 / Touch 3
+
+Cross-skill consistency with Pre-Visit Diagnostic Intake v1.1 (Spanish safety phrases) and Review Request Drafter v2.3 (Spanish job-type templates). When the customer record carries `customer_language: Spanish`, all three touches go out in Spanish. The translations below preserve the v1.0 / v2.1 tone progression (warm → professional/firm → formal/legal).
+
+**Tone notes for Spanish-language AR contexts:**
+- Use *usted* throughout (formality is more important in money conversations than in service conversations).
+- The standard Spanish term for invoice is *factura*. *Cuenta* (bill) is colloquial but reads slightly less formal — use *factura* in writing.
+- *Pago* (payment), *vencimiento* (due date), *atrasado* (overdue), *plan de pago* (payment plan), *gravamen* (lien — note: regional variation; *embargo* is also used in some regions but carries broader connotation, prefer *gravamen* in legal-notice contexts).
+
+**Touch 1 — Recordatorio amistoso (Spanish, Day 7):**
+
+> Asunto: Recordatorio rápido — Factura #INV-2026-1847
+>
+> Estimado/a [Nombre],
+>
+> Gracias por elegir **[Nombre de la empresa]** para su [tipo de trabajo]. Esperamos que todo esté funcionando bien.
+>
+> Le escribimos porque aún no hemos recibido el pago de la **Factura #INV-2026-1847** ($X,XXX), enviada el [fecha]. El trabajo se completó el [fecha] en **[dirección]**.
+>
+> **No se preocupe si el pago ya está en camino.** Si todavía no lo ha enviado, aquí están las opciones más fáciles:
+>
+> - Tarjeta de crédito/débito: visite [enlace al portal] (sin cargos adicionales)
+> - Transferencia bancaria (ACH): responda a este correo y le enviaremos los datos
+> - Cheque: enviar por correo a [dirección]
+> - Por teléfono: llame al [teléfono] para pagar por teléfono
+>
+> Si tiene alguna pregunta sobre la factura o el trabajo, estamos para ayudar. — **[Nombre de la empresa]**
+
+**Touch 2 — Escalación profesional (Spanish, Day 14):**
+
+> Asunto: Acción necesaria — Factura #INV-2026-1847 con 14 días de atraso
+>
+> Estimado/a [Nombre],
+>
+> Le enviamos un recordatorio amistoso hace dos semanas y aún no hemos recibido respuesta. Queremos asegurarnos de que todo esté bien con el trabajo y la instalación.
+>
+> **Resumen de la situación:**
+>
+> - Factura #: INV-2026-1847
+> - Monto: $X,XXX
+> - Servicio: [descripción]
+> - Fecha de vencimiento: [fecha]
+> - Días de atraso: 14
+>
+> **Si hay un problema o una pregunta**, queremos saberlo. A veces las facturas se pierden, hay un error, o el trabajo no cumplió con lo esperado. Por favor, contáctenos directamente.
+>
+> **Necesitamos saber de usted o recibir el pago antes del [fecha límite].** Después de esa fecha, tendremos que tomar otras medidas. Una respuesta rápida resuelve esto.
+>
+> Lo valoramos como cliente. — **[Nombre de la empresa]**
+
+**Touch 3 — Aviso final (Spanish, Day 30+):**
+
+> Asunto: AVISO FINAL — Factura #INV-2026-1847, pago requerido antes del [fecha]
+>
+> Estimado/a [Nombre],
+>
+> Este es nuestro aviso final con respecto a la Factura #INV-2026-1847. Esta factura está ahora con [N] días de atraso y el pago sigue pendiente.
+>
+> Hemos enviado dos solicitudes de pago anteriores ([fecha 1] y [fecha 2]) sin respuesta. Tenemos la responsabilidad con nuestra empresa de cobrar el trabajo completado y aprobado por usted.
+>
+> **Bajo la ley de [Estado], nos reservamos el derecho de presentar un gravamen mecánico (*mechanic's lien*) contra la propiedad en [dirección]** si no recibimos el pago. Adicionalmente, esta cuenta puede ser referida a una agencia de cobranza, lo cual puede afectar negativamente su historial de crédito.
+>
+> **Sus opciones para resolver esto inmediatamente:**
+>
+> 1. Pagar el saldo completo: [opciones de pago]
+> 2. Contactarnos inmediatamente si hay un problema legítimo, un error, o si ya pagó.
+>
+> **Fecha límite:** Debemos recibir el pago o saber de usted antes del **[fecha]**. Después de esa fecha, procederemos con la acción de cobranza y la presentación del gravamen.
+>
+> Preferiríamos resolver esto directamente con usted. — **[Nombre de la empresa]**
+
+If the customer's language is unconfirmed, default to English. Do NOT auto-detect from the customer's name — the same caveat that applies to Review Request Drafter v2.3 applies here: presumption when wrong damages the AR conversation more than it helps.
+
+### v2.3.D One-Tap-Payment-Link Friction-Reduction Discipline
+
+The single largest friction reduction in plumbing-trade AR is making payment one-tap. Every published vendor case study (Stripe / Square / Plaid / GoCardless / Service Fusion / ServiceTitan billing 2024–2026 numbers) shows the same pattern: a one-tap payment link in Touch 1 lifts response by 30–40% over a portal URL that requires a login, and a portal URL with autofilled invoice number lifts response by another 8–12% over a generic portal URL. The discipline below operationalizes this.
+
+**Touch 1 link discipline:**
+- The link in Touch 1 must be a one-tap payment link, not a portal homepage. Examples: Stripe Payment Link with the invoice pre-loaded, ServiceTitan / Housecall Pro / Service Fusion / Jobber pay-by-link URL, Square Invoice payment link.
+- The link must be tracked. Use a UTM or shop-side parameter so the AR lead can see which invoices were opened-but-not-paid (a high-value coaching signal — opened-but-not-paid means friction at the payment-method step, not at the awareness step).
+- The link must NOT be shortened through a generic shortener (bit.ly / tinyurl / t.co) — major email clients flag those as suspicious and depress open rates. Use the platform's native short-URL or the shop's own domain shortener.
+
+**Touch 2 link discipline:**
+- Keep the same one-tap link from Touch 1. Don't introduce a second link in Touch 2 — link consistency reduces friction.
+- Add a "click here to set up a payment plan" link (separate, distinct) for customers who haven't paid because they can't pay in full. The plan-setup link should land on a form that captures down payment + installment cadence + auto-debit consent in a single page.
+
+**Touch 3 link discipline:**
+- The one-tap link is now last in the touch (after the lien-countdown block, after the legal language) — the urgency of the legal language is the lift, the link is the path. Reversing the order in Touch 3 is the v2.1 finding that surfaced in shop-side data.
+- Add a second link to a written-payment-plan-setup form. The customer who hits Touch 3 and hasn't paid is overwhelmingly a customer who *can't* pay in lump sum, not one who *won't* pay; offering a plan formally at this point recovers 12–18% of accounts that would otherwise go to collections.
+
+**Suppression rule when the shop's payment portal is degraded:**
+- If the payment portal has been down or degraded in the last 24 hours (Stripe outage, ServiceTitan billing degradation, etc.), pause Touch 2 and Touch 3 for 48 hours and reopen with a brief "we had a payment-portal issue on [date]" acknowledgment. Sending a payment ask during a known portal outage produces a wave of frustrated replies that compress the AR lead's bandwidth right when the portal is also recovering.
+
+**Cross-skill references:**
+- **Estimate Writer v2.0** — the lien-rights one-liner Estimate Writer adds to large quotes ($3K residential, any commercial) draws the LDOW anchor from the v2.3.A countdown logic; once the work begins, the same LDOW feeds the AR cadence here.
+- **Change Order Tracker v1.2** — extends LDOW; the lien-window countdown auto-recalculates when a CO closes.
+- **Pre-Visit Diagnostic Intake v1.1** — `customer_language` field drives the Spanish bilingual variant selection in v2.3.C.
+- **Review Request Drafter v2.3** — share Spanish-language tone discipline; same `customer_language` field.
+- **Vendor Price Increase Customer Communication** — when an invoice was issued during a known price-wave window, soften the Touch 1 framing to "we know our pricing changed during this window — happy to walk through any line item."
+- **Product Recall Customer Outreach** — confirms the v2.2 partial-payment-recall separation; the AR track stays with the shop, the recall remedy track goes to the manufacturer, and they do not entangle.

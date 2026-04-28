@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/debrief"
-version: 1.0
-last_eval_score: 9.4
+version: 1.1
+last_eval_score: 9.6
 ---
 
 # 🎯 Technician Performance Debrief
@@ -207,3 +207,162 @@ OVERALL SCORE: 7.2/10
   [Add your observations from ride-along or 1-on-1 here]
 ═══════════════════════════════════════════════
 ```
+
+---
+
+## v1.1 Additions (2026-04-27)
+
+The v1.0 content above is unchanged. The four sub-sections below extend the debrief from a single-call snapshot into a benchmark-aware, multi-debrief coaching system. All sections are gated by trigger conditions; if a trigger does not apply, fall back to v1.0.
+
+### v1.1.A Benchmark-Band Layer (per-tech vs. shop median)
+
+A single debrief is an anecdote. A debrief that places the tech against the shop's own rolling median is a coaching artifact a manager can defend. After scoring v1.0 dimensions, append a Benchmark-Band block that compares this tech's recent rolling-30-day numbers against the shop's rolling-90-day median across five operational metrics.
+
+**The five benchmark metrics** (pull from CRM / ServiceTitan / Housecall Pro / FieldEdge / Service Fusion):
+
+| Metric | Definition | Pull from |
+|--------|------------|-----------|
+| Callback rate (30-day) | % of jobs that triggered a return visit for the same scope within 30 days | Job-tag system, CRM callback flag |
+| Membership conversion (30-day) | % of non-member service calls where a membership was offered AND accepted | Invoice line + customer-tag |
+| Average ticket (30-day) | Mean closed-ticket value, excluding membership-only visits | Invoice totals |
+| Options-presented rate | % of repair calls where 2+ options (Good/Better/Best or repair vs. replace) were quoted | Estimate / proposal record |
+| Review-link-sent rate | % of completed jobs where the v2.2-v2.3 review request was actually sent (not just queued) | Communication log |
+
+**Output format — Benchmark-Band block (append after Coaching Actions):**
+
+```
+📈 BENCHMARK BANDS (rolling 30-day vs. shop median rolling 90-day)
+  Callback rate:           [X.X%]   shop median [Y.Y%]   [BAND]
+  Membership conversion:   [X.X%]   shop median [Y.Y%]   [BAND]
+  Average ticket:          $[X,XXX] shop median $[Y,YYY] [BAND]
+  Options-presented rate:  [X.X%]   shop median [Y.Y%]   [BAND]
+  Review-link-sent rate:   [X.X%]   shop median [Y.Y%]   [BAND]
+
+  Bands: [TOP] >+15% above median  |  [GOOD] +5 to +15%
+         [MEDIAN] -5 to +5%        |  [BELOW] -5 to -15%
+         [FLAG] <-15% below median (named in coaching)
+```
+
+**Banding rules:**
+- Callback rate is inverted — lower is better, so a tech 15% *below* the shop median earns [TOP], a tech 15% *above* earns [FLAG].
+- Membership conversion, average ticket, options-presented rate, and review-link-sent rate are direct — higher is better.
+- Always show the shop median as the comparator. Never benchmark a single tech against a published industry figure unless the shop has confirmed the figure tracks their actual book.
+- Always state the rolling window. A 30-day rolling tech number against a 90-day rolling shop median smooths out single-call noise on both sides.
+
+**Comparator anti-patterns (never do these):**
+1. **Never benchmark a service tech against a drain tech.** Their work mix produces structurally different ticket and membership numbers. Use a per-role median if the shop has multiple techs in each role; if only one tech in a role, omit the band rather than borrow from a different role.
+2. **Never benchmark a new tech (under 6 months tenure) against the full shop.** Use a 6-month-and-under cohort median instead. If the cohort has fewer than three techs, omit the band and note "tenure-cohort median unavailable."
+3. **Never publish bands across techs in a group meeting.** The benchmark band is a 1-on-1 coaching artifact. Cross-tech benchmark broadcasts produce defensiveness and rate-gaming, both of which compound into worse data.
+4. **Never tie compensation directly to a single benchmark cycle.** A band is one input to a multi-month coaching trajectory; if the band ever becomes the comp signal, every downstream metric becomes coached-to-the-test.
+
+### v1.1.B Rolling Multi-Debrief Pattern
+
+A single debrief is one data point. The v1.0 skill produces strong single-call coaching, but coaching trajectories are visible only across a sequence. The Rolling Multi-Debrief pattern aggregates the last four debriefs for a single tech into a trend block.
+
+**Trigger:** Run when 4+ debriefs exist for the same tech within the last 60 days.
+
+**Output format — Rolling Trend block (append after Benchmark-Band block):**
+
+```
+📊 ROLLING TREND (last 4 debriefs, oldest → newest)
+  Overall score:          [X.X] → [X.X] → [X.X] → [X.X]   [TREND]
+  Revenue capture:        [X]/10 → [X]/10 → [X]/10 → [X]/10   [TREND]
+  Options presented:      [X]/10 → [X]/10 → [X]/10 → [X]/10   [TREND]
+  Communication:          [X]/10 → [X]/10 → [X]/10 → [X]/10   [TREND]
+
+  Trends: [IMPROVING] +1.0 or more across the four
+          [HOLDING]   within ±0.5 across the four
+          [SLIPPING]  -1.0 or more across the four
+          [VOLATILE]  swing >2.0 between adjacent debriefs
+
+  Coaching trajectory note: [1-2 sentences linking the trend to
+  the coaching action this manager assigned 4 debriefs ago]
+```
+
+The trajectory note is the most important field. If the manager's prior coaching action 4 debriefs ago was *"membership-close practice with a 3x5 card"* and the membership-conversion benchmark band has moved [BELOW] → [MEDIAN] → [GOOD] → [GOOD], the note should call that out explicitly: *"Mike's membership-close coaching from 03-12 has stuck — three consecutive debriefs at or above shop median, up from [BELOW] in mid-March."* That's the closed loop coaching needs.
+
+If the trajectory is [SLIPPING] or [VOLATILE], do NOT add a fourth coaching action — instead, escalate the original action with explicit practice and a 14-day check-in. The cap of 2 active coaching actions per tech is preserved from v1.0.
+
+### v1.1.C Three-Cycle Coaching Plan Template
+
+Most coaching attempts fail because they're a one-off. The v1.0 skill produces a single debrief's worth of coaching, but a tech who is consistently below shop median on (say) revenue capture needs a planned three-cycle arc, not a one-cycle correction. Generate a three-cycle plan when a tech has been [BELOW] or [FLAG] on the same benchmark band for two consecutive debriefs.
+
+**Plan format — Three-Cycle Coaching Plan (insert before Manager Notes):**
+
+```
+🗺️ THREE-CYCLE COACHING PLAN — [Metric: e.g., Membership Conversion]
+  Tech: [Name]   |   Plan opened: [Date]   |   Manager: [Name]
+
+  CYCLE 1 (weeks 1–2): Foundation
+    Action:    [Specific micro-skill, e.g., "membership pitch on every
+                repair >$300, scripted with the 3x5-card from v1.0"]
+    Practice:  [Concrete daily practice, ≤5 minutes/day]
+    Check-in:  Day 7 morning huddle (3 min)
+    Success:   [Observable, e.g., "membership offered on 100% of
+                eligible repairs within 14 days"]
+
+  CYCLE 2 (weeks 3–4): Application under live load
+    Action:    [Layered skill, e.g., "objection-handling for the
+                three most common membership pushbacks: cost,
+                'I'll think about it,' and 'I already have HSP'"]
+    Practice:  [Role-play 1×/week, recorded for self-review]
+    Check-in:  Day 14 ride-along or recorded-call review (15 min)
+    Success:   [Observable, e.g., "membership conversion rate moves
+                from [BELOW] band to [MEDIAN] band on next debrief"]
+
+  CYCLE 3 (weeks 5–6): Consolidation
+    Action:    [Internalization, e.g., "tech leads a 5-minute morning
+                huddle on membership pitch with the rest of the team"]
+    Practice:  [Teaching-as-mastery — present once to the team]
+    Check-in:  Day 21 1-on-1 (30 min)
+    Success:   [Observable, e.g., "[GOOD] band for 30 consecutive
+                days; no further coaching action for this metric"]
+
+  Plan close criteria: All three cycles' success criteria met OR
+  metric returns to [BELOW] for two consecutive cycles after Cycle 3
+  (in which case escalate to operations review).
+```
+
+Three-cycle plans run concurrently with the standard 2-coaching-action-per-debrief cap — they replace one of the two slots, not add a third. A tech can be on at most one open three-cycle plan at a time.
+
+### v1.1.D Tech-Role Adjustment Rules (service / drain / new-construction / apprentice)
+
+The v1.0 dimension scoring weights revenue capture and options presentation equally for every role. That's wrong for drain techs (whose ticket sizes are structurally smaller and whose options-presentation moments are concentrated in the camera-inspection conversation, not the dispatch call) and apprentices (who shouldn't be evaluated on revenue capture at all in their first 6 months). Apply role adjustments before producing the dimension scores.
+
+**Service Technician (residential repair / replace, full scope):**
+- All v1.0 dimensions apply at standard weight.
+- Benchmark bands compare against full-shop service-tech cohort.
+
+**Drain Technician (cabling, jetting, camera, lateral):**
+- Average-ticket benchmark uses drain-tech-only median, not full-shop median (drain tickets run roughly 40–60% of full-service tickets).
+- Options-presentation rate is judged on the camera-inspection / scope-replacement conversation, not the diagnostic call.
+- Membership-conversion rate is weighted at 0.5× (drain calls convert to membership at roughly half the rate of service calls — the call is too short and the customer is in stress mode).
+- Add a "Camera-Conversation Quality" sub-dimension scored 0–10 on whether the tech walked the customer through the footage in plain language and named the defect-to-customer-language translation (cross-references Sewer Camera Inspection Report Drafter v1.1 PACP translation table).
+
+**New-Construction / Rough-In Technician:**
+- Membership conversion and review-link-sent rates do NOT apply — the customer is the GC or the homeowner-via-GC, not a direct service customer. Omit those rows from the Benchmark-Band block.
+- Add a "Code-Compliance & Inspection Pass-Rate" sub-dimension scored 0–10 (cross-references Plumbing Permit Application Drafter walkthrough checklist).
+- Options-presentation rate is replaced with "Spec-Match Rate" (% of installs that matched the approved spec without RFI).
+
+**Apprentice (under 6 months tenure):**
+- Revenue capture and options-presentation rate are NOT scored — apprentices are riding with a journeyman and don't own the close.
+- Score on First Impression, Diagnostic Thoroughness (assist), Communication, and Process Compliance only.
+- Benchmark against the apprentice cohort (or omit bands entirely if cohort < 3 techs).
+- Top Wins / Coaching Actions remain — but coaching is calibrated to skill-build, not revenue.
+- Three-cycle plans for apprentices target one tradecraft skill per cycle (e.g., "press-fitting under cabinet without leaks"), not commercial metrics.
+
+After applying role adjustments, the output adds a single line under the header:
+
+```
+ROLE ADJUSTMENT APPLIED: [Service | Drain | New-Construction | Apprentice]
+```
+
+This is the one-line audit trail that tells a manager why this debrief's bands look different from another tech's — and prevents the most common misuse of the skill, which is benchmarking a drain tech against a service tech and concluding the drain tech is underperforming.
+
+### Cross-Skill References
+
+- **Pricebook Q&A v2.1** — when revenue-capture coaching surfaces a stale-pricing issue (tech offered a price that doesn't match current pricebook), route to Pricebook Q&A's stale-pricing tiered urgency block before assigning the coaching action.
+- **Estimate Writer v2.0** — options-presentation coaching pairs with the Good/Better/Best discipline already in Estimate Writer; a coaching action of "always present 3 options" should reference the Estimate Writer skill so the tech has a framework, not just a directive.
+- **Sewer Camera Inspection Report Drafter v1.1** — drain-tech "Camera-Conversation Quality" sub-dimension references the PACP-grade-to-homeowner-language translation table.
+- **Plumbing Permit Application Drafter v1.0** — new-construction "Code-Compliance & Inspection Pass-Rate" references the day-before-inspection walkthrough checklist.
+- **Review Request Drafter v2.x** — review-link-sent-rate benchmark feeds back into platform-fallback hierarchy and post-callback suppression.

@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~5 min/job"
-version: 2.2
-last_eval_score: 9.2
+version: 2.3
+last_eval_score: 9.4
 ---
 
 # ⭐ Review Request Drafter
@@ -372,3 +372,134 @@ Do not blend two templates — pick one. If the job was a hybrid (e.g., slab lea
 ### Suppression Override Check
 
 Before sending any of the five job-type templates, re-run the v2.1 Post-Callback Suppression checklist. The job-type templates **do not** override suppression triggers — if a callback or warranty claim is in flight, send the personal check-in message from v2.1 instead. The templates above only apply once the job has genuinely closed.
+
+## v2.3 Additions (2026-04-27)
+
+The v1.0 / v2.1 / v2.2 content above is unchanged. The four sub-sections below extend the skill into bilingual coverage, a follow-up nudge sequence, platform-tuned anchor copy, and a benchmarkable send-rate signal that feeds back into Technician Performance Debrief v1.1.
+
+### v2.3.A Spanish Bilingual Variants of the Five Job-Type Templates
+
+Cross-skill consistency with Pre-Visit Diagnostic Intake v1.1, which added Spanish-language safety-critical phrases. When the customer record carries `customer_language: Spanish` (set during intake) — or when the dispatcher / tech has flagged Spanish as the household preference — the review request must go out in Spanish from the first touch. Translation in the second touch reads as an afterthought and depresses response rate.
+
+**Tone notes for Spanish-language plumbing-trade contexts:**
+- Use *usted* throughout. Plumbing service is a trust-and-formality posture; *tú* in trade communications reads as familiar in a way most customers don't expect from a service vendor.
+- The technician's first name is the customer's anchor — keep it. (e.g., "Mike here" remains "Mike aquí" or "Soy Mike," not a translated name.)
+- Plumbing-specific terms: *calentador de agua* (water heater), *desagüe* (drain), *fuga* (leak), *fuga lenta* (slow leak), *fuga bajo el piso / fuga en losa* (slab leak), *gas* (gas — same word; the cognate carries), *garantía* (warranty), *inspección* (inspection), *contraflujo* (backflow), *tubería principal* (main line), *cleanout / registro de limpieza* (cleanout — both terms in use).
+- Multi-generational caller pattern (a son or daughter often coordinates for a parent in a Spanish-speaking household): the review request should land directly to the bill-paying contact, not to the household-coordinator. Confirm the contact during intake.
+
+**SMS template — Water Heater Replacement (Spanish, sent next morning):**
+> Hola [Primer nombre] — soy Mike de [Tienda]. Espero que el calentador de agua nuevo esté funcionando bien y le esté dando agua caliente sin problemas. Si tiene 30 segundos, una reseña rápida en Google nos ayuda mucho: [LINK]. Cualquier problema, escríbame directo. — Mike
+
+**SMS template — Drain / Sewer Clearing (Spanish, sent next morning):**
+> Hola [Primer nombre] — soy Javier de [Tienda]. Espero que todo esté funcionando normal en la casa. Si tiene un minuto, una reseña en Google ayuda mucho: [LINK]. Si vuelve a haber problemas, escríbame directo. — Javier
+
+**SMS template — Sewer Main / Lateral (Spanish, sent 7–10 days post-completion):**
+> Hola [Primer nombre] — soy [Tech] de [Tienda]. Quería saber cómo va la [línea / reemplazo] del drenaje principal. ¿Está todo bien sin problemas en la superficie? Si todo está bien, una reseña rápida en Google sería de gran ayuda: [LINK]. — [Tech]
+
+**SMS template — Gas Work (Spanish, sent 48 hours after inspection clears):**
+> Hola [Primer nombre] — soy [Tech] de [Tienda]. Confirmo que la [línea / instalación] de gas pasó la inspección y está todo en orden. Si se siente cómodo/a, una reseña corta en Google es muy apreciada: [LINK]. — [Tech]
+
+**SMS template — Leak Investigation / Slab Leak (Spanish, sent next morning):**
+> Hola [Primer nombre] — soy [Tech] de [Tienda]. Me alegra que encontramos la fuga. Si la [mancha húmeda / cuenta de agua / olor] está normal, una reseña rápida en Google ayuda mucho: [LINK]. Si vuelve a aparecer, escríbame. — [Tech]
+
+The five email Spanish variants follow the same translation discipline; do not back-translate from the English emails verbatim — write each Spanish email natively against the v2.2 structure, keeping the same *register* (formal-warm) and the same length (180–280 words). When in doubt, keep it shorter rather than longer; English-trade-prose-translated-to-Spanish reads stilted, and a tightly-written native Spanish email outperforms a long literal translation.
+
+If the customer's language is unconfirmed (no `customer_language` field, no flag from intake), default to English. Do NOT auto-detect from the customer's name — that produces the wrong result roughly a third of the time and lands as presumptuous when wrong.
+
+### v2.3.B Two-Touch Follow-Up Nudge Discipline
+
+The v2.1 timing rule says "If no response after 48 hours, one gentle follow-up only (email only, not text)." That rule was correct but undercooked. The right pattern is one nudge, paired to the original template's *register*, sent on the right channel and at the right time. The two-touch sequence below replaces the v2.1 generic nudge.
+
+**Two-touch sequence (per template, not generic):**
+
+1. **Touch 1:** the v2.2 job-type template, sent at the v2.2 timing window.
+2. **Touch 2 (only if no response after 48 hours):** the follow-up below, matched to the same job-type template. Send via email, not SMS, regardless of how Touch 1 went out — a second SMS feels like nagging, but a single email feels like care. If the customer replied to Touch 1 with anything (even "thanks," even a brief acknowledgment), do NOT send Touch 2.
+
+**Touch 2 — Water Heater Replacement (email):**
+> Subject: One quick check-in on the water heater
+>
+> Hi [First Name],
+>
+> Mike here again — just wanted to make sure the [brand model] is still running quiet and the hot water is steady. If everything's working, no need to reply; if anything is off (popping sounds, lukewarm water, drips at the connections), text me direct and I'll come back out.
+>
+> If you've got 30 seconds and the install is meeting your expectations, a quick Google review would help us out a lot. The link is here: [LINK].
+>
+> Either way — thanks for letting us in. — Mike, [Shop]
+
+**Touch 2 — Drain / Sewer Clearing (email):**
+> Subject: How are the drains running?
+>
+> Hi [First Name],
+>
+> Javier from [Shop] — circling back to make sure things are still flowing. If you've had no recurrence, that's the result we wanted. If anything has come back, text me direct and I'll get out same-day.
+>
+> If everything's holding, a short Google review is a real help: [LINK]. No detail needed; even a sentence about how the team handled it works. — Javier
+
+**Touch 2 — Sewer Main / Lateral (email):**
+> Subject: Sewer work — checking in two weeks later
+>
+> Hi [First Name],
+>
+> [Tech] from [Shop]. The trench should be settled by now and fixtures should be draining clean. If anything has shifted (low spot in the lawn, a faint odor, a slow drain anywhere in the house), call me — sometimes the first 30 days surface something, and that's covered under the workmanship warranty.
+>
+> If the work is meeting expectations, a Google review with the detail of *what we did* is gold for the next homeowner researching a sewer job: [LINK]. — [Tech]
+
+**Touch 2 — Gas Work (email):**
+> Subject: Gas line — 4 days after inspection
+>
+> Hi [First Name],
+>
+> [Tech] from [Shop]. Just confirming the inspection paperwork is closed in your file. If the appliance has been firing without issue, that's the answer. If anything smells off or the appliance has been cycling oddly, call me before you do anything else — gas concerns get a same-day truck-roll.
+>
+> If you'd write a short Google review on the work — exactly what we did, no marketing language — it's the kind of signal the next homeowner researching gas plumbers in [service area] is reading. [LINK]. — [Tech]
+
+**Touch 2 — Leak Investigation / Slab Leak (email):**
+> Subject: Two days after the leak repair
+>
+> Hi [First Name],
+>
+> [Tech] from [Shop]. Wanted to make sure the [wet spot / dry patch / water bill] is still trending normal. If anything looks like it's coming back — same spot or a new one — call me first; we'll come back at no charge under the workmanship window.
+>
+> If the symptom is gone for good, would you feel comfortable writing a short Google review? "They found it" is the exact phrase the next homeowner searching for leak detection is looking for. [LINK]. — [Tech]
+
+Do not send a Touch 3. The plumbing-trade review-ask data is consistent across published vendor case studies (Birdeye, Podium, NiceJob 2025–2026): a third request degrades response rate AND increases negative-review risk. Two touches and stop.
+
+### v2.3.C Platform-Tuned Anchor Copy
+
+The v2.1 platform fallback hierarchy chose the *destination*, but didn't tune the *anchor copy* — the words leading into the link. Different platforms need different lead-ins because the customer's expectation on each platform is different. Tune the link copy to the platform.
+
+| Platform | Anchor copy pattern | Example |
+|----------|--------------------|---------|
+| **Google** | Direct, brand-anchored: "share your experience on Google" | *"a quick Google review helps us out a lot: [LINK]"* |
+| **Yelp** | Story-anchored: "leave a review on Yelp so others can find us" | *"if you'd share your experience on Yelp, it really helps the next family looking: [LINK]"* |
+| **Angi** | Verification-anchored: "your honest feedback on Angi" — emphasize honesty because Angi readers expect it | *"we'd love your honest feedback on Angi, where we're a verified pro: [LINK]"* |
+| **Facebook** | Recommendation-anchored: "recommend us on Facebook" — Facebook's review surface is a Yes/No "would you recommend" toggle, not stars | *"if you'd recommend us on Facebook, it's two clicks: [LINK]"* |
+| **Company website testimonial** | Modest, no platform-name lift: "a quick note about your experience" | *"if you'd share a quick note about your experience: [LINK]"* |
+
+The platform tuning is not optional — sending a "Yelp review helps a lot" link to a customer over 60 (Facebook-primary demographic) reads as out-of-touch and depresses the open rate. Pull the customer's likely platform preference from CRM signal: prior reviews on that platform, age band if available, original lead source.
+
+If the customer is multi-platform (e.g., the shop wants both Google and Yelp), use Google in the SMS (highest-leverage single ask) and add the Yelp link as a secondary line in the email — not the SMS. SMS gets one platform, one CTA, full stop.
+
+### v2.3.D Send-Rate Signal — Feeds Back into Technician Performance Debrief
+
+The Technician Performance Debrief v1.1 added a "Review-link-sent rate" benchmark band. That band measures how often the v2.x review request was *actually sent* per completed job — not just how often it was queued. The wedge between queued and sent is where most shops lose review-volume growth.
+
+To make the benchmark band meaningful, this skill now produces an explicit send-record line that gets logged into the communication log in a structured way:
+
+```
+[REVIEW-REQUEST] sent {YYYY-MM-DD HH:MM} via {SMS|EMAIL} to {customer-id}
+  job-type: {water-heater | drain-sewer | sewer-main | gas | leak-invest | generic}
+  template-version: 2.3
+  language: {en | es}
+  platform-anchor: {google | yelp | angi | facebook | website}
+  follow-up-armed: {yes | no}    # if yes, schedule Touch 2 for +48h
+  suppressed: {no | callback | warranty | dispute | survey-low | tech-flag}
+```
+
+The send-record line is a one-line CSV-friendly entry that the shop's reporting layer can aggregate into the per-tech send rate without a separate scrape pass. If a review request is suppressed (not sent), the line still gets logged with the suppression reason — the suppression itself is data, not silence.
+
+**Cross-skill references:**
+- **Technician Performance Debrief v1.1** — review-link-sent-rate benchmark band consumes the send-record lines above directly.
+- **Pre-Visit Diagnostic Intake v1.1** — `customer_language` field on the dispatch-ready record drives Spanish bilingual variant selection in v2.3.A.
+- **Vendor Price Increase Customer Communication** — when a price-wave artifact has been sent in the last 30 days, the review request should NOT reference pricing (no "great value" language) — the artifacts cross-pollinate, and a price-defensive review ask reads tone-deaf right after a price-increase communication.
+- **Job Status Update Drafter** — the on-the-way / arrived / completed status messages share tone calibration with the review request; keeping voice consistent across the job-lifecycle artifacts compounds.

@@ -14,6 +14,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Skill | What it does | Time saved |
 |-------|-------------|------------|
 | After-Hours Call Summary | Turn a batch of overnight voicemails, missed-call logs, and answering-service notes into a prioritized morning briefing. | ~15 min/morning |
+| CSR Performance Debrief | Turn a batch of inbound call recordings, booking logs, and CRM notes into a structured coaching debrief for each customer service representative (CSR) or dispatcher. | ~25 min/debrief |
 | Dispatch Brief Generator | Summarize the job scope, customer history, recommended parts, and optimal routing for the technician heading out. | ~10 min/dispatch |
 | Parts & Materials List Generator | Generate a complete parts and materials list for a plumbing job based on the job description, scope notes, or estimate. | ~10 min/job |
 | Pricebook Q&A | Ask plain-English questions about your pricebook and get instant answers with line-item references, price comparisons, and margin analysis. | ~5 min/lookup |
@@ -39,7 +40,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~543+ minutes across all skills.**
+**Total time saved per use: ~568+ minutes across all skills.**
 
 ## Quick Start
 

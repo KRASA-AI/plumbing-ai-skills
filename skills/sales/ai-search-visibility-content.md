@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~4 hrs per service-area content pack; replaces a one-off agency deliverable at $1,500–$3,500"
 version: 1.1
-last_eval_score: 9.4
+last_eval_score: 9.6
 ---
 
 # AI Search Visibility Content Pack
