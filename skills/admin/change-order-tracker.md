@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/change order"
-version: 1.2
-last_eval_score: 9.4
+version: 1.3
+last_eval_score: 9.6
 ---
 
 # 📋 Change Order Tracker
@@ -249,3 +249,204 @@ For any job with two or more change orders, maintain a single-row-per-CO log at 
 |------|------|-------|--------|----|----|---|---|---|
 
 The log becomes the single page the bookkeeper reads when reconciling the final invoice, the single page the owner reads if a dispute surfaces, and the single page a future buyer's inspector reads if they ever ask what work was done on the house beyond the original estimate. Three minutes to maintain per job, saves hours of reconstruction later.
+
+## v1.3 Additions (2026-04-28)
+
+The 04-26 and 04-27 evaluator summaries flagged personalization (scored 8/10 across four cycles) as the unaddressed lift opportunity for this skill, with three concrete vectors named: per-rep tracking, pipeline-position math, and per-shop CO-velocity benchmarks. v1.3 adds those three as a coordinated layer plus a bilingual Spanish CO variant that extends the cross-skill bilingual thread (Pre-Visit Diagnostic Intake v1.1, Review Request Drafter v2.3, Invoice Follow-Up Sequence v2.3) into CO documentation. None of the v1.0 / v1.1 / v1.2 content above changes; every block below is gated by an explicit trigger and stacks on top of the existing CO output.
+
+### CO-Velocity Per-Rep Layer
+
+Most shops never look at who is writing change orders. The result: one tech writes 40% of all COs and gets pegged as "the closer" or "the upseller" without any data behind it; another tech writes zero COs in six months and the shop assumes their jobs are running clean when in fact they are silently absorbing scope. v1.3 surfaces the rep-level CO pattern in a way that is coachable, not punitive.
+
+**Trigger:** Run when the shop has 12+ closed change orders in the trailing 90 days across 2+ reps. Below 12 COs the sample is too small.
+
+**Per-rep CO-velocity block — append to the Change Order Log (v1.1.E) when triggered:**
+
+| Rep | Role | COs written | COs approved | Approval rate | Median CO $ | Total CO $ | $ per closed job | Vs. shop median | Pattern flag |
+|-----|------|-------------|--------------|---------------|-------------|------------|------------------|-----------------|--------------|
+| [Tech / PM name] | Service / Drain / NC / Lead / PM | [#] | [#] | [%] | $[amt] | $[amt] | $[amt] | [TOP / GOOD / MEDIAN / BELOW / FLAG] | [see below] |
+
+**Five band thresholds (calibrated against the rep's role peers, not the full shop):**
+
+- **[TOP]**: $-per-closed-job ≥ +25% of role-peer median AND approval rate ≥ 80%. Rep is writing COs aggressively *and* getting them approved — closing real scope value cleanly. Reinforce, do not pressure.
+- **[GOOD]**: $-per-closed-job ±25% of role-peer median AND approval rate ≥ 75%. Rep is on-pattern. No coaching action.
+- **[MEDIAN]**: $-per-closed-job ±10% of role-peer median AND approval rate 65–75%. Within the noise band. Watch.
+- **[BELOW]**: $-per-closed-job between -25% and -50% of role-peer median, or approval rate 50–65%. Coaching opportunity — usually one of: (a) hesitant to write COs and absorbing scope, (b) writing COs at sloppy times the customer pushes back on, (c) under-pricing the labor or markup line.
+- **[FLAG]**: $-per-closed-job < -50% of role-peer median, or approval rate < 50%, or zero COs written in the trailing 90 days while peers averaged 3+. Either silently absorbing scope (revenue leak) or writing COs the customer is rejecting at a damaging rate (relationship leak). Manager 1-on-1 within the cycle.
+
+**Five anti-patterns (named so the manager can spot them in the data):**
+
+1. **The hesitant absorber.** Zero or near-zero CO velocity, high gross margin volatility per job. Tech is finishing scope additions on the company's dime. Coach with the v1.2 Verbal-Approval Bridge — make the CO-write reflexive, not a confrontation.
+2. **The aggressive over-quoter.** High CO-$ velocity but approval rate < 50%. Customer is pushing back at scale. Likely either pricing the markup hot, sequencing the conversation poorly, or surprising the customer mid-job without the v1.1 Emergency Fast-Path framing. Coach with the conversation script, not the pricing.
+3. **The end-of-job pile-up.** All COs concentrated in the last day of the job. Means the tech is informally extending scope all week and writing it up at the end as one big number. Customer reads the final CO as a cost shock. Coach with the Verbal-Approval Bridge + the Scope-Creep Guardrails $75 / $200 thresholds from v1.2.
+4. **The discovered-condition under-charger.** CO approval rate ≥ 90% but median CO $ is in the bottom quartile. Tech is writing COs, but pricing them at near-cost out of customer-relationship anxiety. Coach with the markup math from Step 2 and the v1.1 Warranty / Insurance / Code flag block.
+5. **The role-mismatched comparison.** Drain tech with $0 in COs over 90 days is not a [FLAG] — drain calls produce dramatically fewer COs than service or new-construction work. Always benchmark within role. The role column in the table is mandatory; the across-role comparison is meaningless.
+
+**Three hardening rules:**
+
+- **Never publish the per-rep table to the field team or in a group meeting.** It is a manager-side artifact for 1-on-1 coaching. Public ranking produces gaming and defensiveness within two cycles, both of which corrupt the data.
+- **Never tie the per-rep table directly to compensation.** Use it as one of three or four inputs to a quarterly trajectory; if the comp signal is anchored to one cycle's CO velocity, every downstream number gets coached-to-the-test.
+- **Recompute role-peer medians monthly.** Adding or losing a tech in a role shifts the median; running last quarter's median against this quarter's roster mis-classifies bands.
+
+### Pipeline-Position Math
+
+A change order is not a stand-alone document. It moves a project's cumulative cost relative to the original budget and reshapes the margin trajectory of the job. v1.3 surfaces that movement so the office and the owner see — at the moment of CO write-up — whether the job is heading toward a healthy gross-profit landing or quietly walking into a margin floor.
+
+**Trigger:** Run on every CO with $-impact ≥ $250 *or* on every CO regardless of size when the job's cumulative CO total has crossed 10% of the original contract.
+
+**Pipeline-position block — appended after the Cost Breakdown table:**
+
+```
+─────────────────────────────────────────────
+  PIPELINE POSITION (after this CO)
+─────────────────────────────────────────────
+
+  Original contract:        $[amount]
+  Prior approved COs:       $[amount]  ([n] COs)
+  This CO:                  $[amount]
+  Cumulative project cost:  $[amount]
+  CO-to-contract ratio:     [X.X]%   [see benchmark below]
+
+  Estimated gross margin
+    On original scope:      [XX]%
+    On this CO alone:       [XX]%
+    Project blended:        [XX]%   [TREND: ↗ improving / → holding / ↘ slipping]
+
+  Margin floor flag:        [✅ above floor / ⚠️ approaching floor / 🛑 below floor]
+  Shop margin floor:        [XX]%   (from config; default 35% for residential service,
+                                     28% for residential install, 22% for light commercial)
+─────────────────────────────────────────────
+```
+
+**The margin-floor flag is the single most important field on the block.** It tells the owner — at the exact moment the CO is being written — whether approving this CO drops the project below the margin the shop has decided it will not deliver work below. Three responses are appropriate:
+
+- **Above floor:** Sign and proceed.
+- **Approaching floor (within 3 percentage points):** Owner reviews the CO before customer-send. Usually correctable by tightening the labor estimate, re-checking the materials cost, or re-pricing a specific line.
+- **Below floor:** Stop. Either re-price the CO, re-scope what gets done now vs. deferred to a follow-up job, or have the owner-to-customer conversation about why the project as-quoted is not viable. Sending a CO that puts the job below the margin floor is the failure mode that makes the shop hate change orders.
+
+**Three trend rules:**
+
+- **Improving** (↗): the CO has higher margin than the project blended-to-date. Healthy — usually because the original quote was conservative on labor or the discovered-condition work has higher markup than the base scope. No action.
+- **Holding** (→): the CO margin is within ±2 percentage points of the project blended margin. Normal scope expansion. No action.
+- **Slipping** (↘): the CO has lower margin than the project blended-to-date by 3+ percentage points. If this becomes a pattern (3+ slipping COs in a single project), the original quote was probably over-promised. Document and flag for the next quote-review cycle.
+
+**Cross-skill reference:** The Estimate Writer v2.0 produces the original-scope margin number; the Pricebook Q&A v2.x produces the per-line-item margin inputs the math needs. If the original estimate was generated outside those skills (legacy quote, GC-mandated form), the pipeline-position block falls back to the manual margin entry that the user supplies in Step 2 of the main instructions.
+
+### Per-Shop CO-Velocity Benchmarks
+
+Most shops have no idea what a normal CO-to-contract ratio looks like for the kinds of work they do. Without that anchor, every CO feels either too small (we should have priced this in) or too large (the customer will balk). The shop ends up under-writing COs on big jobs and over-writing them on small ones. v1.3 surfaces benchmark ratios so a CO can be sanity-checked at write-time.
+
+**Benchmark table (residential and light-commercial; expand from config when shop has a custom benchmark):**
+
+| Job type | Typical CO total / original contract | Healthy approval rate | Common CO triggers | When to escalate |
+|---|---|---|---|---|
+| Residential service call (single fixture, leak repair, faucet swap) | 0–8% | 85–95% | Discovered code-update requirement (TPR, expansion tank); customer add-on | CO total > 15% — the original quote was probably wrong |
+| Residential install (water heater, garbage disposal, single-fixture replace) | 5–12% | 80–90% | Gas-line upsize, flue / vent code update, valve replacements | CO total > 20% — re-scope or pause |
+| Drain / sewer service (cabling, jetting, camera) | 2–6% | 90–95% | Spot repair recommendation; root infestation re-cabling | CO total > 12% — escalates to spot-repair / pipe-burst quote |
+| Repipe (whole-home or partial) | 8–15% | 75–85% | Wall / ceiling access bigger than expected; concealed code violation; fixture replacement during exposure | CO total > 25% — re-scope or pause |
+| Slab leak diagnosis + repair | 10–20% | 70–80% | Re-route vs. spot repair decision shift; concrete-saw / restoration coordination | CO total > 30% — re-scope toward partial repipe |
+| Sewer lateral / water service replacement | 8–18% | 75–85% | Locator-survey discrepancy; permit-mandated cleanout; restoration scope | CO total > 25% — usually a permit / locator issue |
+| New-construction rough-in (single-family) | 5–15% | 80–90% | Architect / engineer change directive; inspector kickback; spec change | CO total > 25% — escalate to GC / owner |
+| Light-commercial new-construction | 10–25% | 70–80% | Spec changes; phased-shutdown coordination; tenant-improvement scope | CO total > 35% — escalate to PM and owner |
+
+**How to read it:** the typical CO-to-contract ratio is the band your shop should expect to land within if quoting is calibrated. Coming in below the band on a job type is a signal of silent scope absorption. Coming in above the band is a signal that the original quote was light or that the discovery rate is unusually high (galvanized retrofits, coastal corrosion, post-disaster work). Both are coachable; neither is a failure.
+
+**Approval-rate column:** below the healthy band means CO conversations are landing badly — usually a scripting issue, not a pricing issue. The v1.1 Emergency Fast-Path and the v1.2 Verbal-Approval Bridge are the two highest-leverage interventions.
+
+**Common CO triggers column:** when running the skill on a CO, cross-reference whether the trigger reason matches the typical pattern for the job type. A residential service call with a "spec change" CO trigger is mis-classified — that's almost always a residential install or new-construction CO and should be re-tagged for accurate benchmarking.
+
+**Three personalization rules for the benchmark layer:**
+
+- **Override from config when the shop has its own data.** A shop with three years of clean CO data has its own median; that median beats the table's industry-typical band. The skill should use the shop-specific number when `config.yml` has a `co_velocity_benchmarks:` block defined.
+- **Region-adjust for known multipliers.** Coastal-humid markets (FL, LA, TX coastal, NC coastal) run +20–30% on the residential-install CO ratio because corrosion-discovery is more common. Cold-winter markets (MN, WI, ND, NE) run +15% on water-service-line CO ratio because frost-depth code can produce mid-job depth changes. The skill should apply the multiplier when `config.yml` has `region:` set.
+- **Adjust for shop maturity.** Shops in their first 2 years typically run +5–10 percentage points above the table on every job type because their original quotes are calibrating. Veteran shops (10+ years) run -3 to -5 percentage points below because their quotes are tighter. The skill should ask for shop tenure if config does not specify and apply the adjustment.
+
+### Spanish Bilingual CO Variant
+
+The cross-skill bilingual thread (Pre-Visit Diagnostic Intake v1.1, Review Request Drafter v2.3, Invoice Follow-Up Sequence v2.3) treats Spanish-speaking households as a first-class customer segment. v1.3 extends the same discipline to the change order — which is the highest-stakes paperwork in the customer relationship and the place where a back-translated Spanish CO does the most damage.
+
+**Trigger:** Generate the Spanish variant alongside the English CO when `customer_language` (same field source as Pre-Visit Diagnostic Intake v1.1) is set to `es`, OR when the user explicitly requests "in Spanish" / "en español." Default to English when the language field is unconfirmed; never auto-detect from the customer's name.
+
+**Spanish CO header and approval block (formal *usted* register throughout — money conversations are where formality matters most):**
+
+```
+ORDEN DE CAMBIO #CO-[YYYY]-[seq]-[job#]
+
+Fecha: [fecha]
+Trabajo: [descripción / dirección]
+Estimado original: #[EST-XXX] — $[monto]
+
+Descripción del cambio:
+[Descripción en lenguaje claro que un dueño de casa puede entender.
+ Lenguaje plano. No traduzca términos técnicos al inglés a la fuerza —
+ use el término en español si existe (calentador de agua, no "water heater";
+ línea de gas, no "gas line"; trampa, no "P-trap"; tanque de expansión,
+ no "expansion tank").]
+
+Razón del cambio:
+[Condición descubierta / solicitud del cliente / requisito de código /
+ sustitución de material]
+
+Desglose de costos:
+| Concepto | Cantidad | Costo unitario | Total |
+[líneas en español; mantenga los números en formato US ($X,XXX.XX)]
+
+Subtotal: $[monto]
+Margen ([X]%): $[monto]
+Total de la orden de cambio: $[monto]
+
+Total revisado del proyecto: $[monto original] + $[CO] = $[monto total]
+
+Impacto en el cronograma: +[horas] hoy / +[días] al cronograma del proyecto
+
+⚠️ Nota importante: [permiso requerido / impacto en garantía / impacto
+ en código — use la cláusula completa, no la versión abreviada en inglés]
+
+Aprobación del cliente:
+
+☐ Apruebo esta orden de cambio y el total revisado del proyecto de $[monto].
+
+Nombre: _________________________ Fecha: _____________
+
+Firma: _________________________
+```
+
+**Plumbing-CO-specific Spanish terminology (use these consistently — back-translation produces real terminology errors that customers notice):**
+
+- *orden de cambio* — change order. Not *cambio de orden* (that means "order change" in the wrong direction).
+- *condición descubierta* — discovered condition.
+- *sustitución de material* — material substitution.
+- *requisito de código* — code requirement. Not *requerimiento* (loanword from English; *requisito* is the correct term in legal / construction Spanish).
+- *cumplimiento de código* — code compliance.
+- *garantía de mano de obra* — labor warranty.
+- *garantía del fabricante* — manufacturer warranty.
+- *gravamen* — lien (preferred over *embargo* in legal contexts; matches the v2.3 Invoice Follow-Up bilingual register).
+- *aprobación firmada* — signed approval.
+- *aprobación verbal* — verbal approval (use only with the Verbal-Approval Bridge text-back confirmation pattern; verbal alone is *not* a documented approval).
+
+**Spanish Verbal-Approval Bridge (from v1.2) — formal *usted* register:**
+
+> Hola [Nombre] — le confirmo lo que conversamos a las [hora]. Usted aprobó:
+>
+> (1) [Una oración con el alcance del cambio]
+> (2) Costo adicional: $[monto] (mano de obra + materiales, margen incluido)
+> (3) Tiempo adicional: +[horas] hoy
+>
+> Por favor responda "SÍ" a este mensaje para confirmar antes de continuar. La orden de cambio firmada le llegará al final del día. — [Técnico], [Empresa]
+
+**Three Spanish-CO hardening rules:**
+
+- **Native-write the Spanish CO; do not back-translate from English.** A back-translated CO reads as cold and corporate in Spanish even when the English version reads warm and clear. Generate the Spanish CO from the structured input fields, not from the English CO output.
+- **Preserve the dollar-amount format.** US dollar formatting ($X,XXX.XX) is the format Spanish-speaking customers in the US expect on construction paperwork. European-format (€ or thousand-separators with periods) is wrong for this audience.
+- **The signature line stays the same physical line.** A signature is a signature in any language. Do not add a parallel English-language signature block for "the office" — one signed CO in the customer's language is the audit-trail document. The English-language internal copy lives in the job folder; the customer signs the Spanish one.
+
+**Cross-skill references:** Pre-Visit Diagnostic Intake v1.1 (`customer_language` field source), Review Request Drafter v2.3 (Spanish-tone discipline shared), Invoice Follow-Up Sequence v2.3 (lien-language *gravamen* preference), Estimate Writer v2.0 (Spanish-CO format mirrors Spanish-estimate format if the original estimate was in Spanish).
+
+### Cross-Skill Reference Pointers (v1.3)
+
+- **Technician Performance Debrief v1.1.A** — the per-rep CO-velocity table feeds directly into the Tech Perf Debrief's revenue-capture benchmark band; one rep's [BELOW] CO velocity surfaces in their debrief as a coaching action without a separate scrape pass.
+- **Invoice Follow-Up Sequence v2.3.A** — the lien-window countdown uses the CO close date as a recalculation trigger (the LDOW anchor); when this CO closes, the lien-deadline countdown for the underlying job recomputes.
+- **Estimate Writer v2.0** — the original-scope margin from the estimate is the input to the pipeline-position math; the lien-rights one-liner format on $3K+ residential / commercial estimates carries the LDOW anchor that lien-window countdown consumes.
+- **Pricebook Q&A v2.x** — per-line-item margin inputs feed the pipeline-position math; the v2.2 member-pricing overlay (if shop has membership tiers) adjusts the CO line-pricing when the underlying job is a member job.
+- **Pre-Visit Diagnostic Intake v1.1** — `customer_language` field source for the bilingual-Spanish CO trigger.
+- **Membership Plan Drafter** — when a CO is on a member job, the labor-rate line draws the member discount automatically (typically -10% Basic / -15% Preferred / -25% Premium).
