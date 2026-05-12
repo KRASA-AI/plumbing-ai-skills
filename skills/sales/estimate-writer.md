@@ -4,8 +4,8 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/estimate"
-version: 2.0
-last_eval_score: 9.5
+version: 2.1
+last_eval_score: 9.6
 ---
 
 # 📝 Estimate Writer
@@ -589,3 +589,143 @@ A: We often can accommodate same-day service depending on our current schedule. 
 
 *Hometown Plumbing Co.* | License #PL-4521 | Bonded & Insured
 (720) 555-0123 | hello@hometownplumbing.com | www.hometownplumbing.com
+
+---
+
+## v2.1 Additions (2026-05-11)
+
+### v2.1.A AI-RX Speed-to-Quote Adapter
+
+**Why this matters:** The 05-11 landscape monitor surfaced a key statistic from Supernal AI's December 2025 analysis: the first plumbing company to get a professional quote in front of the homeowner wins the job approximately 60% of the time. Most residential plumbing and HVAC companies take 24–72 hours to send a quote. For AI-RX-handled inbound inquiries, the estimate request arrives digitally — and if the shop can return a structured quote response within 2 minutes of the inquiry (while the customer is still on the phone with the AI-RX), the win-rate advantage compounds. This adapter makes the Estimate Writer output machine-readable by the same AI-RX platforms already integrated via Pricebook Q&A v2.2.A.
+
+**Trigger:** Input begins with `[AI-RX-ESTIMATE]` OR input is a JSON payload with `platform` field set to one of the nine AI-RX platforms named in Pricebook Q&A v2.2.A.
+
+**When to use this adapter vs. the standard estimate format:**
+- Use the adapter when the customer is still on an active call with the AI-RX and a rough quote is needed to keep the call moving to a booking.
+- Use the standard Good/Better/Best document format for all estimates that will be emailed or texted to the customer for review and signature.
+- The adapter produces a voice-ready summary + a booking-confirmation artifact; it does not replace the full estimate document.
+
+**Input schema (AI-RX estimate request):**
+
+```
+{
+  "platform": "avoca|petegabi|serviceagent|trillet|marlie|convocore|voiceflow|myaifrontdesk|ringading",
+  "call_id": "string",
+  "customer_id": "string",
+  "customer_first_name": "string",
+  "job_type": "water-heater-replace|water-heater-install|drain-service|sewer-camera|sewer-lateral|fixture-replace|repipe|leak-repair|gas-line|other",
+  "job_detail": "string (free text from AI-RX intake — e.g., '50-gallon gas water heater, standard replacement')",
+  "property_type": "residential|light-commercial",
+  "state": "two-letter state code",
+  "member_status": "none|basic|preferred|premium|commercial",
+  "urgency": "standard|same-day|emergency"
+}
+```
+
+**Output schema:**
+
+```
+{
+  "skill_version": "2.1",
+  "estimate_id": "EST-{YYYY}{MM}{DD}-{call_id_short}",
+  "job_type": "string",
+  "price_band_phrasing": "complete spoken sentence under 20 words — e.g., 'A standard 50-gallon gas water heater replacement in Louisville typically runs between $1,800 and $2,400, installed.'",
+  "tier_options": [
+    {
+      "tier": "GOOD|BETTER|BEST",
+      "price_band": "string",
+      "key_differentiator": "string — one phrase, e.g., 'standard Bradford White, 6-year warranty'",
+      "labor_minutes": number,
+      "permit_required": "yes|no|likely",
+      "timeline": "string — e.g., 'today if parts on truck, tomorrow if special order'"
+    }
+  ],
+  "lien_rights_applies": "yes|no",
+  "lien_rights_threshold": "description — e.g., '$3,000 residential in [state]'",
+  "follow_up_document_needed": "yes|no",
+  "approval_path": "string — e.g., 'Send full estimate document via SMS for customer signature before scheduling'",
+  "booking_ready": "yes|hold",
+  "booking_hold_reason": "string|null — e.g., 'Pending customer review of full estimate document'",
+  "uncertain_match_clarifier": "string|null — e.g., 'If the existing gas line requires resizing, the upper band shifts by $400-600'",
+  "escalation_to_human": "yes|no",
+  "escalation_reason": "string|null"
+}
+```
+
+**Escalate to human when:**
+- Job is classified as `other` and the AI-RX intake cannot map it to a standard job type
+- Urgency is `emergency` AND the price band would require a significant same-day surcharge (>$300 above standard) — human should confirm the surcharge with the customer before booking
+- Property type is `light-commercial` AND the estimate would involve work beyond the shop's standard commercial scope
+- Member status is `commercial` — commercial pricing and scope require human review
+
+**Price_band_phrasing rules:**
+- Always a complete spoken sentence (the AI-RX reads it to the customer verbatim)
+- Under 20 words
+- Never include internal cost or margin
+- Always cite the service area city or region ("in Louisville," "in the Houston area") — grounds the estimate and establishes the geographic context that will feed AI citation signals per AI Search Visibility Content Pack v1.2
+
+**Speed-to-quote urgency framing (add this line to the AI-RX spoken handoff when `urgency: standard`):**
+> "I can send you a full written estimate with all three options for your review in about 5 minutes — and once you approve, we can typically schedule within [X hours/days] depending on parts availability."
+
+This line — "written estimate in about 5 minutes" — is the speed-to-quote signal that converts a browsing inquiry into a booked appointment. The 60% win-rate advantage belongs to the shop that sends the estimate first; this framing sets the expectation and creates urgency without pressure.
+
+**Latency target:** Sub-2-second schema output. For standard residential job types (water heater, drain, fixture, slab leak, gas line), the price band should be derivable from config.yml + the v2.1 default bands table below without a follow-up lookup. The AI-RX should receive the output before the customer ends the active call.
+
+**Default price band table by job type (override from config.yml if shop has its own data):**
+
+| Job type | GOOD band | BETTER band | BEST band | Permit required |
+|----------|-----------|-------------|-----------|-----------------|
+| 40–50 gal gas water heater replace | $1,600–$1,900 | $2,000–$2,500 | $2,600–$3,200 | Usually (check AHJ) |
+| 50 gal electric water heater replace | $1,200–$1,600 | $1,700–$2,100 | $2,200–$2,800 | Usually |
+| Tankless water heater install (gas) | $3,800–$4,500 | $4,500–$5,800 | $5,800–$7,500 | Yes |
+| Standard drain service (cable) | $175–$225 | $250–$325 | $325–$450 | No |
+| Hydro-jet drain service | $350–$450 | $450–$600 | $600–$900 | No |
+| Sewer camera inspection | $200–$325 | $325–$450 | — | No |
+| Sewer lateral replacement (per linear ft avg job) | $6,000–$9,000 | $9,000–$14,000 | $14,000–$22,000 | Yes |
+| Single-fixture replacement (faucet/toilet/valve) | $175–$250 | $275–$375 | $400–$550 | No |
+| Slab leak detection + repair | $900–$1,400 | $1,400–$2,200 | $2,200–$3,500 | Usually |
+| Gas line repair (standard) | $250–$450 | $450–$700 | $700–$1,200 | Yes |
+| Whole-house repipe (per fixture avg job) | $8,000–$12,000 | $12,000–$18,000 | $18,000–$28,000 | Yes |
+
+*Bands above are national averages for 2026; coastal markets (CA, NY, WA, MA, HI) typically run 25–40% above these bands. Mountain West (CO, UT, AZ) runs 10–15% above. South Central (TX, OK, AR, LA) typically runs at or slightly below. Override from config.yml with the shop's own data for highest accuracy.*
+
+---
+
+### v2.1.B State-Calibrated Lien-Rights Estimate Footer
+
+**Why this matters:** The v2.0 lien-rights one-liner was jurisdiction-agnostic — it flagged that lien rights exist without specifying the deadline. Estimate Writer v2.0's one-liner was consumed by Invoice Follow-Up Sequence v2.3.A and Change Order Tracker v1.3 as an LDOW anchor, but the anchor was imprecise. With Invoice Follow-Up Sequence v2.4.A now housing the complete 50-state + DC lien-window table, the Estimate Writer can pull the actual deadline data and include it in the estimate footer — making the lien-rights language actionable rather than generic.
+
+**Trigger:** Any estimate ≥ $3,000 on a residential project OR any commercial estimate regardless of size.
+
+**Footer block structure:**
+
+```
+LIEN RIGHTS NOTICE — [STATE] (included per [State] [citation])
+
+[Company Name] retains the right to file a mechanic's lien against the
+property at [Address] if this invoice remains unpaid. Under [State] law:
+
+  • If required: Preliminary notice must be served within [X] days of
+    first furnishing labor or materials.
+  • A mechanic's lien must be filed within [X] days of the last date of
+    work / substantial completion / [LDOW anchor per state].
+  • [Common trap note from Invoice Follow-Up Sequence v2.4.A — one sentence
+    flagging the most common mistake for this state.]
+
+This is a right we've never had to exercise with customers who communicate
+openly. We mention it because the law requires us to preserve it — not
+because we expect to use it. If any issue arises with payment, please
+contact us before the deadline above so we can resolve it together.
+```
+
+**Placeholder substitution rules:**
+- Pull `Preliminary Notice Deadline`, `Lien Filing Deadline`, `LDOW Anchor Definition`, and `Common Trap` from Invoice Follow-Up Sequence v2.4.A for the project's state.
+- For states where no preliminary notice is required for a direct contractor (the majority), omit the preliminary-notice bullet and begin with the lien-filing-deadline bullet.
+- For Maryland and Delaware (court-petition states), replace "file a mechanic's lien" with "initiate lien proceedings" in both the header line and the deadline bullet.
+- The `[citation]` field should use the state's lien statute citation if known (e.g., "Cal. Civ. Code § 8000 et seq." for California) or omit the parenthetical if not.
+- The closing paragraph ("This is a right we've never had to exercise…") is the human voice that keeps the lien notice from reading as a threat. Do not omit it. Do not alter the substance — it is the single most effective phrase for preserving customer relationships when lien language must appear in a document.
+
+**Cross-skill references:**
+- **Invoice Follow-Up Sequence v2.4.A** — source of all 50-state + DC lien deadline data. The estimate footer pulls from this table; always reference the v2.4.A table, not an independent lookup, to maintain single-source consistency.
+- **Change Order Tracker v1.3** — when a CO closes on this estimate's project, the LDOW countdown auto-recalculates from the estimate's original-scope anchor. The lien-rights footer in the estimate establishes the LDOW anchor that the CO tracker uses.
+- **Pricebook Q&A v2.2.A** — the AI-RX speed-to-quote adapter (v2.1.A above) shares the AI-RX platform integration schema established in Pricebook Q&A v2.2.A.

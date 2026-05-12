@@ -4,8 +4,8 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~4 hrs per service-area content pack; replaces a one-off agency deliverable at $1,500–$3,500"
-version: 1.1
-last_eval_score: 9.6
+version: 1.2
+last_eval_score: 9.7
 ---
 
 # AI Search Visibility Content Pack
@@ -15,6 +15,8 @@ last_eval_score: 9.6
 Produce the structured content a plumbing shop needs to get *cited* — not just ranked — by ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Copilot when a homeowner asks "who's the best emergency plumber in [city]?" or "how much does a water heater replacement cost in [ZIP]?". This is different from traditional local SEO, which optimizes for Google's ten blue links and the map 3-pack; AI search engines synthesize answers from multiple sources and increasingly weight content that has a direct-answer structure, explicit citations, fact density, and schema-ready metadata.
 
 Homeowners are shifting fast. Sessions referred from AI answer engines grew more than 5x year-over-year through 2025, and a growing share of high-intent service searches now begin inside a chat interface rather than a search box. A plumbing shop that shows up as the named recommendation inside those answers captures the lead before the click; a shop that doesn't show up never gets the chance.
+
+A Q1 2026 study by 5W PR (HVAC & Plumbing AI Visibility Index 2026) measured the gap directly: roughly 87% of independent HVAC and plumbing contractors have effectively zero AI citation share in their own metro and category — even those with 800+ five-star Google reviews and decades of customer relationships. The mechanism is structural. National franchise networks (Roto-Rooter, Mr. Rooter, ARS/Rescue Rooter, Neighborly-umbrella brands, Authority Brands-umbrella brands) and contractor software platforms (ServiceTitan, Housecall Pro, Jobber) have built entity-strength signals — Wikipedia presence, Wikidata records, structured corporate disclosure, national trade-press coverage — that AI engines weight at roughly 8x the signal strength of independent contractors. A content pack alone narrows but does not close this gap. The v1.2 additions below add the entity-strength infrastructure steps that must be in place before content work compounds.
 
 This skill produces a content pack sized for a single service area and single service line at a time (for example: "water heater replacement in Louisville") — because that is the unit at which AI engines actually synthesize answers. The pack includes: a direct-answer block, an FAQ set structured for `FAQPage` schema, a pricing-transparency block, a "who we are / who we serve" block that functions as structured entity signal, a Google Business Profile Q&A pre-seed, and a short list of fact-dense paragraphs the shop can drop into service pages.
 
@@ -263,6 +265,41 @@ Most plumbing shops over-index on owned-site content and under-index on the thir
 7. **ServiceTitan booking page** — if the shop runs ServiceTitan, the public booking URL is itself a citation target; AI Mode cites ServiceTitan-hosted pages at roughly 11.5%
 
 After these seven, lower-priority targets include the BBB profile, Google Business Profile, the local PHCC chapter directory, and any city or chamber-of-commerce business directory. Refresh the top seven on a 90-day cycle. Inverting the typical SEO hierarchy — directory work above on-site content — is the highest-yield AEO move for shops that already have a passable service-area page.
+
+### Entity-Strength Infrastructure: The Non-Content Prerequisites
+
+Content work compounds only if the entity-strength layer is in place. AI engines map brand names to citation intent through entity signals that exist entirely outside the shop's website. Before or alongside any content pack work, verify these in priority order:
+
+1. **Wikipedia presence (if notable)** — A Wikipedia article for the shop or its owner creates the single highest-weight entity signal in the open-knowledge-graph layer all four engines query. Notability requirements: local media coverage, significant regional awards, historical significance (50+ years in business in a single market). Do not create a Wikipedia article that does not meet notability standards; engines detect promotional stubs and they backfire. If the shop genuinely meets the bar, a Wikipedia article is worth more than 50 directory listings.
+
+2. **Wikidata record** — Wikidata is the structured-data layer AI engines use for entity disambiguation (distinguishing "Henderson Plumbing in Memphis" from "Henderson Plumbing in Phoenix"). A Wikidata item for the business, linked to the shop's Wikipedia article if one exists, costs $0 and takes under 30 minutes to create. Fields to populate: legal name, instance-of (business), inception date, country, website, industry (plumbing contractor). This is the highest-ROI entry on this list for independent shops that do not qualify for Wikipedia.
+
+3. **Schema.org markup on every location URL** — `LocalBusiness` + `Plumber` schema on the homepage and every service-area page. Include `name`, `address`, `telephone`, `areaServed`, `openingHours`, `priceRange`, and `hasCredential` (for license). The schema markup is what enables AI engines to trust their own entity-resolution and surface the shop confidently rather than hedging. Most shops have partial schema or none. A developer or website platform plugin handles the markup in under two hours.
+
+4. **Consistent name-address-phone (NAP) across the open web** — AI engines cross-reference 12–15 sources to confirm entity identity. A shop that appears as "Henderson Plumbing LLC" on its website, "Henderson Plumbing" on Google, and "Henderson Plumbing & Drain Co." on Yelp creates entity-resolution failures that suppress citation. Run a NAP audit: pull the shop's name as it appears on (a) the website header, (b) Google Business Profile, (c) Yelp, (d) Angi, (e) Expertise.com, (f) the state contractor licensing board. Make them match exactly, including LLC/Inc/Co designation. This is the cheapest citation-lift available.
+
+5. **Trade-press coverage in AI-weighted publications** — AI engines weight ACHR News, Plumbing & Mechanical, Contractor Magazine, Supply House Times, Contracting Business, and BDR buyer's guides at citation multipliers that general-interest media cannot match. A single feature, case study, or quoted expert appearance in one of these publications outperforms dozens of local-newspaper mentions for citation purposes. Pitch the shop's owner or lead tech for expert commentary on industry topics; trades editors actively seek contractor voices. This is a 3–6 month effort but produces citation surface that persists for years.
+
+6. **Platform co-citation** — The contractor-software platform a shop uses appears as a co-citation when the shop is mentioned. Contractors running ServiceTitan inherit ServiceTitan's citation surface (ServiceTitan's IPO at a $6.3B valuation produced the largest single trade-software citation event in industry history). Contractors using less-cited platforms inherit less citation surface. This is not a reason to switch platforms solely for citation purposes, but it is a reason to make the shop's platform affiliation visible in its public content — "our shop runs on ServiceTitan" in the about page or team bio is a structural citation multiplier.
+
+### Cross-Trade Content Tactic
+
+Franchise umbrella networks (Neighborly, Authority Brands) achieve citation dominance in part through cross-trade content — a Neighborly Mr. Rooter blog post that references an Aire Serv HVAC issue for a related problem absorbs citation surface that single-trade brands cannot replicate. Independent plumbing contractors can partially replicate this by publishing content that bridges plumbing to adjacent systems:
+
+- "When your furnace stops working, check these three plumbing-related culprits first" (corrosion on condensate drain, humidifier leak, hydronic system issue)
+- "Water heater efficiency drops that aren't about the heater" (pressure-reducing valve failure, whole-house softener bypass issue)
+- "Signs your sewer lateral problem is actually a foundation drainage problem" (bridges to waterproofing/foundation contractors)
+
+Cross-trade content captures citation queries that single-trade content misses entirely. It also establishes the shop as a systems-thinking resource, which improves the trust signals AI engines use to elevate a citation from "one option" to "recommended option." One cross-trade content piece per quarter aimed at the most common adjacent system in the shop's service area is sufficient.
+
+### Regulatory Event Citation Windows
+
+AI engines reset citation surfaces when major regulatory or code events occur. Shops that publish accurate, practical content within 72 hours of a regulatory announcement capture citation share that competitors silent on the change never recover — the engine fills the gap with the earliest trustworthy source and that citation pattern persists through the next event cycle. Calendar these trigger dates:
+
+- **State license renewal deadlines** — publish a "what this renewal means for homeowners" explainer the week before the public license database refreshes
+- **EPA LCRI implementation milestones** (next: November 1, 2027 compliance date) — service-line inventory requirements affect every homeowner with a lead service line; a practical homeowner FAQ published within 72 hours of each EPA announcement captures lasting citation share
+- **Code change adoption dates** — UPC and IPC cycle adoptions at the state level; the week a code change takes effect, publish what it means for local homeowners (permit requirements, inspection changes, fixture standards)
+- **Tax credit and rebate events** — Inflation Reduction Act heat pump credits, state efficiency rebates, utility-rebate program launches and expirations; publish a local explainer the day of the announcement, not a week after
 
 ### The Consensus-Mention KPI
 

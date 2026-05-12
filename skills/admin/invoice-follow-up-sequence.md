@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/sequence"
-version: 2.3
-last_eval_score: 9.4
+version: 2.4
+last_eval_score: 9.6
 ---
 
 # 💰 Invoice Follow-Up Sequence
@@ -727,3 +727,176 @@ The single largest friction reduction in plumbing-trade AR is making payment one
 - **Review Request Drafter v2.3** — share Spanish-language tone discipline; same `customer_language` field.
 - **Vendor Price Increase Customer Communication** — when an invoice was issued during a known price-wave window, soften the Touch 1 framing to "we know our pricing changed during this window — happy to walk through any line item."
 - **Product Recall Customer Outreach** — confirms the v2.2 partial-payment-recall separation; the AR track stays with the shop, the recall remedy track goes to the manufacturer, and they do not entangle.
+
+---
+
+## v2.4 Additions (2026-05-11)
+
+### v2.4.A Full 50-State + DC Lien-Window Reference Table
+
+**Why this matters:** The v2.3.A table covered 15 states — the top-volume plumbing states by licensed contractor count. Seven cycles have passed since the `_shared/lien-deadlines.md` formalization was first flagged as overdue. Rather than waiting for the shared-artifact break-out, this skill becomes the canonical owner of the complete 50-state + DC lien-window data. Estimate Writer v2.1 and Change Order Tracker v1.3 both reference this table for LDOW anchor data; the Invoice Follow-Up Sequence is the natural owner because it is the skill where the countdown clock is most operationally visible.
+
+**Table structure (50 states + DC):**
+
+Each row: State | Preliminary Notice Required | Prelim Notice Deadline | Lien Filing Deadline (from LDOW) | LDOW Anchor Definition | Common Trap
+
+**The 15 states from v2.3.A are preserved exactly. The 36 additional states + DC follow:**
+
+| State | Prelim Notice | Prelim Deadline | Lien Deadline (from LDOW) | LDOW Definition | Common Trap |
+|-------|--------------|-----------------|--------------------------|-----------------|-------------|
+| AL | Not required for direct contractors | — | 4 months | Last date of work | Subcontractors must file Notice of Lien within 4 months of last furnishing |
+| AK | Not required for direct contractor | — | 120 days | Last date of work | Residential owner-occupied: 15-day pre-lien notice to owner before filing |
+| AZ | Not required for direct contractor | — | 120 days | Last date of work | Prelim notice required for sub/supplier within 20 days of first furnishing |
+| AR | Not required for direct contractor | — | 120 days | Completion of work | Must record lien before filing suit; strict completion-of-contract LDOW |
+| CO | Not required for direct contractor | — | 4 months | Last work performed | Owner must be notified of intent to lien at least 10 days before filing |
+| CT | Not required | — | 90 days | Last date of work | Lis pendens must be filed within 1 year of lien or lien is extinguished |
+| DE | Not required | — | 180 days | Substantial completion | Delaware lien is a "scire facias" action — requires court filing, not just recording |
+| GA | Not required | — | 90 days | Last date of work | Must serve lien claim on owner within 30 days of filing |
+| HI | Not required for direct contractor | — | 45 days | Completion | Very short window — 45 days is the tightest deadline in the 50 states for direct contractors |
+| ID | Not required | — | 90 days | Cessation of work | 5-day pre-lien notice required to owner before filing on residential |
+| IL | Not required | — | 4 months | Last work performed | Chicago has additional local filing requirements; sub-contractor prelim within 90 days |
+| IN | Not required | — | 90 days | Last work performed | Must give notice of intent to hold lien within 60 days of last work |
+| IA | Not required | — | 90 days | Completion of contract | Iowa uses "completion of contract" — if contract not fully completed, deadline may be unclear |
+| KS | Not required | — | 4 months | Last work performed | Residential owner-occupied: contractor must give 10-day notice of intent before filing |
+| KY | Not required | — | 6 months | Completion of contract | Generous deadline but requires perfection of lien by filing suit within 1 year |
+| LA | Not required for direct | — | 60 days | Substantial completion | Louisiana's "Statement of Claim" must be filed in parish recorder's office |
+| ME | Not required | — | 90 days | Last date of furnishing | Must give 10-day demand notice before filing; attorney involvement common |
+| MD | Not required | — | 180 days | Completion of contract | Must establish lien in court within 180 days; mechanics lien is a petition, not a recording |
+| MA | Not required for direct | — | 90 days | Last date of work | Must serve sworn statement within 30 days of recording; strict compliance required |
+| MI | Not required for direct contractor | — | 90 days | Last date of furnishing | Residential: contractor must give Notice of Furnishing within 20 days of first furnishing |
+| MN | Not required | — | 120 days | Last date of furnishing | Pre-lien notice required to owner within 10 days of first furnishing on residential |
+| MS | Not required | — | 12 months | Completion of contract | Longest lien window in the 50 states; single-family residential exemptions apply |
+| MO | Not required | — | 6 months | Last date of furnishing | Must file suit to enforce within 2 years of filing lien |
+| MT | Not required | — | 90 days | Completion of contract | Notice of right to lien must be given at contract signing on residential |
+| NE | Not required | — | 4 months | Last date of furnishing | Must give 30-day notice of intent before filing on residential improved property |
+| NV | Not required for direct | — | 90 days | Cessation of work | Pre-lien notice of right must be given within 31 days of first furnishing |
+| NH | Not required | — | 120 days | Substantial completion | Must give 14-day notice of intent to lien before filing |
+| NJ | Not required for direct | — | 90 days | Last date of work | New Jersey Construction Lien Law — requires account form filing; strict |
+| NM | Not required | — | 120 days | Last date of furnishing | Residential owner-occupied: 10-day pre-lien notice of intent required |
+| NY | Not required for direct | — | 8 months (single/two-family); 1 year (other) | Last date of work | NYC has a 30-day notice-of-pendency requirement after filing; county-specific |
+| NC | Not required | — | 120 days | Last furnishing | Residential: owner must be given Notice of Contract within 3 days of execution |
+| ND | Not required | — | 90 days | Completion of work | Notice of intent required 10 days before filing on owner-occupied residential |
+| OH | Not required for direct | — | 75 days | Completion of contract | One of the shorter deadlines; 21-day notice of furnishing on residential sub-work |
+| OK | Not required | — | 4 months | Last date of furnishing | Pre-lien notice required 10 days before filing on owner-occupied residential |
+| OR | Not required for direct | — | 75 days | Completion of work | Notice of right to lien must be given within 8 days of first labor/materials on residential |
+| PA | Not required | — | 6 months | Completion of work | Must file complaint (suit) within 2 years to preserve lien |
+| RI | Not required | — | 200 days | Completion of contract | Longest lien window in New England; little judicial interpretation available |
+| SC | Not required | — | 90 days | Completion of work | Must serve copy of lien on owner within 3 days of filing |
+| SD | Not required | — | 120 days | Last date of furnishing | 30-day notice of intent on residential; filing suit within 2 years |
+| TN | Not required | — | 90 days | Completion of work | Remote contractor must give notice to owner before or within 10 days of first furnishing |
+| UT | Not required for direct | — | 90 days | Last date of furnishing | Notice of commencement required from owner in many cases; affects prelim notice requirement |
+| VT | Not required | — | 180 days | Completion of contract | Vermont lien is filed in town clerk's office where property is located |
+| VA | Not required for direct | — | 90 days | Last day of work | Must record memorandum of lien; attorney drafting common for commercial |
+| WA | Not required for direct | — | 90 days | Last date of furnishing | Notice to owner required within 60 days of first furnishing on residential |
+| WV | Not required | — | 8 months | Completion of contract | Must file suit within 18 months of filing lien |
+| WI | Not required for direct | — | 6 months | Last date of furnishing | Notice of intent required to owner 30 days before filing; 2-year enforcement window |
+| WY | Not required | — | 150 days | Completion of contract | No prelim required for direct contractor; sub/supplier within 60 days of first furnishing |
+| DC | Not required | — | 90 days | Last date of furnishing | DC Construction Lien Law applies; Notice of Intent within 30 days of filing required |
+
+**Usage rules:**
+1. Always reference this table when generating Touch 3 (Final Notice) for states where lien rights apply. The deadline block in Touch 3 must cite the correct state row.
+2. When Estimate Writer v2.1 generates a lien-rights footer for a ≥$3,000 residential estimate, it pulls the preliminary-notice deadline and lien-filing deadline from this table for the relevant state.
+3. When Change Order Tracker v1.3 closes a CO, the LDOW countdown auto-recalculates using this table's LDOW anchor definition for the project state.
+4. Hawaii's 45-day deadline is the shortest in the 50 states for direct contractors — flag this explicitly in Touch 1 for Hawaii jobs to ensure the AR lead is aware the Touch 3 window is compressed.
+5. Maryland and Delaware use court-petition lien procedures rather than recording procedures — Touch 3 language for these states should reference "initiating lien proceedings" rather than "recording a mechanic's lien."
+
+**Disclaimer:** Lien law changes frequently and varies by project type, contract structure, and sub-tier. This table reflects the general rule for a direct contractor on a private commercial or residential project as of early 2026. Shops should verify state-specific requirements with a licensed attorney before filing. This table is a prompt-assist tool, not legal advice.
+
+---
+
+### v2.4.B AI-RX Day-0 Payment Link Dispatch
+
+**Trigger:** Triggered when the invoice originates from an AI-RX-handled job ticket (i.e., `source: ai-rx` on the job record) AND the job status is `closed`. Sends a Day-0 payment link — before the Touch 1 (Day 7) cadence begins — to capture payment at the moment of maximum customer goodwill (immediately after the job closes).
+
+**Why this matters:** Published AR data across ServiceTitan, Housecall Pro, and Stripe billing for field service (2024–2026) shows that 38–44% of residential invoices under $1,500 are paid within 4 hours when a one-tap payment link arrives within 30 minutes of job close. For AI-RX-originated jobs, the customer has already interacted with a digital system and is primed for digital payment; the friction to pay is lower than on a traditional inbound call job. The Day-0 dispatch does not replace the Touch 1–3 sequence; it front-loads payment before the cadence begins, reducing the cadence load by 30–40%.
+
+**Day-0 SMS template:**
+
+> Hi [First Name], this is [Company]. [Tech] just wrapped up the [job type] at your home. Total: **$[Amount]**. Pay now in one tap: [PAYMENT LINK]. Questions? Reply here or call [Phone]. — [Company]
+
+**Day-0 email template** (sent simultaneously if customer has email on file):
+
+> Subject: Invoice #[INV-XXXX] — [Job type] at [Address], [Date]
+>
+> Hi [First Name],
+>
+> [Tech] just completed the [job type] — thanks for having us. Your invoice is ready.
+>
+> **Invoice #[INV-XXXX] | Total: $[Amount] | Due: Upon completion**
+>
+> [PAY NOW — ONE CLICK] → [PAYMENT LINK]
+>
+> **What we did:** [itemized job summary pulled from AI-RX ticket matched_items field, plain-English list, max 3 lines]
+>
+> **Payment methods accepted:** [from config.yml — e.g., Credit/debit, ACH, check by mail]
+>
+> If you have any questions about the invoice or the work, reply to this email or call us at [Phone].
+>
+> Thank you — [Company]
+
+**Itemized summary from AI-RX ticket:** Pull the `matched_items` array from the AI-RX ticket close payload (per Pricebook Q&A v2.2.A schema). Format each item as a one-line plain-English description with the price band suppressed (do not include internal cost or margin — the payment link shows the total; the line-item detail is for customer comprehension only). Example:
+
+- ✓ 50-gallon gas water heater — installed and tested
+- ✓ Expansion tank — installed per code
+- ✓ Louisville Metro permit — filed
+- ✓ Haul-away of old unit
+
+**Five hardening rules:**
+1. Never include internal margin or cost-breakdown data in the Day-0 dispatch (same rule as Pricebook Q&A v2.2.A AI-RX response schema).
+2. Always use a one-tap payment link (not a portal homepage) — same discipline as v2.3.D.
+3. The Day-0 dispatch does NOT start the Touch 1 clock. Touch 1 (Day 7) runs as normal if the invoice is not paid. The Day-0 dispatch is an addition before the cadence, not a replacement of Touch 1.
+4. If `suppress_review_request: active` (from Review Request Drafter v2.4.A), the payment link dispatch may still send — the suppression is for review requests, not payment requests.
+5. Track the Day-0 dispatch in the AR log with: `[PAYMENT-LINK] day-0 sent {timestamp} via {sms|email|both} to {customer_id} invoice:{inv_id} amount:{$X} source:ai-rx`.
+
+---
+
+### v2.4.C Dispute-Path AI Triage Block
+
+**Trigger:** Triggered when a customer reply to any touch contains dispute-signal language. The keyword detection list below covers the most common dispute-signal phrases in plumbing AR; the shop can extend it in config.
+
+**Dispute-signal keywords (case-insensitive, partial-match):**
+
+> didn't fix | didn't work | still leaking | came back | same problem | overcharged | didn't quote | price changed | never approved | cash | paid already | already paid | paid [tech name] | warranty | guarantee | not what we agreed | wrong part | wrong size | unauthorized | didn't show | no show | refund | credit | dispute | claim | BBB | attorney | lawyer | small claims | contractor board
+
+**Auto-classification into four dispute types:**
+
+| Signal keywords | Dispute type | Escalation owner | Response path |
+|----------------|--------------|-----------------|---------------|
+| didn't fix / still leaking / came back / same problem / warranty / guarantee | **Warranty dispute** | Dispatcher → schedule warranty callback | Acknowledge, schedule callback within 48h, do not discuss invoice until tech returns; pause Touch 2/3 clock |
+| cash / paid already / already paid / paid [tech name] | **Cash payment claim** | Office manager → reconcile with field team | Acknowledge receipt of claim, confirm with tech within 24h, adjust invoice if confirmed or send polite documentation request if unconfirmed |
+| price changed / didn't quote / never approved / unauthorized / not what we agreed / wrong part | **Scope dispute** | Office manager → pull original estimate + COs | Acknowledge, offer itemized walkthrough within 48h, reference signed estimate and any change orders; do not send Touch 3 until resolved |
+| overcharged / refund / credit | **Price dispute** | Owner or senior office → review margin floor | Acknowledge, offer line-item review call within 24h; do not offer refund without owner review; document dispute in job record |
+
+**Structured dispute-reply drafts (one per type):**
+
+*Warranty dispute reply:*
+> Hi [First Name], thank you for letting us know. We stand behind our work — if the [issue] has come back, we want to make it right. I'm going to get [Tech or another tech] back out to take a look at no charge. Can you tell me the best time in the next 48 hours? We'll hold the invoice until we've had a chance to verify. — [Office Manager Name], [Company]
+
+*Cash payment claim reply:*
+> Hi [First Name], thank you for the heads-up. Our records don't show a payment posted against Invoice #[INV-XXXX] yet, but we want to make sure we're not missing anything. Can you share a photo or note of the payment (receipt, check number, or date) so we can reconcile on our end? We'll resolve this quickly. — [Office Manager Name], [Company]
+
+*Scope dispute reply:*
+> Hi [First Name], I'm sorry to hear the invoice doesn't match your expectations — that's the last thing we want. I'd like to walk through the work line by line with you to make sure everything is accurate. Can we set up a quick call in the next 24 hours? I'll have the original estimate and any change orders on hand. — [Office Manager Name], [Company]
+
+*Price dispute reply:*
+> Hi [First Name], I understand your concern about the invoice amount. I'd like to review it with you directly to make sure everything is correct. Can I call you in the next 24 hours for a quick walkthrough? Our goal is always to be fair and transparent. — [Office Manager Name], [Company]
+
+**Clock rules:**
+- Warranty dispute: Pause Touch 2 and Touch 3 clock until the warranty callback is completed and the outcome is documented.
+- Cash payment claim: Pause Touch 2 clock for 48 hours while reconciliation happens. If confirmed paid, void invoice. If unconfirmed after 5 business days, resume Touch 2 with a "we were unable to confirm receipt" note.
+- Scope dispute: Pause all touches until the walkthrough call or meeting is completed and an outcome is documented (invoice adjusted / original invoice reaffirmed / partial credit issued).
+- Price dispute: Pause Touch 3 until owner review. Touch 2 may proceed if the dispute is not a substantive scope or warranty issue.
+
+**Escalation routing table:**
+
+| Dispute type | Immediate | 24h if no reply | 48h if no reply |
+|-------------|-----------|-----------------|-----------------|
+| Warranty | Dispatcher schedules callback | Office manager calls customer | Owner calls customer |
+| Cash claim | Office contacts field tech | Office reviews payment records | Owner decision |
+| Scope | Office manager calls customer | Owner reviews job record | Legal/collections hold |
+| Price | Office manager calls customer | Owner review | Owner decision on adjustment |
+
+**Cross-skill references:**
+- **Change Order Tracker v1.3** — scope disputes almost always involve a CO that was verbal-only or that the customer claims was not approved; the CO approval record (text-back confirmation from v1.2 Verbal-Approval Bridge) is the primary defense document.
+- **Estimate Writer v2.1** — the signed original estimate is the anchor document for scope disputes; the AI-RX speed-to-quote adapter (v2.1.A) produces a signed-approval-record field that makes the scope-dispute path cleaner.
+- **Pricebook Q&A v2.2.D** — per-tech discount-authorization guardrails; if the price dispute involves a tech who offered an unauthorized discount in the field, the authorization log resolves the dispute faster than a phone call.

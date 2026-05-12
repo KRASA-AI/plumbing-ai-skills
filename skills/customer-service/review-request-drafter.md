@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~5 min/job"
-version: 2.3
-last_eval_score: 9.4
+version: 2.4
+last_eval_score: 9.6
 ---
 
 # ⭐ Review Request Drafter
@@ -503,3 +503,143 @@ The send-record line is a one-line CSV-friendly entry that the shop's reporting 
 - **Pre-Visit Diagnostic Intake v1.1** — `customer_language` field on the dispatch-ready record drives Spanish bilingual variant selection in v2.3.A.
 - **Vendor Price Increase Customer Communication** — when a price-wave artifact has been sent in the last 30 days, the review request should NOT reference pricing (no "great value" language) — the artifacts cross-pollinate, and a price-defensive review ask reads tone-deaf right after a price-increase communication.
 - **Job Status Update Drafter** — the on-the-way / arrived / completed status messages share tone calibration with the review request; keeping voice consistent across the job-lifecycle artifacts compounds.
+
+---
+
+## v2.4 Additions (2026-05-11)
+
+### v2.4.A AI-RX Post-Job Send Adapter
+
+**Trigger:** Input begins with `[AI-RX-CLOSE]` OR the job ticket has `source: ai-rx` and `status: closed`. Compatible with the same nine AI-RX platforms named in Pricebook Q&A v2.2.A: Avoca / Pete & Gabi / ServiceAgent / Trillet / Marlie / ConvoCore / Voiceflow / My AI Front Desk / Ring-a-Ding.
+
+**Why this matters:** The v2.3.D send-record analysis consistently shows the largest wedge between "queued" and "sent" happens on AI-RX-handled jobs — the job closes automatically via the AI-RX platform, but the review request requires a manual CSR trigger that doesn't always fire. This adapter closes that gap by letting the AI-RX ticket close itself trigger the review request without CSR intervention.
+
+**Input schema (AI-RX ticket close payload):**
+
+```
+{
+  "platform": "avoca|petegabi|serviceagent|trillet|marlie|convocore|voiceflow|myaifrontdesk|ringading",
+  "job_id": "string",
+  "customer_id": "string",
+  "customer_first_name": "string",
+  "customer_phone": "string",
+  "customer_email": "string|null",
+  "customer_language": "en|es|pt|vi|other",
+  "tech_first_name": "string",
+  "job_type": "water-heater|drain-sewer|sewer-main|gas|leak-invest|fixture|generic",
+  "job_close_timestamp": "ISO8601",
+  "review_platform_preference": "google|yelp|angi|facebook|website",
+  "member_status": "none|basic|preferred|premium|commercial",
+  "price_wave_flag": "none|active",
+  "suppress_review_request": "false|callback|warranty|dispute|survey-low|tech-flag"
+}
+```
+
+**Output schema (dispatched review-request artifact):**
+
+```
+{
+  "skill_version": "2.4",
+  "send_channel": "sms|email",
+  "send_timing": "immediate|next-morning|48h-post-completion|7-10d-post-completion",
+  "template_key": "water-heater|drain-sewer|sewer-main|gas|leak-invest|fixture|generic",
+  "language": "en|es|pt|vi",
+  "message_body": "complete message text",
+  "review_link": "url",
+  "platform_anchor": "google|yelp|angi|facebook|website",
+  "follow_up_armed": "true|false",
+  "suppressed": "false|callback|warranty|dispute|survey-low|tech-flag|price-wave",
+  "send_record_line": "[REVIEW-REQUEST] sent {timestamp} via {channel} to {customer_id} job-type:{job_type} template-version:2.4 language:{language} platform-anchor:{platform_anchor} follow-up-armed:{bool} suppressed:{reason}"
+}
+```
+
+**Latency target:** Sub-150ms schema output (the actual SMS/email dispatch goes through the shop's messaging platform asynchronously — this skill produces the payload, the platform handles the wire). Match the close-event webhook pattern used by ServiceTitan and Housecall Pro job-close automations.
+
+**Price-wave suppression rule:** If `price_wave_flag: active`, set `suppressed: price-wave` and do NOT send the review request until the wave flag clears (typically 30–45 days post-communication). Cross-skill consistency: Vendor Price Increase Customer Communication sets the wave flag; this adapter reads it.
+
+**Six hardening rules:**
+1. Never dispatch a review request when `suppress_review_request` is anything other than `false`.
+2. Never include customer-facing pricing information in the review request body (transcripts get logged, and pricing language in a review request reads as a coupon, not a thank-you).
+3. Always honor the `customer_language` field for template selection — do not auto-detect from name or phone area code.
+4. Always populate `send_record_line` even when `suppressed != false` — suppression is data, not silence.
+5. Never send via SMS when `customer_phone` is null; fall back to email or log as unsendable.
+6. The `send_timing` field must match the v2.2 job-type timing discipline (water heater: within 2h of close; drain-sewer: next morning; sewer-main/lateral: 7–10 days post-completion; gas: 48h after inspection clears; leak-invest: next morning).
+
+---
+
+### v2.4.B Per-Tech Review-Link Performance Table
+
+**Trigger:** Triggered monthly, or on demand when the shop owner / office manager requests a review-performance audit. Requires 20+ send-record lines in the trailing 30 days across 2+ techs.
+
+**Why this matters:** The v2.3.D send-rate signal feeds Tech Perf Debrief v1.1.A, but the band-level signal (shop-median send rate vs. individual tech) only becomes actionable when the per-tech breakdown is surfaced explicitly. This block converts the send-record log into a structured per-tech table the lead can run in the weekly 1:1.
+
+**Per-tech table (10 fields):**
+
+| Tech | Role | Jobs Closed | Requests Sent | Send Rate | Reviews Received | Response Rate | Review Avg | vs. Shop Median | Pattern Flag |
+|------|------|-------------|---------------|-----------|-----------------|---------------|------------|-----------------|--------------|
+
+**Field definitions:**
+- **Send Rate** = Requests Sent ÷ Jobs Closed. Shop median send-rate benchmark: 85%+ healthy / 70–84% coaching opportunity / <70% intervention.
+- **Response Rate** = Reviews Received ÷ Requests Sent. Benchmark: 30%+ healthy / 20–29% coaching / <20% template or timing issue.
+- **Review Avg** = average star rating on received reviews for this tech in the window.
+- **vs. Shop Median** = delta from shop-median send rate, displayed as +/- pp.
+- **Pattern Flag:** one of four named patterns:
+
+| Flag | Trigger | Coaching Implication |
+|------|---------|---------------------|
+| `[LOW-SENDER]` | Send rate < 70% | Tech is not running the post-job flow; day-6 onboarding drill may not have stuck — revisit with New Tech Onboarding Curriculum Day-6 walkthrough |
+| `[HIGH-SENDER-LOW-CONVERT]` | Send rate ≥ 85%, response rate < 20% | Timing or template mismatch — check whether sends are going out at the v2.2 timing window or queuing hours later; check channel (SMS converts at ~3× email for plumbing review requests) |
+| `[HIGH-AVG-NO-VOLUME]` | Review avg ≥ 4.8, but < 10 reviews in 90 days | Tech earns strong reviews when they get them, but volume is low — low-sender pattern or suppression over-use |
+| `[SUPPRESSOR]` | Suppression rate > 20% of jobs closed | Tech is flagging more jobs as unsendable than the shop median — either the tech has genuine quality-concern discipline (good) or is avoiding the send step (investigate) |
+
+**Three hardening rules:**
+1. Never publish this table to customer-facing channels or include it in any external-facing document.
+2. Never tie send-rate metrics directly to tech compensation without owner sign-off — send-rate is a coaching signal, not a performance-plan threshold.
+3. Recompute the shop-median benchmarks monthly; a shop that adds three new techs simultaneously will have a temporarily depressed median that distorts the band comparison.
+
+**Cross-skill consumption:** Tech Perf Debrief v1.1.A review-link-sent-rate benchmark band pulls this table directly. The `[LOW-SENDER]` flag cross-references New Tech Onboarding Curriculum v1.0 Day-6 walkthrough as the remediation path.
+
+---
+
+### v2.4.C Brazilian Portuguese and Vietnamese Variants
+
+**Why these two languages:** The US plumbing market's two largest non-Spanish/non-English customer language populations in the service-area geographies where plumbing shops are most concentrated are Brazilian Portuguese (Greater Boston, South Florida, Newark/Elizabeth NJ, Framingham MA) and Vietnamese (Houston, Orange County CA, San Jose, New Orleans metro, Northern Virginia). Both populations have high homeownership rates and strong word-of-mouth culture — review-request response rates in these communities, when the message arrives in the customer's primary language, outperform English-language requests by a measurable margin in the shop-side data available in published platform case studies (NiceJob 2025, Birdeye 2026).
+
+**Adds two template sets** mirroring the Spanish v2.3.A structure: five job-type SMS templates per language + five job-type Touch-2 follow-up emails per language. Same formal register, same timing discipline, same platform-anchor tuning.
+
+**Brazilian Portuguese template set:**
+
+*Register note:* Use Brazilian Portuguese (pt-BR), not European Portuguese (pt-PT). Register: formal but warm — **o senhor / a senhora** for elderly or first-contact; **você** acceptable for customers under ~50 who have engaged conversationally. When unsure, use **você** — it reads as respectful without feeling stiff in most Brazilian regional contexts.
+
+*Nine plumbing-review-specific pt-BR terms:* aquecedor de água / encanamento / entupimento / vazamento / fossa / desentupimento / gás / instalação / garantia.
+
+| Job Type | pt-BR SMS (within 2h or next morning per v2.2 timing) |
+|----------|------------------------------------------------------|
+| Water heater | Olá [Primeiro nome], aqui é [Tech] da [Loja]. Espero que o aquecedor de água novo esteja funcionando bem. Se tiver 30 segundos, uma avaliação rápida no Google nos ajuda muito: [LINK]. Qualquer problema, me escreva direto. — [Tech] |
+| Drain/Sewer | Olá [Primeiro nome], aqui é [Tech] da [Loja]. Espero que o encanamento esteja funcionando normalmente. Se tiver um minuto, uma avaliação no Google ajuda muito: [LINK]. Se voltar a dar problema, me escreva direto. — [Tech] |
+| Sewer main | Olá [Primeiro nome], aqui é [Tech] da [Loja]. Queria saber se tudo está correndo bem depois da obra. Se estiver tudo certo, uma avaliação no Google seria muito apreciada: [LINK]. — [Tech] |
+| Gas | Olá [Primeiro nome], aqui é [Tech] da [Loja]. Confirmando que o serviço de gás passou na inspeção e está tudo em ordem. Se se sentir confortável, uma avaliação curta no Google é muito apreciada: [LINK]. — [Tech] |
+| Leak investigation | Olá [Primeiro nome], aqui é [Tech] da [Loja]. Fico feliz que encontramos o vazamento. Se a [mancha úmida / conta de água] estiver normal, uma avaliação rápida no Google ajuda muito: [LINK]. Se voltar, me escreva. — [Tech] |
+
+**Vietnamese template set:**
+
+*Register note:* Vietnamese has a complex pronoun system; default to **anh/chị** (older brother/sister, respectful for unknown customer) when age is unknown. Avoid **ông/bà** unless the customer is clearly elderly — it reads as overly formal for most suburban homeowner contexts and can feel distant. Do NOT attempt age-inference from name; use **anh/chị** as the safe default.
+
+*Seven plumbing-review-specific Vietnamese terms:* máy nước nóng / đường ống / tắc nghẽn / rò rỉ / hệ thống thoát nước / khí đốt / bảo hành.
+
+| Job Type | Vietnamese SMS (within 2h or next morning per v2.2 timing) |
+|----------|-------------------------------------------------------------|
+| Water heater | Xin chào anh/chị [Tên], đây là [Tech] từ [Tên cửa hàng]. Hy vọng máy nước nóng mới hoạt động tốt. Nếu anh/chị có 30 giây, một đánh giá nhanh trên Google sẽ giúp chúng tôi rất nhiều: [LINK]. Nếu có vấn đề gì, hãy nhắn tin trực tiếp cho tôi. — [Tech] |
+| Drain/Sewer | Xin chào anh/chị [Tên], đây là [Tech] từ [Tên cửa hàng]. Hy vọng đường ống đang hoạt động bình thường. Nếu có một phút, một đánh giá trên Google sẽ rất có ích: [LINK]. Nếu có vấn đề gì, hãy nhắn tin cho tôi. — [Tech] |
+| Sewer main | Xin chào anh/chị [Tên], đây là [Tech] từ [Tên cửa hàng]. Tôi muốn hỏi thăm xem mọi thứ có ổn sau khi sửa chữa không. Nếu ổn, một đánh giá trên Google sẽ rất được trân trọng: [LINK]. — [Tech] |
+| Gas | Xin chào anh/chị [Tên], đây là [Tech] từ [Tên cửa hàng]. Xác nhận rằng công việc khí đốt đã qua kiểm tra và mọi thứ đều ổn. Nếu anh/chị cảm thấy thoải mái, một đánh giá ngắn trên Google sẽ rất được trân trọng: [LINK]. — [Tech] |
+| Leak investigation | Xin chào anh/chị [Tên], đây là [Tech] từ [Tên cửa hàng]. Tôi rất vui vì chúng tôi đã tìm ra chỗ rò rỉ. Nếu mọi thứ vẫn bình thường, một đánh giá nhanh trên Google sẽ giúp ích rất nhiều: [LINK]. Nếu vấn đề quay lại, hãy nhắn tin cho tôi. — [Tech] |
+
+**Three hardening rules consistent with the cross-skill bilingual thread:**
+1. Native-write the templates; do not back-translate from the English v2.2 templates. Every template above was written natively in the target language.
+2. Preserve US dollar formatting ($X,XXX) and the tech's first name without translation.
+3. Default to English when `customer_language` is unconfirmed. Do NOT auto-detect from the customer's name.
+
+**config.yml integration:** Add `customer_language` options `pt` (Brazilian Portuguese) and `vi` (Vietnamese) alongside the existing `en` and `es` values. The `Pre-Visit Diagnostic Intake v1.1` `customer_language` field is the upstream source; its allowed-values list should be updated in parallel.
+
+**Bilingual thread now spans eight-language paths:** English, Spanish (v2.3.A), Brazilian Portuguese (v2.4.C), Vietnamese (v2.4.C). The `_shared/bilingual-tone-guide.md` formalization backlog should now be renamed from `bilingual-spanish-tone-guide.md` to `bilingual-tone-guide.md` to accommodate the expanded thread.

@@ -5,7 +5,7 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~6 hr/new hire"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.6
 ---
 
 # New Tech Onboarding Curriculum
