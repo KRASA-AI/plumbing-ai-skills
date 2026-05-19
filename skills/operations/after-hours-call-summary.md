@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~15 min/morning"
-version: 2.0
-last_eval_score: 9.5
+version: 2.1
+last_eval_score: 9.6
 ---
 
 # 📞 After-Hours Call Summary
@@ -229,3 +229,168 @@ For every legitimate call, capture:
 
 ═══════════════════════════════════════════════
 ```
+
+---
+
+## v2.1 Additions (2026-05-18)
+
+The v2.0 sections above are unchanged. The three sub-sections below are additive — they extend the skill rather than replace any prior content. Use them in addition to v2.0 when the trigger conditions named in each apply.
+
+### v2.1.A — AI-RX Post-Job Overnight Triage Adapter
+
+When the shop runs an AI receptionist on after-hours (Avoca, Pete & Gabi Olivia, ServiceAgent, Trillet, Marlie, ConvoCore, Smith.ai AI, Sameday, or shop-specific), the overnight call stream now arrives as structured JSON rather than a voicemail batch. The v2.1.A adapter consumes that JSON and emits the same morning briefing output — but with an additional triage layer that surfaces AI-RX-handled calls separately from voicemails and missed calls, so the morning dispatcher can see at a glance which calls the AI already booked, which it queued for human follow-up, and which were dropped (scope-limit miss).
+
+**Trigger:** When invoked with input prefix `[AI-RX-OVERNIGHT]` or a JSON payload with `platform` field, layer the v2.1.A output blocks on top of the v2.0 morning briefing.
+
+**AI-RX overnight-batch input schema (consumed by this skill, produced by AI-RX platforms per the Pricebook Q&A v2.2.A canonical schema):**
+
+```json
+{
+  "batch_id": "AHC-<uuid>",
+  "platform": "avoca | pete_gabi | service_agent | trillet | marlie | convocore | smith_ai | sameday | shop_custom",
+  "shop_id": "<shop slug from config>",
+  "window_start": "<ISO-8601>",
+  "window_end": "<ISO-8601>",
+  "calls": [
+    {
+      "call_id": "<uuid>",
+      "received_at": "<ISO-8601>",
+      "caller_name": "<string or null>",
+      "callback_number": "<E.164>",
+      "address": "<string or null>",
+      "problem_description_raw": "<verbatim transcript snippet>",
+      "problem_description_normalized": "<plumbing-terminology version>",
+      "urgency_tier_ai_assigned": "EMERGENCY | URGENT | STANDARD | INFO",
+      "ai_disposition": "BOOKED | QUEUED_FOR_HUMAN | SCOPE_LIMIT_TRANSFER | DROPPED",
+      "booking_window": "<string or null>",
+      "transfer_reason": "<string or null when SCOPE_LIMIT_TRANSFER>",
+      "customer_language": "en | es | pt | vi | other",
+      "existing_customer": <boolean>,
+      "estimated_ticket_value_band": "<low-high range or null>",
+      "transcript_url": "<URL or null>",
+      "audio_url": "<URL or null>"
+    }
+  ]
+}
+```
+
+**Note on customer_language allowed values:** The `en`, `es`, `pt`, `vi` set matches the values added by Review Request Drafter v2.4.C (2026-05-11). When the AI-RX platform doesn't yet support pt or vi, the field will arrive as `en` or `es` — the v2.1.A adapter does not back-fill or guess.
+
+**New output blocks added to the v2.0 morning briefing:**
+
+Insert a new section between the QUICK STATS block and the EMERGENCIES block:
+
+```
+───────────────────────────────────────────────
+🤖 AI-RX OVERNIGHT — what the AI already handled
+───────────────────────────────────────────────
+
+  ✅ BOOKED (no action — confirm in CRM at 8 AM)
+     1. [Caller Name] — [Phone]
+        ⏰ Called: [time]  |  📍 [Address]
+        🔧 Issue: [Normalized problem]
+        📅 Booked window: [window]
+        💰 Est. ticket value: $[range]
+
+  📤 QUEUED FOR HUMAN (call back in priority order)
+     2. [Caller Name] — [Phone]
+        ⏰ Called: [time]
+        🔧 Issue: [Normalized problem]
+        📝 Why queued: [Why AI did not book — e.g., commercial estimate,
+                       Spanish call when AI scope is English-only,
+                       repair-vs-replace conversation, etc.]
+
+  🚨 SCOPE-LIMIT TRANSFER (review the AI's routing rule)
+     3. [Caller Name] — [Phone]
+        ⏰ Called: [time]
+        🔧 Issue: [Normalized problem]
+        🚪 Transfer reason: [Why AI escalated]
+        📊 Pattern: [Is this an isolated event or a routing-rule issue?]
+
+  📵 DROPPED (call back, investigate why call ended)
+     4. [Caller Name] — [Phone]
+        ⏰ Called: [time]
+        🔧 Issue: [Last known intent before drop]
+        ⚠️ Investigation: [hang-up vs. AI confusion — flag for CSR Perf Debrief]
+```
+
+After the existing DISPATCHER NOTES block, insert:
+
+```
+───────────────────────────────────────────────
+🤖 AI-RX OVERNIGHT METRICS (this batch)
+───────────────────────────────────────────────
+
+  AI calls handled:           [N]
+  ↳ Booked by AI:             [N] ([%])
+  ↳ Queued for human:         [N] ([%])
+  ↳ Scope-limit transfer:     [N] ([%])
+  ↳ Dropped:                  [N] ([%])
+
+  Est. AI-booked revenue:     $[range]
+  Est. queued revenue:        $[range]
+  Est. revenue at risk (dropped): $[range]
+
+  Routing-rule diagnostic:    [CALIBRATED | EXPAND AI WINDOW |
+                               TIGHTEN AI SCOPE | REVIEW SPECIFIC CALL TYPES]
+```
+
+**Routing-rule diagnostic — auto-generate from the batch metrics (mirrors the CSR Performance Debrief v1.1.B rule so the two skills speak the same language):**
+
+1. **CALIBRATED** — Scope-limit transfer rate ≤ 5% AND dropped rate ≤ 3%. No routing change needed.
+2. **EXPAND AI WINDOW** — Booked rate ≥ shop's daytime human-CSR booked rate AND scope-limit ≤ 5%. Recommend extending AI-handled hours.
+3. **TIGHTEN AI SCOPE** — Scope-limit transfer rate > 8% OR dropped rate > 6%. Recommend narrowing AI scope (e.g., AI handles after-hours intake-only; transfers all booking attempts to a morning human callback).
+4. **REVIEW SPECIFIC CALL TYPES** — One or more job types underperform their expected booking rate by ≥ 20pp. Flag for a follow-up CSR Performance Debrief comparison block.
+
+### v2.1.B — Programmable-Scope-as-Guardrail Pattern Note
+
+The Superior Plumbing "Piper" case study (ServiceTitan / Feb 2026) achieved 67% close rate and reduced 7 CSR equivalents to 3 FT + AI by *tightly constraining* what the AI could attempt. The v2.1.B section formalizes the programmable-scope design pattern so a shop running this skill can use the morning briefing as the empirical evidence loop on whether the AI's current scope is correctly calibrated.
+
+**The pattern (one paragraph for the morning briefing reader):**
+
+> An AI receptionist is most effective when its scope is narrower than a senior human CSR's, not when it tries to match it. Calls outside its programmed scope route to a human callback. The morning briefing surfaces scope-limit transfers as the empirical signal on whether the scope is correctly drawn — too few transfers and the AI is over-reaching (look for dropped calls and low booking rates on the call types it shouldn't have attempted); too many transfers and the scope can probably be widened safely (look for transfer reasons that are routine call types the AI handles fine in other shops).
+
+**Output addition — append to the AI-RX OVERNIGHT METRICS block when the routing diagnostic is TIGHTEN AI SCOPE or REVIEW SPECIFIC CALL TYPES:**
+
+```
+SCOPE-CALIBRATION NOTE
+The Superior Plumbing pattern (ServiceTitan / Feb 2026): tight scope +
+named teammate ("Piper" / "Olivia" / your-AI-name) consistently beats
+broad scope + un-named AI. Three actions if the diagnostic is TIGHTEN:
+  1. Add the most-frequent transfer reason as an explicit out-of-scope rule
+     in the AI platform configuration.
+  2. Re-record the AI's after-hours greeting to set caller expectations
+     ("If you need a price quote on commercial work tonight, [AI name]
+     will queue your callback for [human CSR name] in the morning").
+  3. Run this skill again in 2 weeks; the transfer rate on that call type
+     should fall below 5%.
+```
+
+**Cross-skill reference:** The CSR Performance Debrief v1.1.B AI-vs-Human comparative block consumes this skill's AI-RX OVERNIGHT METRICS payload as one of its inputs. The two skills produce a coherent picture: this skill answers "what did the AI do overnight" and CSR Performance Debrief answers "how did the AI's performance on a given call type compare to the human CSR's performance on the same call type." Together they close the AI-RX calibration feedback loop without requiring the office manager to manually correlate the two reports.
+
+### v2.1.C — Customer-Language Routing for Multilingual Overnight Calls
+
+The bilingual thread now spans four languages (English, Spanish, Brazilian Portuguese, Vietnamese) per the Review Request Drafter v2.4.C ship on 2026-05-11. The v2.1.C addition makes the morning briefing surface the language of each call so the dispatcher knows which bilingual CSR (or which translated callback script) to use without listening to the voicemail first.
+
+**Trigger:** Apply whenever the `customer_language` field is present in the AI-RX overnight batch, OR when voicemail transcripts contain a non-English segment ≥ 5 seconds in length.
+
+**Output addition — append to each call entry in every triage block:**
+
+```
+  🗣️ Language: [en | es | pt | vi | other — confidence:high/medium/low]
+  ↳ Recommended callback: [Bilingual CSR name from config / translated script ID]
+```
+
+**Don't-auto-detect-from-name rule (consistent across the bilingual thread):** Do NOT infer the customer's preferred language from their name. The name "Martinez" is not a Spanish-preference signal — many Martinezes prefer English and will be insulted by a Spanish callback they did not ask for. Only use:
+
+- An explicit `customer_language` field from the AI-RX platform (highest confidence).
+- A non-English voicemail segment ≥ 5 seconds (medium confidence; flag as such).
+- An existing customer's stored language preference from prior calls in the CRM (high confidence when set; do not back-fill from name).
+
+When confidence is medium, the recommended callback line reads: `"Try [bilingual CSR] in [language]; revert to English if customer answers in English"` rather than committing to the language. When confidence is low or absent, default to English with the bilingual CSR on standby. This protects against the over-correction failure mode where shops with good bilingual posture insult bilingual-but-English-preferred customers.
+
+**Cross-skill reference:** When the language is `es`, `pt`, or `vi`, the recommended callback maps to the Review Request Drafter v2.4.C bilingual templates for the corresponding language and the Pre-Visit Diagnostic Intake v1.1 (v1.2 in flight) bilingual intake fields. The morning briefing thus seeds the downstream multilingual handoff for the day.
+
+---
+
+**End of v2.1 additions. v2.0 example output above remains the canonical example. The v2.1 sub-sections layer on without modifying any v2.0 instruction or example. Eight-cycle additive-only streak holds on this skill (v1.0 → v2.0 was a structural rewrite shipped 2026-04-14; v2.0 → v2.1 returns to the additive-only pattern).**

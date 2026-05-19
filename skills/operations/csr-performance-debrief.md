@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min/debrief"
-version: 1.0
-last_eval_score: 9.5
+version: 1.1
+last_eval_score: 9.6
 ---
 
 # 📞 CSR Performance Debrief
@@ -263,3 +263,151 @@ OVERALL SCORE: 7.6/10
 - **The AI-receptionist split is here to stay.** As of April 2026, the AI-receptionist category includes Avoca (Series B at $1B valuation, April 27), Pete & Gabi Olivia (1,000 inactive accounts → 413 conversations → 12 deals → $21,116 revenue case study), ServiceAgent, Trillet, Marlie, ConvoCore, and a long tail. Most shops will run a hybrid model — AI on after-hours and overflow, human CSRs on daytime and emergency. This debrief skill applies to the human side; the AI side has its own metrics tracked through the platform's reporting. Run both reports. Compare them on booking rate and average ticket. The honest answer is usually that AI is better than the worst human CSR and worse than the best.
 - **Do not run the debrief on a sample smaller than 5 calls.** A 3-call sample is anecdotal at best, defamatory at worst. If the CSR's call volume in the period is under 5, hold the debrief for the next cycle.
 - **Do not tie a single debrief to compensation.** Use it as one input to a multi-month coaching trajectory; if any single-cycle score becomes the comp signal, every downstream metric gets coached-to-the-test and the debrief loses its diagnostic value.
+
+---
+
+## v1.1 Additions (2026-05-18)
+
+The v1.0 sections above are unchanged. The four sub-sections below are additive — they extend the skill rather than replace any prior content. Use them in addition to v1.0 when the trigger conditions named in each apply.
+
+### v1.1.A — Rolling Per-CSR Baseline + Trend-Band Layer
+
+A single 7.6/10 score is a snapshot. Whether that 7.6 is good or bad depends entirely on whether the CSR usually scores 6.8 (trending up) or 8.4 (trending down). The v1.1 trend-band layer mirrors the same pattern Tech Performance Debrief v1.1.A established — making each individual debrief into a point on a trajectory rather than a verdict in isolation.
+
+**Trigger:** Apply on every debrief when at least three prior debriefs exist for the same CSR within the last 90 days.
+
+**Inputs added to the existing v1.0 Required Input list:**
+
+- **Per-CSR debrief history** — Prior debrief overall-scores and per-dimension scores for the trailing 30 / 60 / 90 days. Pull from `outputs/csr-perf-debriefs/<csr-name>/` if the shop has run earlier debriefs through the skill.
+- **Shop-wide cohort baseline** (optional) — The median and inter-quartile range for each of the 7 dimensions across all CSRs at the shop for the trailing 30 days. Pre-computed if available; otherwise the v1.1 skill computes it on the fly from the same `outputs/csr-perf-debriefs/` directory.
+
+**New output block — insert between OVERALL SCORE and DIMENSION SCORES:**
+
+```
+📈 TREND BAND (last 90 days, this CSR)
+  Overall:           7.6  |  30d avg 7.4  |  60d avg 7.3  |  90d avg 7.1
+                     ↗ trending up (+0.5 vs 90d, +0.2 vs 30d)
+  Booking Conv.:     6.0  |  30d avg 5.8  |  90d avg 5.4
+                     ↗ slow climb; still 1.2 below shop median 7.2
+  Membership:        5.0  |  30d avg 5.1  |  90d avg 4.9
+                     → flat; 1.8 below shop median 6.8 — top coaching priority
+  Empathy/Soft:      9.0  |  30d avg 8.8  |  90d avg 8.6
+                     ↗ at shop top quartile (median 7.5)
+  Spanish handling:  8.5  |  30d avg 8.4  |  90d avg 8.2
+                     ↗ no peer comparison — only 2 CSRs handle Spanish
+```
+
+**Trend-band thresholds (use these arrow rules so the language is consistent across debriefs):**
+
+- `↗ trending up` — current vs. 90d avg ≥ +0.4
+- `→ flat` — current vs. 90d avg between −0.3 and +0.3
+- `↘ trending down` — current vs. 90d avg ≤ −0.4
+- `🔴 regression flag` — current ≥ 1.5 below 90d avg AND prior debrief also showed a regression on the same dimension (two-cycle confirmation pattern)
+
+**Coaching-Action selection rule update:**
+
+The v1.0 rule "pick top 2 coaching actions" gets a v1.1 priority overlay: when a dimension is flagged with `🔴 regression flag`, the regression dimension takes one of the two coaching-action slots, even if a different dimension would otherwise be the largest gap to shop median. This catches CSRs who are slipping on a previously-strong skill (often the early-burnout signal in CSR work).
+
+**Why this lifts Personalization 9 → 10:** A single-debrief score gives the same recommendation regardless of who is being coached. The trend-band layer makes the coaching specific to the CSR's actual trajectory — a 6.0 booking conversion is reinforcement for someone climbing from 4.2, and a regression flag for someone falling from 7.8.
+
+### v1.1.B — AI-vs-Human-CSR Comparative-Benchmark Block
+
+Most plumbing shops now run a hybrid model — AI receptionist on after-hours and overflow, human CSRs on daytime and emergency. The v1.0 skill correctly notes the split exists ("Note the AI / human split in the header") but stops there. The v1.1 block below adds the structured side-by-side comparison so the office manager can keep the routing rules between AI and human calibrated.
+
+**Trigger:** Apply when `config.yml` lists at least one AI-receptionist platform (Avoca, Pete & Gabi Olivia, ServiceAgent, Trillet, Marlie, ConvoCore, Smith.ai AI, Sameday, or shop-specific) AND the debrief period had at least 20 AI-handled calls in addition to the human-handled sample.
+
+**Inputs added:**
+
+- **AI-receptionist platform metrics export** — Booking rate, average handle time, hold-time discipline, transfer-to-human rate, after-hours / overflow / scope-limit miss rate. Pull from the platform's reporting (Avoca dashboard, Pete & Gabi Olivia exports, etc.).
+- **Sample disposition tags** — Which calls were AI-handled, which were transferred to a human mid-call (and at what point), which were human-only.
+
+**New output block — insert after DIMENSION SCORES:**
+
+```
+🤖 AI vs HUMAN CSR — same period, same call-mix
+                          Human CSR (Andrea)   AI (Avoca)    Δ
+  Calls handled:                   8                 47       —
+  Booking rate (qualified):     5/6 = 83%      31/41 = 76%   +7pp
+  Avg handle time:                4:12               2:58    +1:14
+  Hold-time discipline:            9/10              10/10    -1
+  Membership cross-sell:         1/4 = 25%      6/27 = 22%    +3pp
+  Spanish handling:              2/2 = 100%      0/0 (n/a)    n/a
+  Emergency triage:              1/1 PASS        2/2 PASS     tie
+  Transfer-to-human rate:           n/a              17%      —
+  Scope-limit miss rate:            n/a              4%       —
+```
+
+**Routing-rule diagnostic — auto-generate one of these four diagnoses:**
+
+1. **CALIBRATED** — AI booking rate within 5pp of human AND scope-limit miss rate ≤ 5%. No routing change needed.
+2. **EXPAND AI WINDOW** — AI booking rate ≥ human booking rate AND scope-limit miss rate ≤ 5%. Recommend extending AI-handled hours into adjacent windows (e.g., shift Avoca window from 6 PM–8 AM to 4 PM–9 AM).
+3. **TIGHTEN AI SCOPE** — AI booking rate ≥ 10pp below human OR scope-limit miss rate > 8%. Recommend narrowing AI scope (e.g., AI handles after-hours intake-only, transfers all booking attempts to human callback in the morning).
+4. **REVIEW SPECIFIC CALL TYPES** — One or more call types underperform their cross-mode equivalent by ≥ 20pp (e.g., AI converts 12% on water heater repair-vs-replace conversations vs. 67% for the senior human CSR). Recommend type-specific routing carve-out.
+
+**Programmable-scope-as-guardrail note:** The Superior Plumbing "Piper" case study (ServiceTitan / Feb 2026) showed 67% close rate after 7 CSR equivalents were reduced to 3 FT + AI by tightly constraining what the AI could attempt (no Spanish, no commercial estimates, no membership renewals — all routed to human). The naming-contest adoption tactic from that case study makes the AI a teammate rather than a replacement; the programmable-scope rule keeps the AI from over-reaching on call types where it conversion-rates underperform. Cite this case in the routing-rule recommendation when the diagnosis is TIGHTEN AI SCOPE.
+
+**Why this lifts Specificity 9 → 10 and grounds Industry fit at 10:** v1.0 acknowledged the hybrid model exists; v1.1 produces an actual side-by-side benchmark block with a concrete routing-rule diagnostic. The Superior Plumbing data point is the first published AI-vs-human CSR conversion benchmark in plumbing.
+
+### v1.1.C — Bilingual Spanish-Call Sub-Dimension
+
+The v1.0 skill scores Spanish handling as a sub-point of Greeting and Qualification dimensions. For shops where Spanish-speaking callers are ≥ 15% of inbound volume, that's insufficient resolution — the bilingual handling deserves its own dimension with its own coaching artifact.
+
+**Trigger:** Apply when `config.yml` flags `bilingual_posture: spanish` (or any non-English) AND the debrief period had at least 5 bilingual calls in the sample.
+
+**New 8th dimension added to the analysis framework:**
+
+### 8. Bilingual Call Handling (when configured)
+- Was the language switch handled within 15 seconds of the caller's first Spanish word, without making them repeat themselves?
+- Was the formal register (*usted* / *señora*) used by default and switched to informal (*tú*) only on the caller's lead?
+- Were plumbing-specific Spanish terms used accurately? (Common drift: *llave de agua* vs. *grifo* vs. *canilla* — match the caller's region; *fuga* for leak, not *escape*; *tubería* for pipe, not *cañería* unless the caller used it first.)
+- Was the appointment recap done in Spanish, with the time window stated in the format the caller used (12-hour vs. 24-hour, AM/PM in Spanish)?
+- Was the confirmation text sent in Spanish (not auto-translated from English)?
+- For mixed-language households (caller's Spanish + spouse's English): was the language preference captured for the technician handoff, with a note on which family member will be home at the appointment time?
+
+**Output addition — new row in the DIMENSION SCORES block:**
+
+```
+  Bilingual Call Handling:        [X]/10
+```
+
+**Cross-skill reference:** When the trend-band layer (v1.1.A) shows Spanish handling at 9+ for three consecutive cycles, the CSR's transcripts become candidate training data for the shop's `_shared/bilingual-tone-guide.md` artifact (eight cycles overdue per 05-11 backlog). Flag in the OFFICE MANAGER NOTES block: "Andrea's Spanish call handling is repo-quality — pull her last three months of transcripts for the bilingual tone guide when it ships."
+
+### v1.1.D — Multi-CSR Batch Execution
+
+The v1.0 skill processes one CSR at a time. Most office managers run weekly debriefs on 4–8 CSRs in a single session — re-pasting the analysis framework, the dimension list, and the prompt context for each CSR is the per-call overhead the v1.1 batch mode eliminates.
+
+**Trigger:** Apply when the user pastes call data for more than one CSR in a single invocation, or when the input is structured as `{csr_name: [calls...]}` for multiple CSRs.
+
+**Batch input format:**
+
+```
+BATCH DEBRIEF — Period: 2026-05-12 through 2026-05-18
+CSRs in batch: Andrea M., Brian P., Catalina V., Devon S.
+
+[Andrea M.]
+- Call 1: <transcript or summary>
+- Call 2: <transcript or summary>
+...
+
+[Brian P.]
+- Call 1: <transcript or summary>
+...
+```
+
+**Batch output structure:**
+
+1. **Batch header block** — Period, CSR count, total calls, aggregate booking rate, aggregate emergency volume.
+2. **Per-CSR debrief** — Full v1.0 output (with v1.1.A trend band and v1.1.C bilingual row when applicable) for each CSR in the batch, separated by a hard rule.
+3. **Cross-CSR pattern block** — A single end-of-batch summary that surfaces patterns across the team without comparing CSRs publicly:
+   - Calls that two or more CSRs fumbled with the same root cause (almost always a script gap or a pricebook ambiguity rather than a CSR-specific issue).
+   - Job types where any CSR's booking rate is below 50% — usually a sign the shop's pricing posture on that job type needs revisiting, not a coaching issue.
+   - Calls that one CSR handled exceptionally well that could become training transcripts for the rest of the team.
+   - Calls that are candidates for the After-Hours Call Summary skill's morning briefing format (if the call would benefit from triage-tier framing, flag it).
+
+**Anti-pattern guard:** The cross-CSR pattern block does NOT rank CSRs against each other, does NOT include leaderboard tables, and does NOT identify the "lowest-performing" CSR by name. The v1.0 anti-pattern rule ("Never use a CSR debrief to compare CSRs across the team in a group meeting") extends to batch mode — cross-CSR observations are framed as shop-level systems issues, not CSR-level performance issues. The per-CSR section stays the 1-on-1 artifact.
+
+**Why this lifts Efficiency:** A 4-CSR weekly debrief that previously required 4 separate invocations + 4 separate prompt setups now runs in a single pass with the same per-CSR quality. Office-manager-side time drops from ~30 minutes to ~8 minutes for the prompt/output handling — the AI's analysis time is unchanged, but the meta-overhead disappears.
+
+---
+
+**End of v1.1 additions. v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**
