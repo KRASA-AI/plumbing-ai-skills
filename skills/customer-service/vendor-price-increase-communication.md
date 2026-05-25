@@ -4,15 +4,17 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump"
-version: 1.0
+version: 1.1
 last_eval_score: 9.6
+last_eval_date: 2026-04-20
+notes_for_next_eval: "v1.1 (2026-05-25) added multi-month cadence framing and a May 2026 wave fresh-example block (Apollo press/grooved as the lead driver); re-eval recommended to confirm no regression."
 ---
 
 # Vendor Price Increase Customer Communication
 
 ## Purpose
 
-Produce the complete decision matrix and customer-facing communication packet a plumbing shop needs when its supply houses and manufacturers push through a wave of price increases. In 2026 this is no longer a rare event — the PHCP-PVF industry has settled into quarterly waves, with April 2026 alone bringing Charlotte Pipe 10% on PVC/CPVC, Merit Brass 6–12% on brass fittings and nipples, Matco-Norca 2.5%, ICP Parts 4%, Honeywell 5%, IPEX 10%, Crane 5.3%, and National Comfort Products 7% — on top of continued upward pressure on copper, brass, and resin globally. The shop has to decide three things very quickly each time: which of its outstanding quotes, signed proposals, and in-progress jobs get grandfathered at the old price and which get re-quoted; how its membership-plan covered services and flat-rate pricebook items absorb the increase (or not); and how it tells customers about it without sounding like it is nickel-and-diming them.
+Produce the complete decision matrix and customer-facing communication packet a plumbing shop needs when its supply houses and manufacturers push through a wave of price increases. In 2026 this is no longer a rare event — the PHCP-PVF industry has compressed from quarterly waves into a monthly cadence. April 2026 alone brought Charlotte Pipe 10% on PVC/CPVC, Merit Brass 6–12% on brass fittings and nipples, Matco-Norca 2.5%, ICP Parts 4%, Honeywell 5%, IPEX 10%, Crane 5.3%, and National Comfort Products 7%. May 2026 followed immediately with another wave — Apollo up to 20% on PowerPress, up to 17% on SmartPress, up to 12% on Shurjoint grooved products, 3% on Backflow and on commercial/industrial valves; Westlake's Brownsville Fittings division +8% across large-diameter, Schedule 40/80, CPVC, HVAC/DWV, and electrical conduit fittings; SDR 35 S/P Series +10%; OmegaFlex TracPipe +6%; Little Giant Pumps +2% — on top of continued upward pressure on copper, brass, and resin globally. Four consecutive months of named manufacturer waves (Feb-Mar, April, May 2026) is now a stable pattern, not a 2025 hangover, and shops that wait for the wave to "settle down" before formalizing their communication discipline are losing margin every month. The shop has to decide three things very quickly each time: which of its outstanding quotes, signed proposals, and in-progress jobs get grandfathered at the old price and which get re-quoted; how its membership-plan covered services and flat-rate pricebook items absorb the increase (or not); and how it tells customers about it without sounding like it is nickel-and-diming them.
 
 This skill produces that full packet in six artifacts: a shop-internal decision matrix that routes every open commitment into grandfather / pass-through / absorb / re-quote; a customer-facing announcement for the shop's membership-plan holders and top commercial accounts (the ones who will notice first); a "your estimate is still honored through date X" confirmation template for customers sitting on an open quote; a pricebook-update briefing the dispatchers and office staff use when a customer asks "why did the price go up"; the technician kitchen-table script for the first two weeks after the new pricing goes live (customers will ask in person); and the internal tracking block for measuring the communication's landing — plan-cancel rate, quote-reconfirm rate, and the resulting margin delta.
 
@@ -348,6 +350,69 @@ A simple tracker and the metrics the shop watches for the next 90 days to confir
 - Any commercial account requesting a meeting under their agreement opt-out provision
 - Any job closing below the 55%-service / 40%-install gross-margin floor
 - Any week where more than one customer asks for Cardinal's pricing policy in writing — indicates the communication did not land for that cohort, adjust messaging
+
+---
+
+## Fresh-Example Data Block — May 2026 Wave (v1.1, 2026-05-25)
+
+This block exists so the operator does not have to re-research the May 2026 named drivers each time a customer-comms packet is run. Drop these values directly into the Required Input section above and the skill will produce a packet calibrated to the actual May 2026 wave rather than to the older April example. The shop's specific weighting depends on its rolling-90-day spend mix; the percentages here are the announced list/net increases per the manufacturer.
+
+**Wave window:** May 1 effective dates (announced mid-to-late April 2026), reported in *Supply House Times* and *Plumbing & Mechanical* magazine.
+
+**Named drivers:**
+
+| Manufacturer / Brand | Move | Categories Affected | Effective |
+|---|---|---|---|
+| Apollo (Aalberts IPS) — **headline driver** | Up to **+20%** | PowerPress press fittings | May 1, 2026 |
+| Apollo (Aalberts IPS) | Up to **+17%** | SmartPress press fittings | May 1, 2026 |
+| Apollo (Aalberts IPS) | Up to **+12%** | Shurjoint grooved products | May 1, 2026 |
+| Apollo (Aalberts IPS) | +3% | Backflow products | May 1, 2026 |
+| Apollo (Aalberts IPS) | +3% | Commercial and industrial valves | May 1, 2026 |
+| Westlake Brownsville Fittings | +8% (list and net) | Large-diameter fittings, Schedule 40 & 80, CPVC, HVAC and DWV, electrical conduit fittings, swing joints, heavy turf, inserts and nipples, select residential/commercial product lines | May 1, 2026 |
+| Westlake — SDR 35 S/P Series | +10% | SDR 35 sewer and drain pipe | May 1, 2026 |
+| OmegaFlex TracPipe | +6% | TracPipe fitting products | May 1, 2026 |
+| Little Giant Pumps | +2% | Pump products | May 1, 2026 |
+
+**Sources to cite internally:**
+
+- *Plumbing & Mechanical*, "PHCP-PVF Price Increases May 2026"
+- *Supply House Times*, "PHCP-PVF Price Increases May 2026"
+
+**What is structurally different about this wave vs. the April wave:**
+
+- **Press fittings are the headline category, not plastic pipe.** The April wave was led by plastic pipe (Charlotte Pipe +10% PVC/CPVC, IPEX +10%); the May wave is led by press-fitting systems (Apollo PowerPress +20%, SmartPress +17%). Shops doing heavy commercial install work — where press systems are now the default joining method for copper, stainless, and carbon steel — will feel this wave more than the April one. Shops doing predominantly residential service and drain work will feel it less.
+- **SDR 35 +10% is the largest single move in any sewer/drain category in the four-month cadence.** Shops doing sewer lateral and main-line replacement work should price this through cleanly — the residential sewer-line jobs that customers most often defer-and-call-around on are about to see a noticeable bump in material cost.
+- **The Westlake Brownsville Fittings +8% is broad-spectrum.** Unlike the press-fittings move (concentrated on Apollo's branded systems), the Westlake move touches everything from large-diameter to Schedule 40/80 to CPVC to HVAC/DWV to electrical conduit. This is the wave's "background increase" that affects almost every quote, even residential service calls that touch any of those categories incidentally.
+
+**Recommended weighted-average framing for a typical residential service shop's announcement:**
+
+> "Between late April and May 1, four of the manufacturers we buy from — Apollo (which makes the press fittings and valves we use on commercial work), Westlake (large-diameter and Schedule 40 fittings, CPVC, DWV), OmegaFlex (TracPipe), and Little Giant Pumps — raised their prices by 2% to 20% by category. Weighted against our typical residential service material mix, the net effective adjustment works out to about [X]%."
+
+**Recommended weighted-average framing for a shop doing heavy commercial install work:**
+
+> "Between late April and May 1, our press-fitting and grooved-system manufacturer Apollo raised prices on PowerPress by up to 20%, SmartPress by up to 17%, and Shurjoint grooved products by up to 12%. Westlake also raised prices on large-diameter and Schedule 40/80 fittings by 8%. Weighted against our typical commercial install material mix — where press and grooved systems dominate the joining-method line — the net effective adjustment is approximately [X]%."
+
+**Field-back-fill (compute against the shop's own spend mix):**
+
+| Material category | Typical residential service-call weight | Typical commercial install weight | May 2026 move |
+|---|---|---|---|
+| Press fittings (Apollo PowerPress/SmartPress) | ~3–5% of spend | ~18–25% of spend | +17–20% |
+| Grooved products (Apollo Shurjoint) | <2% | ~5–8% | +12% |
+| Large-diameter / Sch 40/80 / CPVC / HVAC-DWV / electrical conduit (Westlake) | ~8–12% | ~15–20% | +8% |
+| SDR 35 sewer/drain (Westlake S/P Series) | ~3–5% (sewer-heavy shops higher) | ~2–4% | +10% |
+| Gas piping (OmegaFlex TracPipe fittings) | ~4–7% (gas-line-active shops) | ~3–5% | +6% |
+| Pumps (Little Giant) | ~2–4% | ~2–3% | +2% |
+| Backflow + C&I valves (Apollo) | ~2–3% | ~6–10% | +3% |
+
+**Calibration cross-check (compare against April 2026 wave):**
+
+April 2026 weighted-average net effective move on a typical residential service-call material load: **~6.4%** (per the example in Section 1 of this skill). May 2026 wave will land in the **3.5–5.5%** range for most residential service-heavy shops (because press fittings, where the largest moves are, are a smaller share of the residential mix) and the **6–9%** range for commercial install-heavy shops (because press and grooved systems are a much larger share of the commercial mix). Shops where the May calibration lands above 9% or below 3% should double-check the spend-mix assumption before publishing the percentage in customer-facing communication — outliers in either direction are usually a math error, not a real number.
+
+**What does not change between the April and May packets:**
+
+The six-artifact structure (decision matrix → membership-holder announcement → commercial-account announcement → service-agreement compliance letter → pending-quote confirmation → office briefing → kitchen-table script → 90-day tracker). The grandfather-window logic. The "name the manufacturers, do not blame inflation" discipline. The one-week-lead-time rule. The "single topic, single call to action, signed by name" rule for the announcement email. The membership-plan-fee-is-unchanged reassurance up high.
+
+The only things that change wave-over-wave are the named manufacturers, the percentages, the weighted-average for the specific shop, the effective date, and the grandfather window dates. The packet itself is templated; the input data is what gets refreshed.
 
 ---
 

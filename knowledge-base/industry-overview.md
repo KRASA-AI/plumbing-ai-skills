@@ -1,6 +1,6 @@
 # Plumbing Industry Overview
 
-*Last updated: 2026-05-18*
+*Last updated: 2026-05-25*
 
 ## Market Context
 
@@ -8,7 +8,7 @@ The plumbing industry is undergoing a structural shift in how AI fits into daily
 
 ServiceTitan's 2026 Residential State of the Trades Report found 74% of residential contractors view AI as key to efficiency, but only 25% are currently using it. Among those who are, 48% report productivity improvements and 45% report time savings. The top commercial AI use cases are cost estimation and budgeting (24%) and bid management (22%).
 
-The labor market continues to tighten: 71% of contractors report rising wages (up from 55% in 2025), 530,000+ skilled trade jobs sit empty nationwide, and material costs are climbing — the PHCP-PVF April 2026 vendor-price wave included Charlotte Pipe +10% (PVC/CPVC), Merit Brass +6–12%, IPEX +10%, Honeywell +5%, Crane +5.3%, among others. May 2026 brought a follow-on wave: Westlake's Brownsville Fittings division +8% on large-diameter, Schedule 40/80, CPVC, HVAC/DWV, and electrical conduit fittings; SDR 35 S/P Series +10%; OmegaFlex TracPipe fitting products +6%; Little Giant Pumps +2% — confirming the "quarterly waves are now monthly" pattern and reinforcing the operational case for the Vendor Price Increase Customer Communication skill. AI adoption is now as much about margin protection as it is about efficiency.
+The labor market continues to tighten: 71% of contractors report rising wages (up from 55% in 2025), 530,000+ skilled trade jobs sit empty nationwide, and material costs are climbing — the PHCP-PVF April 2026 vendor-price wave included Charlotte Pipe +10% (PVC/CPVC), Merit Brass +6–12%, IPEX +10%, Honeywell +5%, Crane +5.3%, among others. May 2026 brought a follow-on wave: Apollo (Aalberts IPS) up to +20% on PowerPress, up to +17% on SmartPress, up to +12% on Shurjoint grooved products, +3% on Backflow and on commercial/industrial valves — the largest single-category moves in the four-month cadence and concentrated on the press-fitting and grooved systems that dominate commercial install joining methods; Westlake's Brownsville Fittings division +8% on large-diameter, Schedule 40/80, CPVC, HVAC/DWV, and electrical conduit fittings; SDR 35 S/P Series +10%; OmegaFlex TracPipe fitting products +6%; Little Giant Pumps +2% — confirming the "quarterly waves are now monthly" pattern and reinforcing the operational case for the Vendor Price Increase Customer Communication skill (now v1.1 with a May 2026 fresh-example data block). AI adoption is now as much about margin protection as it is about efficiency.
 
 The broader cultural shift is equally notable. Fortune reported in March 2026 that "plumbers regularly earn more than lawyers" (Daniel Priestley, entrepreneur and author). BlackRock committed $100M to skilled-trade worker training (March 11, 2026). More than half of Gen Z respondents in a 2026 career survey expressed interest in trades careers. PM Magazine's Roland Ligtenberg (Housecall Pro co-founder) described a "blue-collar revolution" driven by economic realities and a reassessment of skilled labor value (April 23, 2026).
 
