@@ -5,9 +5,9 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump"
 version: 1.1
-last_eval_score: 9.6
-last_eval_date: 2026-04-20
-notes_for_next_eval: "v1.1 (2026-05-25) added multi-month cadence framing and a May 2026 wave fresh-example block (Apollo press/grooved as the lead driver); re-eval recommended to confirm no regression."
+last_eval_score: 9.7
+last_eval_date: 2026-05-25
+notes_for_next_eval: "v1.1 (2026-05-25) re-evaluated 2026-05-25; score lifted 9.6 → 9.7 on confirmation of Specificity 9 → 10 (calibration band 3.5–5.5% residential / 6–9% commercial defensible) and Output Quality 9 → 10 (May 2026 inputs pre-loaded, ~30–45 min upstream research saved). v1.2 vector: when the June 2026 wave lands, add a second fresh-example annex without disturbing the May block."
 ---
 
 # Vendor Price Increase Customer Communication

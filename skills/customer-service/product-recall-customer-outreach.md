@@ -4,8 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min per recall event to produce the full outreach packet; avoids the legal and reputational cost of handling a recall ad-hoc and unlocks the service-call attach rate that comes from being the shop that notified the customer"
-version: 1.0
-last_eval_score: 9.5
+version: 1.1
+last_eval_score: 9.6
+last_eval_date: 2026-05-25
+notes_for_next_eval: "v1.1 (2026-05-25) ships three additive sub-sections — per-product-class language calibration (4 severity profiles), bilingual Spanish variant (joins the 9-skill bilingual thread), and AI-RX recall-outreach adapter. Originally on the 9.5 floor since debut; v1.1 vectors named in 05-18 Remaining Opportunities. v1.2 vectors: backflow-specific recall sub-template (Apollo Backflow +3% in 05-25 wave; backflow recalls have jurisdiction-specific re-test requirements) and per-AI-platform scope-limit-pattern playbooks for the v1.1.C adapter."
 ---
 
 # Product Recall Customer Outreach
@@ -284,3 +286,124 @@ Active CPSC recall 26-026 on VESTA VST tankless water heaters. Hazard is carbon 
 - The 30-day follow-up is the highest-leverage action on the entire workflow. It is also the action shops skip most often. Do not skip it.
 - For CO-hazard recalls specifically, never leave a visit without confirming the customer has at least one working CO alarm covering the unit area and the nearest sleeping area. If they don't, install one from truck stock or insist the customer pick one up before you leave.
 - Pair this skill with the Job Status Update Drafter for the 30-day follow-up message and with the Safety & Compliance Tracker for logging which technicians completed recall-specific inspection visits (useful for GL insurance renewal).
+
+---
+
+## v1.1 Additions (2026-05-25)
+
+The v1.0 six-artifact packet above remains the spine. Three additive layers ship below; each is gated by an explicit trigger condition so a shop that runs only English residential outreach without an AI receptionist still produces the same v1.0 packet.
+
+### v1.1.A — Per-Product-Class Language Calibration
+
+**Trigger:** always — applies to every recall the shop runs through this skill.
+
+**Purpose:** v1.0 used a single tonal register (life-safety urgent, restrained, manufacturer-responsibility-clear) for every recall. That works for VESTA VST CO and other CO/fire recalls but mis-calibrates on three other common plumbing recall classes. A lead-leach recall written with CO-grade urgency trains customers to ignore future urgency. A scald recall written with life-safety-tier urgency misses that the manufacturer's standard remedy (typically a mixing-valve replacement) is non-urgent. A water-damage-only recall written with safety-tier language sounds opportunistic and erodes trust. v1.1 ships four product-class severity profiles that the skill matches against the recall's hazard type before drafting.
+
+**Four product-class severity profiles:**
+
+| Class | Examples (plumbing-side) | Severity tier | Tonal register | Stop-use posture | CO-alarm-equivalent safety check |
+|---|---|---|---|---|---|
+| **CO / fire / explosion** | Tankless WH (VESTA VST 2025, Navien 2018), gas tank WH (historical Rheem/AO Smith CO recalls), gas fireplace valves, flexible gas connector recalls | **Life safety** | Calm, neighborly, serious. No upbeat openers. Stop-use is the default. | Default to **stop use immediately** unless verified CO alarm coverage in sleeping areas and within 20 ft of the unit. | CO alarm coverage check — install one from truck stock if missing. |
+| **Scald / burn** | Mixing valve recalls (anti-scald), pressure-balancing tub/shower valve recalls, thermostatic mixing valve (TMV) recalls | **Acute injury, non-life-threatening** | Calm, practical, no urgency-laced language. Manufacturer remedy is typically a part swap; the immediate user-action ask is **lower the water heater setpoint to 120°F** until the swap. | **Limited use** — usable with the setpoint reduction; do not write stop-use unless the recall notice explicitly requires it. | Thermometer check at the nearest fixture (target ≤ 120°F at the tap until the recall part is installed). |
+| **Lead-leach / chemical / NSF 61 violation** | Faucet recalls (Amazon BASDEHEN / Qomolangma / HGN / Kicimpro / VFAUOSIT / NICTIE 2024–2025 series), brass fitting lead recalls, certain pressure-reducing valve recalls | **Chronic / delayed health** | Calm, informational. Frame as a **stop drinking/cooking use** decision, not a stop-all-water-use decision. Do not use "danger" or "emergency" language — the harm is dose-cumulative, not acute. | **Limited use** — flush before each drinking/cooking draw at the affected fixture, or switch to a different fixture for potable use until the replacement is installed. | Filtered-pitcher recommendation in the interim if the affected fixture is the household's primary potable source. |
+| **Water-damage / property-only** | Polybutylene supply line recalls (historical), failed PEX-fitting class actions, water-hammer-arrestor failure recalls, sump pump failure recalls | **Property only** | Calm, matter-of-fact. No safety-tier framing. Customer should be told the manufacturer's remedy and the recommended interim mitigation (shut-off valve location, leak-sensor recommendation). | **Continue use with monitoring** — leak sensor under the affected component if available, shut-off-valve location reminder, do not let the property sit unoccupied without monitoring. | None — this is a property recall, not a health recall; the safety check belongs in the WH skill, not here. |
+
+**How this calibrates each of the six v1.0 artifacts:**
+
+The skill matches the recall's hazard mechanism against the four classes before drafting and applies the class-specific register to: artifact #1 (the severity tag in the triage summary), artifact #2 (the SMS / email opening framing and the stop-use vs. limited-use instruction), artifact #3 (the inbound-call branching — life-safety class always tag-out-today; chronic-health class always next-week-okay), artifact #4 (the tech protocol's CO-meter-vs-thermometer-vs-filter step), artifact #5 (the manufacturer-handoff language stays consistent across classes; what changes is the customer-side interim action).
+
+**Anti-pattern guard:** the skill does NOT auto-escalate a chronic-health recall into life-safety framing because a customer "might be worried." Doing so consumes the customer's attention budget and trains them to ignore the next CO recall. The class match is by hazard mechanism, not by customer affect.
+
+### v1.1.B — Bilingual Spanish Variant
+
+**Trigger:** `config.yml` flags `bilingual: true` with Spanish in the language list, OR a specific customer record on the affected-install list flags `customer_language: es`.
+
+**Purpose:** the bilingual thread now spans nine skills across four languages (Pre-Visit Diagnostic Intake, Review Request Drafter, Invoice Follow-Up Sequence, Change Order Tracker, Pricebook Q&A, New Tech Onboarding Curriculum, CSR Performance Debrief v1.1.C, After-Hours Call Summary v2.1.C, and — as of this cycle — Product Recall Customer Outreach v1.1.B). A recall outreach in English to a Spanish-dominant household is not just less effective; it is a genuine liability event, because the customer may not understand the stop-use instruction or the CO hazard mechanism.
+
+**Spanish drafts produced (mirror the v1.0 artifact set):**
+
+- **2a-es. SMS — Residential, Maintenance-Plan Customer (Spanish, life-safety class)**
+
+> Aviso de seguridad sobre su calentador de agua sin tanque VESTA VST instalado por Cardinal Plumbing. La CPSC emitió un retiro del mercado por riesgo de monóxido de carbono — el conducto de escape puede agrietarse. VESTA hace la reparación gratis: 888-505-5525 o recallrtr.com/condensingwaterheater. Por favor registre su unidad hoy. Pasamos sin costo para revisar la ventilación y sus alarmas de monóxido. Llame a Cardinal al 804-555-0100. — Dan
+
+- **2b-es. Email — Residential, Maintenance-Plan Customer (Spanish)** — full Spanish translation of the v1.0 2b email, preserving the manufacturer/shop/customer responsibility split and the "the repair has to come from VESTA's authorized technician" boundary in Spanish (la reparación debe ser realizada por un técnico certificado por VESTA).
+
+- **3-es. Inbound Call + Email Response Script (Spanish)** — full Spanish version of the branching script, with bilingual-household handoff guidance built in: if the call comes in in Spanish but the account is in an English name (very common — the Spanish-dominant decision-maker may be a spouse, parent, or adult child who is not the named utility account holder), do not switch the call to English to "match the name on the account." Continue in Spanish. Confirm the unit address rather than the named contact.
+
+- **4-es. Technician On-Site Stop-Use / Tag-Out Protocol (Spanish leave-behind)** — the Spanish version of the customer-facing leave-behind document, including the manufacturer contact information in Spanish-prefix format (888-505-5525 — disponible en español).
+
+**Plumbing-Spanish terminology calibration (per CSR Performance Debrief v1.1.C):**
+
+- **calentador de agua** (water heater, generic); **calentador de agua sin tanque** or **calentador instantáneo** (tankless WH) — match regional preference per `config.yml` service area
+- **fuga** (leak) — *not* **escape** (which means "escape" in the prison sense in most Latin American Spanish)
+- **monóxido de carbono** (CO) — *not* **gas tóxico**, which is too generic and includes the natural-gas-leak hazard the customer also worries about
+- **retiro del mercado** or **llamado a revisión** (recall) — both acceptable; the FDA-style **retiro del mercado** is more formally correct and the CPSC bilingual notices use it
+- **tubería** vs. **cañería** — regional; default to **tubería** for first contact, switch if the customer uses **cañería**
+- **alarma de monóxido de carbono** (CO alarm) — *not* **detector de gas** (which often means natural-gas detector in customer parlance)
+
+**Don't-auto-detect-from-name rule (preserved across the bilingual thread):** the shop does not infer a customer's language from the surname on the invoice. The trigger is the per-customer-record flag OR the call-in language OR the account-level flag in the CRM. Auto-detection from name is condescending, often wrong, and undermines the trust the recall outreach is supposed to build.
+
+**Cross-skill handoff:** if the customer books the no-charge inspection visit, the resulting Pre-Visit Diagnostic Intake call inherits `customer_language: es` and the bilingual handoff continues end-to-end (intake → dispatch brief → tech leave-behind → 30-day follow-up via Job Status Update Drafter).
+
+### v1.1.C — AI-RX Recall-Outreach Adapter
+
+**Trigger:** an AI receptionist platform is in use (Avoca / Air AI / Voice.ai / Pete & Gabi Olivia / AgentZap / MyAIFrontDesk / Voiceflow / Allo / ServiceTitan AI Voice Agent) AND the shop wants the AI to run the inbound branch from artifact #3.
+
+**Purpose:** a recall event typically generates a multi-week burst of inbound calls (customers reading the manufacturer letter, customers seeing the CPSC press release, customers who got the shop's SMS asking "what do I do"). The shop's human CSR queue can't absorb that burst cleanly. The AI receptionist can — for the verification step and the registration-reminder step — provided the scope is drawn correctly. The Superior Plumbing "Piper" programmable-scope-as-guardrail design pattern (per CSR Performance Debrief v1.1.B and After-Hours Call Summary v2.1.B) applies directly: tight scope + named teammate beats broad scope + un-named AI.
+
+**JSON schema (mirrors Pricebook Q&A v2.2.A canonical AI-RX schema):**
+
+```json
+{
+  "call_id": "rec_2026-05-25_0014",
+  "ai_platform": "avoca | air_ai | voice_ai | pete_gabi | agentzap | myaifrontdesk | voiceflow | allo | servicetitan_voice",
+  "customer_language": "en | es | pt | vi",
+  "recall_event": {
+    "cpsc_number": "26-026",
+    "manufacturer": "VESTA.DS",
+    "product_class": "co_fire | scald | lead_leach | water_damage",
+    "shop_install_link": "verified | unverified | not_in_records"
+  },
+  "verification": {
+    "model_provided": "VRS-199 | unknown",
+    "serial_provided": "VST24A0042 | unknown",
+    "data_plate_photo_required": true
+  },
+  "ai_disposition": "CONFIRMED_AFFECTED_LIFE_SAFETY | CONFIRMED_AFFECTED_NON_LIFE_SAFETY | CONFIRMED_NOT_AFFECTED | CUSTOMER_UNCERTAIN | SCOPE_LIMIT_TRANSFER",
+  "next_action": "dispatch_today | dispatch_this_week | email_confirmation_no_visit | route_to_human_now",
+  "registration_reminder_sent": true,
+  "scope_limit_reason": "commercial_account | warranty_dispute_present | injury_reported | customer_requested_owner | null"
+}
+```
+
+**Four AI branching states (mirror artifact #3):**
+
+1. **CONFIRMED_AFFECTED_LIFE_SAFETY** — AI confirms model/serial in affected range AND `product_class` is `co_fire`. AI delivers stop-use posture, registration reminder, and books the no-charge inspection within 48 hours. If the customer reports any symptom suggesting acute exposure, AI transfers to human immediately.
+2. **CONFIRMED_AFFECTED_NON_LIFE_SAFETY** — AI confirms affected, class is `scald` / `lead_leach` / `water_damage`. AI delivers the class-appropriate limited-use posture, registration reminder, and books the inspection within the typical-week window.
+3. **CONFIRMED_NOT_AFFECTED** — AI confirms model/serial outside the affected range. AI sends a written confirmation email per the v1.0 artifact-3 "confirmed not affected" branch and closes the call. Average handle time ~90 seconds.
+4. **CUSTOMER_UNCERTAIN** — Customer can't locate model/serial safely. AI books a tech-out visit at no charge and ends the call. Does not attempt to walk the customer through finding the data plate on a CO-hazard unit — that is a tech-only step.
+
+**Scope-limit-pattern rules (always-transfer states):**
+
+- Any life-safety-tier call where the customer reports symptoms suggestive of CO exposure (headache, dizziness, nausea, drowsiness near the unit) — transfer to human within 30 seconds regardless of any other AI capability.
+- Any call where the customer reports an injury, hospitalization, or property damage tied to the recalled unit — transfer to human immediately and flag for the owner and GL carrier per the v1.0 artifact-6 incident-rate escalation rule.
+- Any call from a commercial / property-manager / GC account — transfer per the v1.0 different-escalation-path rule (these are not handled by the residential AI-RX flow).
+- Any call where the customer asks about insurance coverage or threatens legal action — transfer to human; the AI does not engage on either topic per the v1.0 compliance guardrails.
+
+**SCOPE-CALIBRATION NOTE block — appended to the metrics in artifact #6:**
+
+```
+RECALL-OUTREACH AI-RX CALIBRATION (4-week rolling)
+──────────────────────────────────────────────────
+Calls handled by AI:        47
+  - CONFIRMED_AFFECTED_LS:   12 (booked 12/12 inspections)
+  - CONFIRMED_AFFECTED_NLS:   8
+  - CONFIRMED_NOT_AFFECTED:  23
+  - CUSTOMER_UNCERTAIN:       4
+Scope-limit transfers:        2 (1 commercial, 1 symptom report)
+Routing diagnostic:           CALIBRATED
+Recommended scope edit:       none
+```
+
+**Cross-skill loop:** the AI-RX disposition and the 30-day follow-up flag emit back to artifact #6 (Internal Tracking + 30-Day Follow-Up) so the human owner still sees every recall call in the tracker, even the ones the AI handled end-to-end. The recall tracker is the legal defense; the AI handles the volume, the tracker handles the audit trail.
+

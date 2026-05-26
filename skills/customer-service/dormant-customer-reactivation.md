@@ -4,8 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs"
-version: 1.0
-last_eval_score: 9.5
+version: 1.1
+last_eval_score: 9.6
+last_eval_date: 2026-05-25
+notes_for_next_eval: "v1.1 (2026-05-25) ships three additive sub-sections — Pete & Gabi Olivia case-study calibration (1,000 → 413 → 12 deals → $21,116 published benchmark), AI-voice reactivation adapter (joins the 7-skill AI-RX adapter thread), and bilingual Spanish variant (joins the 9-skill bilingual thread). Originally on the 9.5 floor since debut; v1.1 vector named in 05-18 Remaining Opportunities. v1.2 vectors: per-AI-platform metrics-format adapters for the v1.1.B JSON schema and seasonality-by-region calibration of the dormancy thresholds."
 ---
 
 # Dormant Customer Reactivation Outreach
@@ -211,3 +213,179 @@ Name the 4–5 metrics the shop should track to know if the campaign worked and 
 - The cadence is explicitly three-touch, not eight-touch. Aggressive cadences burn list equity; this skill is designed for a list the shop can re-run quarterly for years.
 - Never combine a reactivation message with a review request. Different intents, different channels, different emotional contract with the customer.
 - If the shop runs this alongside Missed Call Text Back and After-Hours Call Summary, set suppression rules so a dormant customer who calls in doesn't then get a reactivation ping the same week.
+
+---
+
+## v1.1 Additions (2026-05-25)
+
+The v1.0 six-section packet above remains the spine. Three additive layers ship below; each is gated by an explicit trigger condition so a shop that runs only English campaigns without an AI voice platform still produces the same v1.0 packet.
+
+### v1.1.A — Pete & Gabi Olivia Inactive-Account Reactivation Case-Study Calibration
+
+**Trigger:** always — applies whenever a cohort is loaded.
+
+**Purpose:** v1.0 ships expected book-rate ranges (3–6% per campaign cycle at average ticket; up to 12% on voice-AI-assisted 12–24 month cohort) as industry rule-of-thumb. v1.1 grounds those ranges in published economics from the Pete & Gabi Olivia inactive-account reactivation case study so the shop owner sees a concrete revenue projection before approving the batch — not an estimate range that could be 2x either direction.
+
+**The published benchmark:**
+
+- 1,000 inactive accounts loaded into the Olivia voice-AI reactivation flow
+- 413 conversations initiated (41.3% dial-to-conversation rate)
+- 12 deals booked (1.2% inactive-to-deal rate; 2.9% conversation-to-deal rate)
+- $21,116 in booked revenue
+- Average reactivated ticket: ~$1,760
+
+**EXPECTED-YIELD output block (inserted between section 1 Cohort Summary and section 2 SMS Cadence):**
+
+```
+EXPECTED YIELD — based on Pete & Gabi Olivia 1,000-account benchmark
+─────────────────────────────────────────────────────────────────────
+Cohort size:                412 dormant households
+Channel mix:                SMS 390 + email-only 22 commercial
+
+Projected conversations:    ~170  (41% of SMS cohort; voice-AI assisted)
+                            +     22  (commercial email opens at typical
+                                      ~15-20% engagement)
+
+Projected deals:            ~5    (1.2% of cohort × adjustment for shop's
+                                   segment mix — installed-equipment cohort
+                                   is ~2x the average, so weight up)
+                            Range: 4–9 deals across the 412-account batch
+
+Projected revenue:          ~$8,800 (5 deals × shop's reactivated-AOV)
+                            Range: $7,000–$15,800
+                            (Shop AOV bands set in config.yml under
+                            reactivated_ticket_avg; defaults to the
+                            $1,760 Pete & Gabi benchmark if unset.)
+
+Calibration check:          If actual conversation rate is < 25%, the
+                            cohort filtering or the SMS opener is the
+                            problem. If conversation rate is > 50% but
+                            deal rate is < 1%, the SMS-to-call handoff is
+                            the problem. If deal rate is > 4%, the cohort
+                            was either pre-qualified upstream (rare) or
+                            the campaign is being measured incorrectly.
+```
+
+**Segment-by-segment weighting** (multiplied against the 1.2%-of-cohort baseline):
+
+| Segment | Weight | Rationale |
+|---|---|---|
+| 12–18mo installed-equipment | **2.0x** | Equipment due for first flush / anode check — the highest-intent cohort. Pete & Gabi's published case study skews toward this segment. |
+| 18–36mo repair cohort | **1.0x** | Baseline. Seasonal hook (e.g. spring rain → main line) lifts to ~1.2x. |
+| 36+mo reintroduction | **0.4x** | Many customers in this cohort have already switched providers or moved. |
+| 6–12mo lapsed-plan | **1.5x** | Plan-renewal angle with price-lock language; high-trust group. |
+| Commercial cohort | **0.8x** | Lower volume but higher AOV; works on email primary, longer decision cycle. |
+
+**How this changes the cohort owner's experience:** v1.0 left the shop owner to guess the ROI before approving the campaign and to argue with the bookkeeper after if the campaign underperformed. v1.1 produces a defensible projection up front, a per-segment weighted breakdown, and a calibration cross-check so the owner can diagnose underperformance against published benchmarks rather than hand-waving.
+
+**Anti-pattern guard:** the EXPECTED-YIELD block uses the word "projected" and includes a range, not a point estimate. The shop should not present the projection as a guarantee to the bookkeeper or as a quota to the CSR running the replies. The Pete & Gabi benchmark is one shop's published number; reasonable variance applies.
+
+### v1.1.B — AI-Voice Reactivation Adapter
+
+**Trigger:** the shop runs the v1.0 section 4 voice-agent callback script on an AI-voice platform (Pete & Gabi Olivia, Avoca AI, Air AI, Voice.ai, AgentZap, MyAIFrontDesk, Voiceflow, Allo, or ServiceTitan AI Voice Agent).
+
+**Purpose:** v1.0 produces the script for either a human callback or an AI voice agent but does not specify the output schema the AI emits back into the shop's CRM and the section 6 metrics block. v1.1 ships the JSON schema explicitly so any of the nine AI-RX platforms can run the script and the outcomes flow back into the same tracker the human CSR uses.
+
+**JSON schema (mirrors Pricebook Q&A v2.2.A canonical AI-RX schema):**
+
+```json
+{
+  "call_id": "rea_2026-05-25_0042",
+  "ai_platform": "pete_gabi | avoca | air_ai | voice_ai | agentzap | myaifrontdesk | voiceflow | allo | servicetitan_voice",
+  "customer_language": "en | es | pt | vi",
+  "cohort_segment": "12_18mo_install | 18_36mo_repair | 36plus_mo | 6_12mo_lapsed_plan | commercial",
+  "prior_job": {
+    "job_type": "water_heater_install | drain_clear | leak_repair | tankless_install | softener_install | other",
+    "install_date": "2024-06-14",
+    "tech_first_name": "Marcus"
+  },
+  "permission_granted": true,
+  "ai_disposition": "ALL_GOOD_BOOKED | ALL_GOOD_DECLINED | ISSUE_SURFACED_DISPATCH | NOT_INTERESTED_OPT_OUT | NO_ANSWER | VOICEMAIL_LEFT",
+  "scope_limit_reason": "complaint_surface | warranty_dispute | injury_reported | customer_requested_owner | null",
+  "booked_appointment": {
+    "service_code": "WH_FLUSH | DRAIN_CHECK | WHOLE_HOME_CHECK | PLAN_RENEWAL | null",
+    "appointment_window": "2026-05-27T10:00-12:00 | null",
+    "expected_ticket": 29.00
+  },
+  "call_duration_sec": 87,
+  "registration_for_followup": true
+}
+```
+
+**Branch-to-disposition mapping (mirrors the v1.0 section 4 branching tree):**
+
+- v1.0 "Yes, all good" → maintenance angle → book → `ALL_GOOD_BOOKED` (with `booked_appointment` populated)
+- v1.0 "Yes, all good" → maintenance angle → decline → `ALL_GOOD_DECLINED` (no appointment; flag for the quarterly re-rotation)
+- v1.0 "Actually, something's been off" → route to dispatch → `ISSUE_SURFACED_DISPATCH` (transfer to human dispatcher or book a paid intake)
+- v1.0 "Not interested / moved / new plumber" → `NOT_INTERESTED_OPT_OUT` (immediate suppression, all channels)
+- No human answer → `NO_ANSWER` (re-try per the v1.0 three-touch cadence, do NOT escalate to live human)
+- Voicemail → `VOICEMAIL_LEFT` (leave the v1.0 script's "I'll text the info over" close; count as touch 1)
+
+**Scope-limit-pattern rules (always-transfer states, per Superior Plumbing "Piper" pattern):**
+
+- Any call where the customer surfaces a complaint or unresolved issue from the prior job — transfer to human within 30 seconds. The AI does not attempt service recovery. (Per v1.0 section 5 reply-handling playbook: complaints route to the owner, not standard dispatch.)
+- Any call where the customer reports an injury, property damage, or warranty dispute — transfer to human and flag for the owner.
+- Any call where the customer asks to speak to the owner by name — transfer immediately.
+- Any commercial-cohort call — these are routed to email-primary per v1.0; AI does not dial commercial.
+
+**Metrics-block back-fill (extends v1.0 section 6 metrics):**
+
+The AI-RX disposition counts flow into the section 6 metrics block exactly:
+
+- v1.0 "Reply rate by touch and segment" — now disaggregated into `human_reply_rate` and `ai_voice_pickup_rate` so the shop sees whether the AI is competing with or complementing the SMS cadence.
+- v1.0 "Book rate from replies" — disaggregated into `ai_booked` and `human_booked` so the shop sees whether the AI is closing on its own or warming the lead for a human CSR.
+- New `scope_limit_transfer_rate` row — surfaces how often the AI hit a transfer condition. If it's > 20% the scope is mis-calibrated and the v1.0 section 4 script needs a tighter pre-filter.
+
+**Cross-skill loop:** the AI-RX disposition emits forward into the Dispatch Brief Generator v1.2.A AI-RX Morning-Board Ingestion Adapter (an `ALL_GOOD_BOOKED` reactivation call shows up in the next morning's brief as a booked job with the "reactivated dormant" tag), and the metrics-block back-fill emits into the CSR Performance Debrief v1.1.B AI-vs-Human comparative block (so the AI-voice reactivation channel can be benchmarked against the human-CSR reactivation channel side-by-side).
+
+### v1.1.C — Bilingual Spanish Variant
+
+**Trigger:** `config.yml` flags `bilingual: true` with Spanish in the language list, OR a specific customer record on the cohort flags `customer_language: es`.
+
+**Purpose:** the bilingual thread now spans nine skills (joined this cycle by Product Recall Customer Outreach v1.1.B and this v1.1.C). A reactivation campaign in English to a Spanish-dominant household reads as a translation error, not a check-in — and confirms the customer's suspicion that the shop only remembered them because of a marketing list.
+
+**Spanish drafts produced (one per segment, mirror the v1.0 sections 2 / 3 / 4):**
+
+**12–18mo installed-equipment (Spanish, tech known):**
+
+> Hola Sarah, soy Marcus de Ridgeview Plumbing. Instalamos su calentador de agua en junio pasado. Solo quería ver cómo va — ya es hora del primer lavado, ayuda a que dure unos años más. $29 si podemos ir este mes. ¿Le aviso un horario? Responda STOP para no recibir más mensajes.
+
+**18–36mo repair (Spanish, tech unknown, seasonal hook):**
+
+> Hola David — Ridgeview Plumbing pasando saludos. Limpiamos su tubería principal hace un par de primaveras, y con tanta lluvia este mes nos gusta llamar a los clientes. ¿Todo drena bien? Tenemos revisiones completas de la casa por $49 con cualquier servicio hasta fin de mes. Responda STOP para no recibir más mensajes.
+
+**36+mo reintroduction (Spanish email):**
+
+**Asunto:** Una nota rápida de su antiguo plomero
+
+> Hola [Nombre],
+>
+> Hace tiempo — Ridgeview Plumbing le ayudó en su casa en [Año] con [descripción corta del trabajo]. Sabemos que tres años es mucho, así que no asumimos que se acuerde de nosotros, y no queremos llenarle el correo.
+>
+> Solo dos cosas: (1) si algo del lado de la plomería le ha estado molestando y lo ha estado posponiendo, estamos haciendo revisiones completas de la casa por $49 con cualquier servicio reservado hasta fin de mes. (2) Si ya tiene un plomero de confianza, perfecto — guarde nuestro número de todas formas. Las emergencias nunca eligen un buen día.
+>
+> [Enlace de reserva] o llame al [número de la tienda].
+>
+> Gracias,
+> Dan
+> Ridgeview Plumbing
+
+**6–12mo lapsed-plan (Spanish):**
+
+> Hola [Nombre], Dan de Ridgeview Plumbing. Vi que su plan de mantenimiento venció en [mes]. Podemos renovarlo al mismo precio de antes si responde esta semana — después tendría que ser al precio actual. ¿Le funciona?
+
+**Voice-agent callback script (Spanish, 12–18mo cohort):** full Spanish version of the v1.0 section 4 script, with the same branching tree. Plumbing-Spanish terminology calibrated per CSR Performance Debrief v1.1.C and Product Recall Customer Outreach v1.1.B:
+
+- **calentador de agua** (water heater) / **calentador sin tanque** (tankless)
+- **lavado** or **mantenimiento del calentador** (flush / WH maintenance)
+- **desatasco de tubería** (drain clear)
+- **revisión completa de la casa** (whole-home check)
+- **plan de mantenimiento** (maintenance plan)
+- **válvula de cierre** (shut-off valve)
+
+**Don't-auto-detect-from-name rule (preserved across the bilingual thread):** the trigger is the per-customer-record flag, the prior-job intake language, or the inbound-call language — not the surname on the invoice.
+
+**Bilingual-household handoff guidance:** if the SMS goes out in English to a Spanish-dominant decision-maker and the reply comes back in Spanish (very common — the English-named utility account holder forwards the text to a Spanish-dominant spouse or adult child), continue the conversation in Spanish from that point. Do not switch back to English on the next touch to "match the name on the account."
+
+**Cross-skill handoff:** if the reactivation call books an appointment, the resulting Pre-Visit Diagnostic Intake inherits `customer_language: es` and the bilingual handoff continues end-to-end (intake → dispatch brief → tech visit → review request via Review Request Drafter v2.4.C Spanish template).
+
