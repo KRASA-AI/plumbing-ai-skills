@@ -1,6 +1,6 @@
 # Plumbing Industry Overview
 
-*Last updated: 2026-05-25*
+*Last updated: 2026-06-01*
 
 ## Market Context
 
@@ -35,6 +35,8 @@ Other platforms in active use: Pete & Gabi (Olivia AI — case study: 1,000 dorm
 
 Riley Plumbing case study: 19% revenue growth and 80%+ call booking rates after deploying ServiceTitan AI Voice Agents + Dispatch Pro + Field Pro across every workflow. A Sunday-night AI-answered furnace call → next-morning dispatch → $1,060 ticket that would have gone unanswered pre-AI.
 
+**Counter-thesis surfaced May 2026 (calibration consideration for the AI-Receptionist JSON Adapter thread):** Contractor Magazine published "Plumber Near Me: How Contractors Lose Jobs Before the Technician Arrives" (Jane Blanchard, ServiceForge, May 12, 2026), reporting that "one in three homeowners will hang up if AI answers the phone instead of a live person" and that "when customers are choosing between two businesses with similar ratings, 78% will pick the one where a real person picks up the phone over AI." The article is authored by a live-answering-service brand and carries that vendor bias, but it is the first such counter-thesis surfaced in an industry-authority watchlist publication and it is being cited in shop-owner conversations. The operational implication is **not** to disable AI receptionist deployments — the Avoca, Pete & Gabi, AgentZap, and ServiceTitan AI Voice Agent results above remain real — but to calibrate the AI-RX adapter framing across the repo's skills toward a **hybrid posture**: AI-RX for after-hours, overflow, and triage, with live-human answering as the default-on for business-hours inbound. Skills consuming the AI-RX JSON adapter schema (Pricebook Q&A v2.2.A, Estimate Writer v2.1.A, Invoice Follow-Up v2.4.B, Review Request Drafter v2.4.A, Parts & Materials List v1.2.B, After-Hours Call Summary v2.1.A, Dispatch Brief Generator v1.2.A, Product Recall Customer Outreach v1.1.C, Dormant Customer Reactivation v1.1.B) already carry human-handoff guardrails; the calibration consideration documented here should be reflected in those skills' framing at the next evaluator cycle.
+
 ### AI-Powered Field Service Platforms
 
 ServiceTitan Atlas remains the dominant platform — AI sidekick built into the operating system that thousands of trade businesses already run on. Dispatch Pro automates technician assignment based on proximity, skill sets, customer history, and workload. Nearly 30% of bookings at some shops now flow end-to-end without human involvement from call to schedule to dispatch.
@@ -65,7 +67,7 @@ Plumbing manufacturers are producing AI-powered systems for leak detection, wate
 
 ## Regulatory and Compliance Landscape
 
-The EPA Lead and Copper Rule Improvements (LCRI) carry a compliance date of November 1, 2027. The LCRR annual notification cycle continues (November 2025/2026/2027). The EPA's Small Entity Compliance Guide for the LCRI has not yet been published as of May 2026 — the June 2023 LCRR inventory guide (815-B-23-005) remains the only released small-entity guide. 2026 is the final year to access the current round of EPA grant funding and 0% interest loan programs.
+The EPA Lead and Copper Rule Improvements (LCRI) carry a compliance date of November 1, 2027. The LCRR annual notification cycle continues (November 2025/2026/2027). The EPA's Small Entity Compliance Guide for the LCRI has not yet been published as of June 2026 — fourteen consecutive monitor cycles confirming. The June 2023 LCRR inventory guide (815-B-23-005) remains the only released small-entity guide, with the April 2026 draft "Access Tips" and "Service Line Inventory Tips" documents in post-comment-period limbo (comment deadline was April 30, 2026; final guidance has not been released). The Lead Service Line Customer Briefing skill ships at v0.9 provisional draft as of 06-01 with explicit subject-to-EPA-final-guidance markers on the three artifacts that depend on the unpublished guide (the on-site access-permission step, the homeowner flushing-and-filter windows, and the customer-side access-permission form), to be reconciled to v1.0 when EPA publishes. 2026 is the final year to access the current round of EPA grant funding and 0% interest loan programs.
 
 State-specific licensing and CE requirements vary significantly: TX 6-hr CE with code-update sub-requirement, OH 5-hr CE online-only cap, FL workers-comp + workplace-safety sub-hour CE, KY Master Plumber, IL 1099 hold-your-own-license rule, VA P-1/P-2, WA contractor bond + L&I, OR CCB, AZ ROC class, CA C-36, FL CFC. DOL committed $243M to AI Apprenticeships (April 1, 2026). AR/VR plumbing apprenticeship programs report a 28% retention lift.
 
