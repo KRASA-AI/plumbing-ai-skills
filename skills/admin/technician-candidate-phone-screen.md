@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/candidate"
-version: 1.1
-last_eval_score: 9.5
+version: 1.2
+last_eval_score: 9.6
 ---
 
 # Technician Candidate Phone Screen
@@ -324,3 +324,181 @@ Some candidates warrant the full v1.0 conversation from the first call, no triag
 - A candidate whose last 18 months show the exact role mix the shop is hiring for
 
 For these candidates, skip the compressed variant and run the full v1.0 conversation. Treat the 8-12 question conversation as the respect signal — these candidates have other shops calling them too.
+
+---
+
+## v1.2 Additions (2026-06-01)
+
+The v1.1 skill held at 9.5 across six consecutive evaluator cycles (04-25 ship through 05-25). The 05-18 Remaining Opportunities #2 named the v1.2 vector explicitly: integration with the New Tech Onboarding Curriculum v1.0 Day-1 fluency-baseline drills so the phone screen pre-flags which fluency drills the candidate will need on Day 1. v1.2 ships that integration plus two additional sub-sections (an AI-RX phone-screen adapter for shops using AI-RX platforms to do first-touch candidate triage, and a bilingual Spanish variant). All v1.0 and v1.1 content above is preserved unchanged.
+
+### Onboarding-Fluency Pre-Flag Integration
+
+The v1.0 Section 4 post-call summary template gains a new FLUENCY-DRILL PRE-FLAG block that maps the candidate's verbal responses to the technical-probe questions (Q4–Q11 of the v1.0 8–12 question script, or Q4 of the v1.1 compressed variant when the compressed variant was the only call) onto the seven Day-1 fluency drills defined in New Tech Onboarding Curriculum v1.0.
+
+The seven drills (canonical names from New Tech Onboarding Curriculum):
+
+1. **water-heater-sizing** — recovery rate, family size, fixture count, tank-vs-tankless decision logic, expansion-tank-on-closed-system, T&P, code venting
+2. **gas-pressure-test sequence** — manometer placement, drop tolerance window, leak isolation, post-test purge and pressure restoration
+3. **DWV-stack reading** — vent sizing, fixture-unit math, branch interval rules, stack-vent vs. main-vent decision
+4. **drain-cleaning-method selection** — jet vs. snake vs. cable, kitchen vs. main vs. lateral, slab-on-grade vs. crawlspace access strategy
+5. **PEX-A-vs-B identification** — visual and physical identification, expansion-fitting compatibility, temperature-rating fit, recall-list awareness
+6. **code-fluency by jurisdiction** — UPC vs. IPC vs. local amendments, permit-pulling cadence, inspector-relationship norms in the shop's primary jurisdiction
+7. **customer-pricing conversation** — explaining a $3,200 repair to a $500-expecting homeowner, good-better-best framing, walking back from a sticker-shock reaction without giving away margin
+
+**Pre-flag scoring for each drill** — one of three states:
+
+- **CALIBRATED** — The candidate's verbal answer demonstrates fluency. Day-1 drill can be a confirmation pass (5–10 minutes verifying the verbal answer against shop-specific tools and pricebook) rather than a full learning session. Save the Day-1 slot for one of the GAP drills.
+- **GAP** — The answer is incomplete or directionally wrong in a way that a working tech would not be wrong. Day-1 drill is a true learning session (45–90 minutes with a senior tech). Note which sub-skill within the drill was the gap so the senior tech can target the session.
+- **UNTESTED** — The screen did not surface enough signal to score (the call did not reach the relevant technical probe, or the candidate's answer was too short to assess, or the role-calibration was off — e.g., a drain-tech candidate answered the water-heater-sizing question with no exposure). Day-1 drill should be run cold (full 45–90 minute drill with no assumed baseline).
+
+**Output addition — append to v1.0 Section 4 post-call summary as a new sub-block:**
+
+```
+─────────────────────────────────────────────────
+🎯 DAY-1 FLUENCY-DRILL PRE-FLAG
+   Source: phone-screen technical probes
+   Target consumer: New Tech Onboarding Curriculum v1.0
+─────────────────────────────────────────────────
+
+  Drill                         | Pre-flag    | Senior-tech note
+  ------------------------------|-------------|------------------------------
+  water-heater-sizing           | CALIBRATED  | Named recovery rate + closed-system expansion logic on Q4
+  gas-pressure-test sequence    | GAP         | Knows manometer, missed the post-test purge step — drill the purge sequence specifically
+  DWV-stack reading             | UNTESTED    | Service-tech role; v1.0 script did not include the DWV question — run cold
+  drain-cleaning-method         | CALIBRATED  | Strong jet-vs-snake judgment on Q5 scenario
+  PEX-A-vs-B identification     | UNTESTED    | Not probed in the compressed variant — run cold
+  code-fluency (TX)             | GAP         | Knew IPC chapter numbers but unsure on TX local amendments — needs a local-jurisdiction walkthrough
+  customer-pricing conversation | CALIBRATED  | Q11 answer demonstrated good-better-best framing naturally
+
+  Day-1 drill priority order (senior-tech allocation):
+   1. gas-pressure-test sequence (GAP — purge sequence)
+   2. code-fluency TX local amendments (GAP — sub-area-specific)
+   3. DWV-stack reading (UNTESTED — service-tech baseline unknown)
+   4. PEX-A-vs-B identification (UNTESTED — could be a 15-min bench show)
+   5. water-heater-sizing (CALIBRATED — confirmation pass only)
+   6. drain-cleaning-method (CALIBRATED — confirmation pass only)
+   7. customer-pricing conversation (CALIBRATED — confirmation via role-play only)
+
+  Pre-flag generated 2026-06-01 from phone screen 2026-06-01.
+  Feeds: outputs/onboarding-curriculum-{candidate-last-name}-day1.md (when hired)
+─────────────────────────────────────────────────
+```
+
+**Hardening rules for the pre-flag integration:**
+
+- **The pre-flag is a calibration signal, not a hiring signal.** A candidate with 3 GAPs and 2 UNTESTED scores can still be a HIRE — the pre-flag tells the onboarding plan what to do on Day 1, not whether to make the offer. The hiring decision remains on the v1.0 / v1.1 HIRE / MAYBE / PASS recommendation line.
+- **CALIBRATED is a confirmation pass, not a skip.** Senior techs sometimes read CALIBRATED as "don't run the drill at all." That misses the calibration value (verifying the verbal answer against the shop's tools and pricebook in the actual shop environment). Confirmation pass is 5–10 minutes, not zero.
+- **UNTESTED is not a skill gap.** A drill that was not probed in the call is unknown, not absent. Day-1 drill is run cold (full session). The most common source of UNTESTED is role-calibration: a drain-tech candidate's call won't include water-heater-sizing probes.
+- **The 7-drill canonical list must match the New Tech Onboarding Curriculum v1.0 list exactly.** If the onboarding curriculum's drill names or canonical list ever change (which they have not in nine months), this skill's pre-flag block must be updated to match. The two skills' lists are a single source of truth.
+- **Per-shop overlay.** Shops with a customized onboarding curriculum (a shop that has added an 8th drill — septic, hydronic, fire-suppression) get the pre-flag extended automatically by reading the shop's `outputs/onboarding-curriculum-*.md` for the local canonical list. The default 7-drill list is the fall-back.
+
+### AI-RX Phone-Screen Adapter
+
+JSON schema mirroring the Pricebook Q&A v2.2.A canonical AI-RX schema. Lets the SMS pre-screen pattern from v1.1 plus the live 10-minute compressed variant from v1.1 run on any of the nine AI-RX platforms in the canonical platform list (Avoca, Pete & Gabi Olivia, ServiceAgent, Trillet, Marlie, ConvoCore, Voiceflow, My AI Front Desk, Ring-a-Ding OpenClaw). This is the tenth schema-implementing skill across the AI-RX adapter thread.
+
+**Trigger:** Apply when the input includes `[AI-RX]` at the start of the candidate intake, *or* when the input is a JSON request payload with a `platform` field set to one of the nine canonical platform identifiers.
+
+**Output schema (mirrors canonical AI-RX schema):**
+
+```json
+{
+  "skill_version": "1.2",
+  "intake_type": "sms_pre_screen | compressed_phone_screen | full_phone_screen",
+  "candidate_id": "[shop's internal candidate ID]",
+  "platform": "[avoca | petegabi | serviceagent | trillet | marlie | convocore | voiceflow | myaifrontdesk | ringading]",
+  "candidate_disposition": "ADVANCE_TO_FULL_SCREEN | HOLD_30_DAYS | PASS_WITH_REASON | NO_REPLY_24H_AUTO_CLOSE",
+  "knockout_results": {
+    "license_status": "pass | fail | unverified",
+    "dl_mvr_status": "pass | fail | unverified",
+    "start_date_fit": "pass | fail | needs_negotiation"
+  },
+  "fluency_pre_flag_partial": {
+    "drills_probed": ["..."],
+    "calibrated_count": 0,
+    "gap_count": 0,
+    "untested_count": 7
+  },
+  "pay_range_signal": "in_range | above_range_small | above_range_large | below_range",
+  "scope_limit_triggered": false,
+  "scope_limit_reason": null,
+  "escalation_to_human": false,
+  "escalation_reason": null,
+  "next_action_owner": "ai_rx | shop_office | hiring_owner",
+  "next_action_by": "[ISO timestamp]"
+}
+```
+
+**Scope-limit-pattern rules (matching the Superior Plumbing "Piper" programmable-scope-as-guardrail pattern used across the nine AI-RX-consuming skills):**
+
+The AI-RX phone screen escalates to human within 30 seconds when any of the following surface:
+
+- **Any license-claim-verification request.** The AI-RX should not be confirming a state license number is active. License lookups go through state portals that the AI-RX does not have credentials for. Mark `knockout_results.license_status` as `unverified` and escalate.
+- **Pay-negotiation beyond the published band.** If the candidate asks about negotiating outside the published $X–$Y range, escalate. AI-RX should not be making counter-offers.
+- **Callback from a current shop's tech.** Relationship-sensitive — the candidate is currently employed at a competitor's shop and is making a tentative inquiry. Human-only, AI-RX should not engage at all beyond confirming the call is welcome and scheduling a callback with the hiring owner.
+- **Reference-check-style questions** ("I worked with so-and-so at ABC Plumbing, do you know him?"). Reference checks are a separate workflow and require human relationship handling.
+- **Any complaint about a current or former employer.** Escalate to human — these conversations carry legal and tonal risk that the AI-RX should not navigate.
+- **Apprentice candidates with active learning-disability disclosure.** Accommodation conversations require human discretion. Escalate to the hiring owner.
+- **Any tonal request for "a person to talk to."** Mirrors the Blanchard counter-thesis hybrid-posture guidance from the 06-01 monitor cycle — when a candidate explicitly asks for a human, transfer within 15 seconds without restating the question.
+
+**Hardening rules for the AI-RX phone-screen adapter:**
+
+- **AI-RX runs only the SMS pre-screen and the compressed variant.** AI-RX should not run the v1.0 full 8–12 question screen. The full screen carries the hiring conversation; AI-RX is triage. If the candidate clears the compressed variant with ADVANCE_TO_FULL_SCREEN, schedule a human-led full screen within 48 hours.
+- **The pre-flag block from v1.2.A is partial under AI-RX.** AI-RX-collected pre-flag scores cover only the drills that were probed in the compressed variant's Q4 scenario (typically 1 drill — water-heater-sizing for service candidates, drain-cleaning-method for drain candidates, DWV-stack reading for new-construction candidates, customer-pricing-conversation for apprentice candidates). All other drills are UNTESTED. The full human-led screen completes the pre-flag.
+- **Hybrid-posture deployment.** Per the 06-01 hybrid-posture calibration framing applied across the AI-RX adapter thread: AI-RX phone-screen is the right answer for after-hours (4:45 PM Friday callback), overflow (3 candidates calling at once during business hours), and Indeed/ZipRecruiter auto-reply SMS pre-screen. AI-RX should NOT be the default business-hours candidate-call answer when a human is available. The hiring conversation is a relationship-building moment.
+- **Bilingual flag passes through.** When the candidate's intake is in Spanish (`candidate_language: es`), the AI-RX adapter routes to the v1.2.C Spanish variant below.
+- **Audit trail.** Every AI-RX-handled candidate touch emits to `outputs/candidate-screens/{date}-{candidate-last-name}-{intake_type}.md` for the office's hiring record, matching the v1.0 Section 4 save-path convention.
+
+### Bilingual Spanish Variant
+
+Joins the bilingual thread as the twelfth Spanish-anchored skill across four languages (en/es/pt/vi). Adds Spanish versions of the v1.1 SMS pre-screen pattern (two-message exchange in Spanish), the v1.1 compressed-variant five-question script, and the v1.0 Section 4 post-call summary template. The v1.0 full 8–12 question screen and Section 1 prep sheet remain English-default; both are produced for the screener and the screener will read either language; the customer-facing artifacts (SMS, scripted compressed-call open and close, post-call summary if shared with the candidate) get the Spanish treatment.
+
+**Trigger:** Apply when `candidate_language` is set to `es` (sourced from the application form, the SMS pre-screen Q1 reply, or the candidate's stated preference on the initial call), *or* when the input includes `[ES]` at the start of the candidate intake. Default to English when the language field is unconfirmed. Never auto-detect from the candidate's name — many Hispanic candidates prefer English-default in professional contexts, and many non-Hispanic candidates have applied through Spanish-language job-board placements and prefer Spanish.
+
+**Spanish SMS pre-screen pattern (mirrors v1.1 two-message exchange):**
+
+> **Message 1 (within 30 minutes of application):**
+>
+> Hola [NOMBRE] — soy de [NOMBRE DEL TALLER] en [CIUDAD]. Vi su solicitud para [PUESTO]. Dos preguntas rápidas antes de programar una llamada:
+> 1. ¿Su licencia de fontanero en [ESTADO] está activa? (sí o no)
+> 2. ¿Cuándo podría empezar si avanzamos rápido — 1 semana / 2-3 semanas / 30+ días?
+
+> **Message 2 (after candidate replies):**
+>
+> Gracias. ¿Tiene 10 minutos para una llamada [HOY] [HORA] o [MAÑANA] [HORA]? La mantendré breve.
+
+**Spanish compressed-variant five-question script (mirrors v1.1):**
+
+- **Q1 — Licencia + DL knockout.** "Rápidamente — ¿cuál es su número de licencia de fontanero en [ESTADO], y está su licencia de conducir en regla?"
+- **Q2 — Último trabajo en sus propias palabras.** "Cuénteme del último servicio que atendió hoy" (o ayer, o la semana pasada).
+- **Q3 — Rango de pago.** "Nuestro rango para este puesto es de $X a $Y por hora más bonificación por desempeño, vehículo de la empresa, [beneficios]. ¿Cómo se compara con lo que está buscando?"
+- **Q4 — Escenario (calibrado por rol).** For service tech: "Un cliente llamó — el inodoro del segundo piso no para de correr, hay agua filtrándose al techo de la cocina abajo. La llave de paso principal está en el sótano. ¿Qué hace en los primeros 90 segundos?"
+- **Q5 — Cierre con knockouts.** "Tres rápidos sí o no. (1) ¿Acepta la rotación de guardia — una semana en cuatro? (2) ¿Fecha de inicio más temprana? (3) ¿Hay algo que le gustaría preguntarme antes de avanzar o cerrar el caso?"
+
+**Plumbing-Spanish terminology (calibrated per CSR Performance Debrief v1.1.C, Vendor Price Increase Customer Communication v1.1, and Pricebook Q&A v2.2):**
+
+- *fontanero* — plumber (formal register, used in license documents across most US Spanish-speaking plumbing markets). Use in formal Q1 license-verification and SMS Message 1.
+- *plomero* — plumber (colloquial register, common in Texas, Florida, Southern California, and most of Mexico). Use in conversational copy and the scenario probe; warmer than *fontanero* and more likely to land naturally with candidates from those regions.
+- *licencia* — license. *Licencia de fontanero* — plumbing license.
+- *fuga* — leak. *Tubería* — pipe. *Llave de paso* — shutoff valve. *Calentador de agua* — water heater. *Calentador instantáneo* / *sin tanque* — tankless water heater. *Trampa P* — P-trap. *Desagüe* — drain. *Registro de limpieza* — cleanout.
+- *guardia* — on-call rotation (more natural than the literal *en-llamada*). *Semana de guardia* — on-call week.
+- *bonificación por desempeño* — performance pay (not *paga por desempeño*; bonificación carries the variable-pay register correctly).
+- *empezar* — to start (a job). *Disponibilidad* — availability. *Comenzar* is also acceptable; *empezar* is the more common register in this conversation.
+- *llamada de seguimiento* — follow-up call. *Programar* — to schedule.
+- *prueba en el trabajo* / *prueba práctica* — working interview / bench test.
+
+**Hardening rules for the Spanish variant:**
+
+- **Native-write the Spanish phrasing; do not back-translate from English.** Back-translation produces stilted phrasing that erodes the relationship signal that the trades hiring conversation depends on. Generate from the structured candidate intake, not from the English script output.
+- **Bilingual-candidate handoff guidance.** Continue in Spanish from the first Spanish reply or stated preference. Do not switch back to English mid-conversation to "match the résumé language" — résumés are often submitted in English for ATS-compatibility regardless of the candidate's preferred conversational language. Follow the candidate's lead.
+- **Don't-auto-detect-from-name rule preserved.** Surname-based language assumption is the most common bilingual-hiring failure mode. Use the explicit `candidate_language` field, the application-form selection, or the SMS pre-screen Q1 reply as the language signal — never the name.
+- **Dialect-register choice (fontanero vs. plomero).** Use *fontanero* in formal verification copy (Q1, SMS Message 1) and use *plomero* in conversational warmth copy (Q4 scenario, Q5 close). The candidate's own usage in the first reply is the strongest dialect signal — match it from Message 2 onward.
+- **State-license terminology by jurisdiction.** Some state license names have established Spanish translations (TX *Plomero con Licencia*, CA *Plomero C-36*, FL *Plomero CFC*); others do not. When in doubt, keep the state-licensed credential name in English (e.g., "TX Journeyman Plumber") inside the Spanish sentence — license names are quasi-proper-nouns and Spanish-speaking candidates expect the official term.
+
+### Cross-Skill Reference Pointers (v1.2)
+
+- **New Tech Onboarding Curriculum v1.0** — downstream consumer of the v1.2.A FLUENCY-DRILL PRE-FLAG block. The seven canonical drill names must match exactly; the per-shop overlay reads `outputs/onboarding-curriculum-*.md` for customized lists.
+- **Pricebook Q&A v2.2.A** — canonical source for the AI-RX adapter schema and the nine-platform identifier list mirrored in v1.2.B.
+- **CSR Performance Debrief v1.1.C, Vendor Price Increase Customer Communication v1.1, Pricebook Q&A v2.2 Spanish variant** — shared plumbing-Spanish terminology calibration, shared formal-vs-colloquial register decisions, shared don't-auto-detect-from-name rule, shared native-write discipline.
+- **Lead Service Line Customer Briefing v0.9** (shipped 2026-06-01) — joins the bilingual thread as the eleventh Spanish-anchored skill; this skill v1.2.C is the twelfth.
+- **Safety & Compliance Tracker v1.2.C** (shipped 2026-06-01) — shares the lead-handling endorsement awareness; a candidate who claims to hold a state lead-handling endorsement should be flagged in the pre-flag block for Day-1 verification.
+

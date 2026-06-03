@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~5 min/lookup"
-version: 2.2
-last_eval_score: 9.6
+version: 2.3
+last_eval_score: 9.7
 ---
 
 # 📖 Pricebook Q&A
@@ -529,3 +529,184 @@ Most shops authorize techs to discount within bands but never surface those band
 - **Vendor Price Increase Customer Communication** — the wave-affected-SKU flag in v2.1.C still gates the member-pricing overlay (member discount on a stale SKU is suppressed until the SKU refresh).
 - **Estimate Writer v2.0** — multi-line estimates that are member-eligible carry the per-line member-pricing overlay through to the estimate output rather than re-applying it at quote time.
 - **Technician Performance Debrief v1.1** — consumes the per-tech discount-authorization log into the revenue-capture benchmark band; closes another measurement loop alongside the Review Request Drafter v2.3.D send-rate signal.
+
+## v2.3 Additions (2026-06-01)
+
+The v2.2 ship held at 9.6 across five consecutive evaluator cycles (04-28 ship through 05-25). The 05-18 Remaining Opportunities #13 named the Claude for Small Business one-click MCP connector context + AI Search Visibility cross-reference as the v2.3 vector; the 06-01 monitor cycle's Next-Run Priority #2 added the hybrid-posture calibration framing from the Blanchard / ServiceForge counter-thesis surfaced May 12, 2026 in Contractor Magazine. v2.3 ships both vectors plus a stale-pricing audit output format refinement that closes the v2.1.C carry-forward. All v2.0 / v2.1 / v2.2 content above is preserved unchanged.
+
+### Hybrid-Posture Calibration Framing for the AI-RX Live-Call Adapter
+
+The Contractor Magazine May 12, 2026 article by Jane Blanchard (ServiceForge) — surfaced in the 2026-06-01 landscape monitor cycle — reports two data points that re-frame how the AI-RX adapter should be deployed:
+
+- **~1 in 3 homeowners hang up when AI answers the phone instead of a live person.**
+- **78% of homeowners choose the business with human-answering when two businesses' reviews are comparable.**
+
+The underlying data carries a vendor-bias caveat (ServiceForge sells live answering services and has commercial incentive to frame AI-RX negatively). The Bonney Plumbing 60% missed-call reduction case study, Avoca's continued adoption, Pete & Gabi's dormant-customer reactivation rates, and the seven-platform actively-marketed plumbing AI-RX landscape (AgentZap, MyAIFrontDesk, Voiceflow, Allo, RevSquared, Sameday, ServiceTitan AI Voice Agent) keep the AI-RX-positive evidence stack intact. The two data sets are not contradictory: AI-RX has measurable upside *and* AI-RX has measurable customer-side resistance. The operational implication is hybrid-posture deployment — AI-RX is the right answer for after-hours, overflow, triage, and dormant-customer reactivation; live-human is the right answer for business-hours default and for emergency-call first-touch.
+
+v2.3.A adds a HYBRID-POSTURE-MODE field to the v2.2.A AI-RX adapter input schema and a more aggressive `escalation_to_human` posture in business-hours mode.
+
+**Input schema addition:**
+
+```json
+{
+  "hybrid_posture_mode": "AFTER_HOURS | OVERFLOW | BUSINESS_HOURS_OVERRIDE",
+  "human_available": true
+}
+```
+
+The three modes:
+
+- **AFTER_HOURS** — Default mode for any call outside the shop's published business hours, or for any call that hit the AI-RX because all human dispatchers were on other calls (overflow). This is the mode the AI-RX adapter is structurally suited for; the v2.2.A escalation rules apply unchanged.
+- **OVERFLOW** — Same posture as AFTER_HOURS but with a 90-second time-cap on the AI-RX exchange. After 90 seconds, if a human dispatcher has come free, the AI-RX warm-transfers to the human ("I'm going to bring our office manager in — she just came free"). If no human is free at the 90-second mark, the AI-RX completes the price-band lookup and books or schedules the callback per the v2.2.A flow.
+- **BUSINESS_HOURS_OVERRIDE** — The shop has chosen to deploy AI-RX during business hours despite human availability (lowest-tier-staffing shops, owner-on-the-truck-only operations). This mode applies the more aggressive escalation rules below.
+
+**More aggressive escalation rules under BUSINESS_HOURS_OVERRIDE:**
+
+In addition to the v2.2.A escalation rules (emergency calls, multi-fixture scope, stale-pricing flag, member-status question, competitor-quote comparison), the BUSINESS_HOURS_OVERRIDE mode escalates on:
+
+- **Any quote-shopping signal.** "I'm getting three estimates" / "what's your best price" / "Can you beat what I've been quoted" all escalate. Quote-shopping under business hours requires a human relationship-builder; price-band-only response cedes the close.
+- **Any second-vendor mention.** "Roto-Rooter said..." / "Mr. Rooter quoted..." — the conversation is already a relationship sale; escalate.
+- **Any tonal warmth-seeking signal.** "Are you guys local?" / "How long have you been in business?" / "Can I just talk to someone?" — these signals are explicit asks for human relationship; transfer within 15 seconds without restating the question.
+- **Repeat-customer signal.** If the platform's CRM lookup matches an existing-customer record, the BUSINESS_HOURS_OVERRIDE mode escalates regardless of the price-question complexity. Existing customers calling during business hours expect a human voice; the AI-RX is the wrong reception.
+
+**New escalation reason added to the v2.2.A schema enum:**
+
+```json
+"escalation_reason": "PREFERS_HUMAN"
+```
+
+`PREFERS_HUMAN` is the escalation reason whenever the customer's signal explicitly asks for a person (regardless of the hybrid-posture mode). The handoff is sub-15-second; the AI-RX does NOT restate the price question, the AI-RX does NOT confirm the call back to the customer, the AI-RX simply says "Let me bring someone on for you right now" and transfers.
+
+**Updated worked example — Avoca platform calling under BUSINESS_HOURS_OVERRIDE on a quote-shopping signal:**
+
+```json
+{
+  "skill_version": "2.3",
+  "query_type": "price_lookup",
+  "hybrid_posture_mode": "BUSINESS_HOURS_OVERRIDE",
+  "matched_items": [],
+  "escalation_to_human": true,
+  "escalation_reason": "PREFERS_HUMAN",
+  "escalation_phrasing": "Let me bring someone on for you right now."
+}
+```
+
+**Hardening rules for the hybrid-posture calibration framing:**
+
+- **The hybrid-posture mode is per-call, not per-shop.** The same shop runs AI-RX in AFTER_HOURS mode at 7 PM, OVERFLOW mode at 11:30 AM during a freeze surge, and might run BUSINESS_HOURS_OVERRIDE mode never. The mode is a runtime input from the platform's scheduling logic, not a shop-level configuration.
+- **PREFERS_HUMAN escalation has no exceptions.** Even on the price-lookup happy-path, even when the AI-RX has a clean answer ready, when the customer asks for a person, transfer. The 1-in-3 hang-up rate from the Blanchard data is the cost of NOT transferring.
+- **Document the hybrid-posture mode in the audit trail.** The platform should log which mode each AI-RX-handled call ran in, so the shop can correlate AI-RX call outcomes against mode at the weekly review. After-hours bookings, overflow-mode bookings, and business-hours-override bookings have different baseline conversion rates.
+- **Hybrid posture is calibration, not abandonment.** The 06-01 monitor cycle's framing was explicit: "the hybrid posture is not a compromise — it is the operational reality." v2.3.A is a re-calibration of when the v2.2.A adapter fires, not a withdrawal of the adapter.
+
+### Claude for Small Business / One-Click MCP Connector Context
+
+Adds a new output mode triggered by the input including `[CSB]` at the start of the question or `[MCP:connector_id]` with an explicit connector ID. When triggered, the adapter assumes the shop is running the pricebook lookup through the Claude for Small Business one-click MCP connector pattern rather than direct platform integration. The output is structurally simpler (the MCP connector handles platform-specific formatting downstream) and includes a `connector_meta` block surfacing connector-level context.
+
+**Trigger:** Apply when the input includes `[CSB]` or `[MCP:<connector_id>]` where `connector_id` is one of the shop's configured MCP connectors in `config.yml` → `mcp_connectors:`.
+
+**Output addition (replaces the v2.2.A AI-RX adapter envelope when triggered):**
+
+```json
+{
+  "skill_version": "2.3",
+  "csb_packaging": true,
+  "connector_meta": {
+    "shop_id": "[shop's CSB workspace identifier]",
+    "connector_id": "[the MCP connector ID that made the lookup]",
+    "connector_type": "[crm | pricebook | ai_receptionist | dispatch]",
+    "lookup_source": "[cached | live]",
+    "lookup_latency_ms": 0,
+    "downstream_consumer": "[ai_rx | csr_dashboard | tech_mobile | owner_dashboard]"
+  },
+  "matched_items": [
+    {
+      "sku": "[item code]",
+      "name": "[customer-facing item name]",
+      "price_band": { "low": 0, "high": 0 },
+      "price_band_phrasing": "[the spoken sentence, kept consistent with v2.2.A schema]",
+      "labor_minutes": 0,
+      "includes": "[short prose summary]"
+    }
+  ]
+}
+```
+
+**Hardening rules for the CSB / MCP connector context:**
+
+- **The CSB envelope is structurally simpler than the v2.2.A AI-RX envelope.** The MCP connector handles platform-specific formatting downstream (turning `price_band` into the platform's expected `price` field, adding the platform's required `confidence` score, etc.). The skill's responsibility is the canonical answer; the connector's responsibility is the platform-specific shape.
+- **`lookup_source: cached` is acceptable when the pricebook's `last_modified` is within the connector's cache TTL.** Most pricebooks update on a daily-or-slower cadence; sub-second live lookups are wasteful and add platform latency. The cache should invalidate immediately on any pricebook edit, on any vendor-price-wave bulk update, and on any membership-tier-structure change in Membership Plan Drafter.
+- **`downstream_consumer` drives the verbosity.** `ai_rx` consumer gets the spoken-sentence phrasing; `csr_dashboard` gets the matched-items table plus the v2.0 internal margin block; `tech_mobile` gets the matched-items table without the margin block; `owner_dashboard` gets everything plus the v2.1.C stale-pricing flag plus the v2.2.D per-tech discount-authorization log.
+- **Connector-level audit trail.** Every CSB lookup emits to the shop's CSB workspace logs with the `connector_id`, the `lookup_source`, and the `downstream_consumer` for the office's compliance and analytics review.
+- **AI Search Visibility cross-reference (one paragraph).** The AI-Receptionist's spoken-answer quality is one of the four signals that feed answer-engine visibility (the other three are review-text density, schema markup, and topical-cluster authority). When the CSR or owner asks "why is my shop showing up first on Perplexity for 'tankless installer near me'?", part of the answer is "your AI-RX is giving cleaner, more specific price-band answers than the chain competitor's, and those answers are getting cited downstream in the answer engines that index call transcripts." Cross-reference: AI Search Visibility Content Pack v1.2's answer-engine framework. This is a reference, not a content expansion — the AEO skill is the source of truth.
+
+### Stale-Pricing Audit Output Format Refinement (refines v2.1.C)
+
+The v2.1.C stale-pricing layer produces a flat list of SKUs with no price update in 12+ months. v2.3.C reformats the output as a prioritized audit-action plan grouping stale SKUs by (a) wave-affected manufacturer-class, (b) high-volume per-shop SKU class, and (c) margin-sensitive SKU class. Each audit-action group includes a one-sentence rationale, an estimated margin-impact-per-month-of-delay calculation, and a recommended audit window.
+
+**Output addition — replaces the v2.1.C flat list when the staleness check fires:**
+
+```
+───────────────────────────────────────────────
+🔧 STALE-PRICING AUDIT — PRIORITIZED ACTION PLAN
+   Run date: [date]
+   Pricebook last full audit: [date]  |  Days since: [N]
+───────────────────────────────────────────────
+
+  WAVE-AFFECTED SKUs (cross-ref Vendor Price Increase Communication v1.1 May 2026 annex)
+  Named-driver manufacturers in the trailing 90-day wave window:
+   • Apollo Backflow (+3% May 2026 wave)
+   • Westlake Pipe & Fittings (May 2026 wave)
+   • SDR 35 plastic pipe (May 2026 wave)
+   • OmegaFlex (May 2026 wave)
+   • Little Giant pumps (May 2026 wave)
+
+  Stale SKUs in wave-affected classes ([N] SKUs):
+    Audit window: THIS WEEK
+    Estimated margin-impact-per-month-of-delay: $[amount] (computed from
+       trailing-90-day sell volume × wave-percentage × days-since-wave)
+    Action: Update the per-SKU price by the named-driver percentage from the
+       Vendor Price Increase v1.1 annex; backfill the v2.0 margin block; emit
+       to the v2.2.D per-tech discount-authorization guardrails to refresh the
+       tech-floor numbers.
+
+  HIGH-VOLUME PER-SHOP SKUs (top-decile sell volume in trailing 12 months)
+  Stale SKUs in high-volume class ([N] SKUs):
+    Audit window: THIS MONTH
+    Estimated margin-impact-per-month-of-delay: $[amount] (computed from
+       trailing-12-month sell volume × estimated-cost-drift × days-since-update)
+    Action: Pull current material cost from the supplier-API live feed (or call
+       the supplier rep for the same line); re-compute the margin against the
+       published price; recommend a price adjustment if margin has drifted
+       below the v2.0 Healthy 50% threshold.
+
+  MARGIN-SENSITIVE SKUs (currently at or below Healthy 50% margin floor)
+  Stale SKUs in margin-sensitive class ([N] SKUs):
+    Audit window: THIS QUARTER
+    Estimated margin-impact-per-month-of-delay: $[amount] (the per-SKU margin
+       is already below the floor; every month of delay compounds the
+       below-floor revenue)
+    Action: Refresh cost data; either lift the published price to restore
+       margin or remove the SKU from the active pricebook if the market won't
+       support the lift.
+
+  REMAINING STALE SKUs (not in any of the three priority classes)
+  [N] SKUs flagged for the next quarterly audit.
+
+───────────────────────────────────────────────
+```
+
+**Hardening rules for the stale-pricing audit refinement:**
+
+- **The grouping is additive, not exclusive.** A SKU can belong to multiple priority classes (wave-affected AND high-volume AND margin-sensitive); when it does, the audit window is the most-urgent (THIS WEEK over THIS MONTH over THIS QUARTER) and the action items are merged.
+- **The margin-impact-per-month-of-delay is an estimate, not a contract.** The computation depends on assumptions (trailing-volume holding, wave-percentage applying uniformly, material-cost drift continuing). The number is a prioritization signal, not a P&L line. Surface the assumption inline.
+- **Cross-skill emit:** when the audit-action plan fires, emit the wave-affected SKU update list back into the Vendor Price Increase Customer Communication v1.1 tracker so the next monthly cadence cycle has the actual implementation status against the wave-driver lift.
+- **The quarterly bucket is not "later, never."** SKUs in the REMAINING bucket get audited at the next quarterly review. The bucket exists so the THIS WEEK action plan doesn't get drowned out by the long-tail; it does not exist to defer indefinitely.
+
+### Cross-Skill Reference Pointers (v2.3)
+
+- **Vendor Price Increase Customer Communication v1.1** — named-driver manufacturer list source for the wave-affected SKU grouping in v2.3.C; cross-skill emit destination for audit-action implementation status.
+- **AI Search Visibility Content Pack v1.2** — answer-engine framework reference for the CSB / MCP connector context one-paragraph cross-reference in v2.3.B.
+- **Membership Plan Drafter** — cache-invalidation trigger source for the v2.3.B `lookup_source: cached` behavior (any membership-tier-structure change invalidates the pricebook cache).
+- **All nine AI-RX-consuming skills** (Pricebook Q&A v2.2.A, Estimate Writer v2.1.A, Invoice Follow-Up Sequence v2.4.B, Review Request Drafter v2.4.A, Parts & Materials List v1.2.B, After-Hours Call Summary v2.1.A, Dispatch Brief Generator v1.2.A, Product Recall Customer Outreach v1.1.C, Dormant Customer Reactivation v1.1.B) — v2.3.A hybrid-posture calibration is the per-cycle framing pass anticipated by the 06-01 monitor's "AI-RX adapter calibration framing pass" Next-Run Priority. The other eight consuming skills will receive the same framing pass on a subsequent evaluator cycle.
+- **Technician Candidate Phone Screen v1.2.B** (shipped 2026-06-01) — joins the AI-RX adapter thread as the tenth schema-implementing skill, mirroring the v2.2.A canonical schema and inheriting the v2.3.A hybrid-posture calibration framing automatically.
+

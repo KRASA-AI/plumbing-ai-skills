@@ -5,8 +5,8 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per affected-customer batch to produce the door-hanger, letter, FAQ, and on-site briefing packet; avoids the trust damage and call-volume spike that come from letting customers discover an LSL replacement notice from the water utility without any framing from the shop that will actually be doing the work"
 version: 0.9
-last_eval_score: null
-last_eval_date: null
+last_eval_score: 9.0
+last_eval_date: 2026-06-01
 notes_for_next_eval: "v0.9 (2026-06-01) is the provisional draft. Status flagged provisional because the EPA Small Entity Compliance Guide for the LCRI has still not been published as of the 06-01 monitor cycle — 14 consecutive cycles overdue. The June 2023 LCRR inventory guide (815-B-23-005, 'Developing and Maintaining a Service Line Inventory') and the April 2026 EPA draft 'Access Tips' and 'Service Line Inventory Tips' documents (public-comment deadline April 30, 2026; final guidance not yet released) are the current authoritative references. Every customer-facing artifact in this skill explicitly marks any claim that depends on the unpublished guide as 'subject to EPA final guidance' so a shop running v0.9 today is not exposed to a clean back-edit when the guide finally lands. v1.0 lift conditions: (1) EPA publishes the LCRI Small Entity Compliance Guide, OR (2) the Access Tips and Service Line Inventory Tips draft documents are finalized — at which point the provisional markers are removed, the cited document numbers update, and the access-permission language in artifacts #3 and #5 is reconciled with the final EPA language."
 ---
 

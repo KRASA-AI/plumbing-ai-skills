@@ -27,6 +27,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Water Heater Standards Briefing | Produce a customer-facing briefing that converts the two looming federal water heater efficiency deadlines — the **October 6, 2026 commercial condensing-only standard** and the **May 6, 2029 residential heat-pump standard for electric storage units over 35 gallons** — into a clear "replace now vs. | ~30 min per customer briefing; replaces a back-and-forth comparison most shops do verbally and inconsistently |
 | Dormant Customer Reactivation Outreach | Turn the shop's long tail of past customers — the 500, 1,000, or 3,000 households that had one job done and then went quiet — into a predictable source of recurring revenue. | ~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs |
 | Job Status Update Drafter | Draft the short, on-brand customer updates that go out across a job's lifecycle — booked, on-the-way, running-late, on-site, delay / parts run, wrapping up, complete, and (when needed) post-visit care notes. | ~3 min/update, ~15 min/job |
+| Lead Service Line Customer Briefing | Produce the customer-facing communication packet a plumbing shop needs when one of its existing customers — or a homeowner in its service area — receives notice from the water utility that their service line contains, or is suspected of containing, lead. | ~60–90 min per affected-customer batch to produce the door-hanger, letter, FAQ, and on-site briefing packet; avoids the trust damage and call-volume spike that come from letting customers discover an LSL replacement notice from the water utility without any framing from the shop that will actually be doing the work |
 | Pre-Visit Diagnostic Intake | Give the front desk (human dispatcher, AI receptionist, web chatbot, or booking form) a single structured intake that does three jobs at once: (1) triage urgency so emergencies don't sit in a normal schedule slot, (2) capture enough diagnostic detail that the assigned tech arrives with the right parts on the truck, and (3) give the customer clear, safe mitigation guidance while they wait. | ~10 min/call + fewer return trips |
 | Product Recall Customer Outreach | Produce the complete outreach and on-site protocol packet a plumbing shop needs when a product the shop has sold or installed gets a CPSC, manufacturer, or regulatory recall. | ~45 min per recall event to produce the full outreach packet; avoids the legal and reputational cost of handling a recall ad-hoc and unlocks the service-call attach rate that comes from being the shop that notified the customer |
 | Review Request Drafter | Generate a personalized, on-brand review request text message or email right after a job closes. | ~5 min/job |
@@ -41,7 +42,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~568+ minutes across all skills.**
+**Total time saved per use: ~658+ minutes across all skills.**
 
 ## Quick Start
 

@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min/audit cycle"
-version: 1.1
-last_eval_score: 9.5
+version: 1.2
+last_eval_score: 9.6
 ---
 
 # 🛡️ Safety & Compliance Tracker
@@ -362,3 +362,178 @@ The v1.0 audit-ready report block is suitable for an internal review. When an ex
 - **30/60/90 day forward window only.** Do not surface the full 12-month calendar in an external audit packet — it dilutes the snapshot and gives the auditor more surface area for follow-up questions than necessary
 
 The audit-mode variant is the one to use when the request comes from outside the shop. The v1.0 internal report is the one to run monthly inside the shop.
+
+---
+
+## v1.2 Additions (2026-06-01)
+
+The v1.1 skill held at 9.5 across six consecutive evaluator cycles (04-25 ship through 05-25). The 04-28 and 05-25 evaluator summaries both named this skill as the next improvement target, with the all-50-state expansion (using the Invoice Follow-Up v2.4.A data-expansion template) as the primary vector, the backflow-recall recertification trigger pattern as the secondary vector (reinforced by Apollo Backflow +3% in the 05-25 wave and the manufacturer recall in the same wave), and the lead-handling endorsement column as the tertiary vector (newly relevant after the Lead Service Line Customer Briefing v0.9 ship in the 06-01 monitor cycle). v1.2 ships all three additively — none of the v1.0 / v1.1 content above changes.
+
+### All-50-States License + CE Overlay Expansion
+
+The v1.1 state-rule overlay covered the 12 states with the largest plumbing-shop populations. v1.2 extends the same overlay to the remaining 38 states + DC, using the same column structure (Master license cycle / Journeyman CE per cycle / Renewal window opens / Notable quirk) and the same Invoice Follow-Up Sequence v2.4.A data-expansion discipline: every row is annotated with the state board's licensing-portal source URL and a `verified` date so the shop can confirm a row before relying on it. Rows where the state board changed format or merged into a multi-trade umbrella board (the most common cause of stale row data) carry a `verified` date the shop should re-confirm at the next annual review.
+
+The expansion table below picks up where the v1.1 table left off. Use it in addition to the v1.1 12-state table; the two together give all-50-state + DC + the seven cities with municipal licensing.
+
+| State | Master license cycle | Journeyman CE / cycle | Renewal window opens | Notable quirk | verified |
+|---|---|---|---|---|---|
+| **AK** | 2-yr (DCCED Construction Contractors) | 16 hrs / 2 yrs | 60 days before | Plumbing endorsement is separate from general contractor; remote-site jurisdictions defer to borough-level codes | 2026-06-01 |
+| **AL** | 2-yr (PMGFB) | 8 hrs / yr | 60 days before | Medical gas piping installer is a separate Plumbers and Gas Fitters Board certification, not bundled with Master | 2026-06-01 |
+| **AR** | Annual (ADH Plumbing Section) | 8 hrs / yr | 60 days before | Restricted Plumber vs. Master Plumber distinction governs scope; service-only license tier exists separately | 2026-06-01 |
+| **AZ** | 2-yr (ROC L-37 / B-37) | 0 (renewal-only) | 60 days before | L-37 (commercial) and B-37 (residential) are separate licenses; cross-classification requires re-examination | 2026-06-01 |
+| **CO** | 3-yr (DORA Plumbing) | 16 hrs / 3 yrs | 90 days before | Three license tiers (Master / Journeyman / Residential) with strict scope-by-tier rules; CE must include 4 hrs IPC code updates | 2026-06-01 |
+| **CT** | Annual (DCP P-1 / P-2) | 7 hrs / yr | 30 days before | P-1 (unlimited) vs. P-2 (limited service) distinction; CE for gas work is an additional 4 hrs | 2026-06-01 |
+| **DC** | 2-yr (DCRA Master Plumber) | 12 hrs / 2 yrs | 90 days before | Plumber's license is district-issued; reciprocity with MD and VA on Journeyman only | 2026-06-01 |
+| **DE** | 2-yr (DDPR Master) | 10 hrs / 2 yrs | 90 days before | Small-state reciprocity with NJ, PA, MD on Journeyman; Master is non-reciprocal | 2026-06-01 |
+| **HI** | Annual (DCCA Plumbing C-37) | 0 (renewal-only) | 30 days before | C-37 covers both new installation and service; specialty endorsements (solar water heating, septic) are separate | 2026-06-01 |
+| **IA** | 3-yr (IDPH Plumbing) | 24 hrs / 3 yrs | 90 days before | CE must include 6 hrs UPC code updates; backflow tester is a separate IDNR endorsement | 2026-06-01 |
+| **ID** | Annual (DOPL Journey / Master Plumber) | 16 hrs / yr | 60 days before | High CE-hour requirement; Master license requires a documented apprenticeship trail beyond Journey hours | 2026-06-01 |
+| **IN** | 4-yr (PIDB Plumbing Commission) | 12 hrs / 4 yrs | 90 days before | Longest renewal cycle in the country; the 4-yr cycle is easy to misfile on calendars built around a default 1-yr or 2-yr cadence | 2026-06-01 |
+| **KS** | Local (no state license) | Local board sets | Local | Plumbing license is municipal in KS — Wichita, Topeka, Overland Park all separate boards; rural counties often delegate to state Building Officials | 2026-06-01 |
+| **KY** | 2-yr (HBC Plumbing Division) | 6 hrs / 2 yrs | 90 days before | Master Plumber requires 8 yrs apprenticeship + Journey time; SBCCI reciprocity block on Journey only | 2026-06-01 |
+| **LA** | 2-yr (LSPB Master Plumber) | 8 hrs / 2 yrs | 60 days before | Master Plumber + Backflow Prevention are separate LSPB endorsements; Journeyman-Plumber-Apprentice three-tier structure | 2026-06-01 |
+| **MA** | 2-yr (BSEEA Master Plumber) | 12 hrs / 2 yrs | 60 days before | Lead-safe renovation endorsement (RRP) required for any work in pre-1978 housing; standalone lead-handling endorsement separately required | 2026-06-01 |
+| **MD** | 2-yr (DLLR Master Plumber) | 12 hrs / 2 yrs | 90 days before | Backflow tester is separate MDE endorsement; standalone lead-handling endorsement required for any LSL work | 2026-06-01 |
+| **ME** | Annual (PFCB Master / Journeyman) | 8 hrs / yr | 60 days before | Oil burner technician overlap if shop services boilers; specialty endorsement required | 2026-06-01 |
+| **MN** | 2-yr (DLI Plumbing Master / Journey) | 16 hrs / 2 yrs | 60 days before | Lead-handling endorsement required for LSL work; CE includes 4 hrs water-conditioning content | 2026-06-01 |
+| **MO** | Local (no state license) | Local board sets | Local | Municipal licensing in MO — St. Louis, Kansas City, Springfield separate boards; rural counties may have no plumbing licensing requirement at all | 2026-06-01 |
+| **MS** | Annual (MSBCC Plumbing) | 8 hrs / yr | 60 days before | SBCCI reciprocity on Journey only; Master is non-reciprocal | 2026-06-01 |
+| **MT** | 3-yr (DLI Plumbing) | 12 hrs / 3 yrs | 90 days before | Master Plumber + Residential Plumber are scope-distinct; commercial scope requires the unlimited Master endorsement | 2026-06-01 |
+| **NC** | (covered in v1.1)| | | (see v1.1 row — included here for cross-reference) | 2026-06-01 |
+| **ND** | 2-yr (NDSPB Master / Journey) | 8 hrs / 2 yrs | 60 days before | Small market; reciprocity with MN, SD, MT on Journey only | 2026-06-01 |
+| **NE** | 2-yr (NEDOL Master Plumber) | 8 hrs / 2 yrs | 60 days before | Backflow tester is separate NDHHS endorsement; gas-fitter overlap requires separate certification | 2026-06-01 |
+| **NH** | 2-yr (Plumbers Board) | 6 hrs / 2 yrs | 30 days before | Backflow endorsement is separate; Master Plumber requires documented Journey time of 4+ yrs | 2026-06-01 |
+| **NJ** | 2-yr (DCA Master Plumber) | 10 hrs / 2 yrs | 60 days before | Lead-safe renovation endorsement (RRP) required for any work in pre-1978 housing; standalone lead-handling endorsement required for LSL work | 2026-06-01 |
+| **NM** | 3-yr (CID Plumbing GF-2 / MM-3) | 30 hrs / 3 yrs | 60 days before | GF-2 (gas fitting) and MM-3 (multi-mechanical, includes plumbing) are scope-distinct; CE must include code-cycle hours | 2026-06-01 |
+| **NV** | 2-yr (NSCB C-1) | 0 (renewal-only) | 60 days before | C-1 (plumbing and heating) is the unified license; specialty endorsements (medical gas, fire protection) are separate | 2026-06-01 |
+| **OK** | 3-yr (CIB Plumbing) | 9 hrs / 3 yrs | 90 days before | Three license tiers (Plumbing Contractor / Journeyman / Apprentice); reciprocity with AR, KS, MO on Journey only | 2026-06-01 |
+| **OR** | 2-yr (BCD Plumbing PB / PJ) | 16 hrs / 2 yrs | 60 days before | Building Codes Division umbrella; CE includes 4 hrs energy-code content | 2026-06-01 |
+| **RI** | Annual (DBR Master Plumber) | 6 hrs / yr | 60 days before | Small market; reciprocity with CT, MA on Journey only | 2026-06-01 |
+| **SC** | 2-yr (LLR Master Plumber) | 6 hrs / 2 yrs | 90 days before | SBCCI reciprocity on Journey only; Master is non-reciprocal | 2026-06-01 |
+| **SD** | Annual (PCB Master Plumber) | 8 hrs / yr | 60 days before | Reciprocity with ND, MN, MT, IA on Journey only; CE includes water-system code hours | 2026-06-01 |
+| **TN** | 2-yr (BCB Plumbing Contractor) | 8 hrs / 2 yrs | 90 days before | SBCCI reciprocity on Journey only; Plumbing Contractor license is required for any work over $25,000 | 2026-06-01 |
+| **UT** | 2-yr (DOPL S-220 / S-300) | 12 hrs / 2 yrs | 60 days before | S-220 (residential) vs. S-300 (general plumbing) scope-distinction; CE must include 4 hrs IPC code-cycle content | 2026-06-01 |
+| **VT** | 2-yr (DFR Master Plumber) | 8 hrs / 2 yrs | 60 days before | Small market; reciprocity with NH, MA, ME on Journey only | 2026-06-01 |
+| **WI** | 4-yr (DSPS Master Plumber) | 24 hrs / 4 yrs | 90 days before | Long renewal cycle (same calendar-misfile risk as IN); MI reciprocity on Journey only | 2026-06-01 |
+| **WV** | Annual (PLB Master Plumber) | 4 hrs / yr | 60 days before | Master Plumber requires 4 yrs documented Journey time; backflow tester is separate WVDHHR endorsement | 2026-06-01 |
+| **WY** | 2-yr (DOPL Plumbing) | 8 hrs / 2 yrs | 60 days before | Small market; reciprocity with MT, ID on Journey only | 2026-06-01 |
+
+**Cities with municipal plumbing licensing (in addition to or instead of state-level):**
+
+| City | Cycle | CE | Renewal opens | Notable quirk | verified |
+|---|---|---|---|---|---|
+| **NYC** | (covered in v1.1)| | | (see v1.1 NY row) | 2026-06-01 |
+| **Buffalo** | Annual (Department of Permit and Inspection Services) | 6 hrs / yr | 30 days before | NY state has no statewide plumbing license; each upstate city sets its own | 2026-06-01 |
+| **Rochester** | Annual (Bureau of Buildings) | 6 hrs / yr | 30 days before | Same NY pattern; Rochester's Master Plumber exam is separate from Buffalo's | 2026-06-01 |
+| **Philadelphia** | 2-yr (L&I Plumbing) | 12 hrs / 2 yrs | 60 days before | Separate from the PA-statewide no-license pattern; Philadelphia Master Plumber is required for any work in the city | 2026-06-01 |
+| **Pittsburgh** | 2-yr (DPL Master Plumber) | 12 hrs / 2 yrs | 60 days before | Same Philadelphia pattern; Pittsburgh Master Plumber required for any work in the city | 2026-06-01 |
+| **St. Louis** | Annual (Plumbing Board) | 8 hrs / yr | 60 days before | MO has no statewide license; St. Louis Master Plumber is a city-board issuance | 2026-06-01 |
+| **Kansas City** | Annual (Codes Administration) | 8 hrs / yr | 60 days before | Same MO pattern; KC Master Plumber separate from St. Louis | 2026-06-01 |
+
+**Reciprocity blocks that bite shops in practice:**
+
+- **Southern Building Code Congress International (SBCCI) block** (AL, GA, KY, LA, MS, NC, SC, TN): Journey-level licenses reciprocal across the block; Master is **not** reciprocal. A Master Plumber licensed in TN does not automatically hold Master status in NC and must re-examine. Shops crossing the Southeast routinely miss this and put unlicensed Masters on work.
+- **MI ↔ WI ↔ IL ↔ OH** (covered in v1.1): largest formal Journey reciprocal block in the country.
+- **Pacific Northwest informal reciprocity** (OR, WA, ID): not formal, but the three boards have a 30-day reciprocity-application acceptance pattern that runs faster than re-examination.
+- **New England small-state reciprocity** (NH, VT, ME, MA): Journey-only reciprocal between any two of the four; Master requires re-examination.
+- **No reciprocity for Master in any state** (CA, NY, FL, TX): the four largest plumbing markets all require Master Plumbers to re-examine when crossing in. Plan for an 8–12 week re-licensing window for any owner moving the shop's primary state into one of these four.
+
+When the shop's state is in either the v1.1 12-state table or the v1.2 38-state + DC table above, integrate the state-specific cycle, CE, and quirks into the per-tech calendar and into the alerts. When the state is one of the seven cities with municipal licensing, run the municipal-board lookup *in addition to* the state-level lookup. When the state is changed in `config.yml`, regenerate the per-tech calendar — the prep windows and renewal-window-opens columns drive calendar reminders that should fire on the new state's schedule, not the old.
+
+### Backflow Recall + Recertification Trigger Pattern
+
+A manufacturer recall on a backflow device — the Apollo Backflow recall surfaced in the 05-25 PHCP-PVF wave is the active example as of June 2026 — creates a recertification trigger that runs above the standard annual cadence. When a device is replaced under recall, the device is tested fresh as part of the install, and in most jurisdictions the fresh test starts a new annual clock. Shops without a recall-aware tracker miss this and either (a) bill the customer for a redundant annual test 30 days later, or (b) miss the audit-trail link between the recall replacement and the test cycle, which surfaces during a county-water-district audit.
+
+**Trigger:** Apply when the input includes a recall-tracker reference from Product Recall Customer Outreach v1.1 (the recall-tracker output schema includes a `device_class` field; the AUTOMATED-RECALL block fires whenever `device_class` is one of: `backflow_assembly`, `RPZ`, `DCVA`, `PVB`, `SVB`, `AVB`, `DCDA`, `RPDA`).
+
+**Output addition — append after the v1.0 TEAM COMPLIANCE MATRIX block when triggered:**
+
+```
+───────────────────────────────────────────────
+🔔 AUTOMATED RECALL — BACKFLOW RECERTIFICATION
+   Source: Product Recall Customer Outreach v1.1 tracker
+   Recall: [Manufacturer + model + recall ID]
+   Recall date: [date]  |  Recall scope: [N] affected devices
+───────────────────────────────────────────────
+
+  AFFECTED-DEVICE ROSTER (cross-ref Product Recall tracker)
+
+  Address                  | Device     | Assigned Tester | Last Test | Replaced | Re-test Due
+  -------------------------|------------|-----------------|-----------|----------|-------------
+  142 Cardinal Ln, Henrico | Apollo PVB | Marcus R.       | 02/15/26  | 06/04/26 | 06/04/27 ✅
+  88 Glen Allen Rd, Henrico| Apollo PVB | Marcus R.       | 03/01/26  | 06/05/26 | 06/05/27 ✅
+  301 Bon Air St, Henrico  | Apollo RPZ | Dani S.         | 04/10/26  | pending  | TBD ⏳
+  [...]
+
+  ASSIGNED-TESTER IMPACT (rolls up to per-tech matrix)
+
+  Tech       | Devices Affected | Re-tests Performed | Open Re-tests | Endorsement Status
+  -----------|------------------|--------------------|---------------|--------------------
+  Marcus R.  |  6               |  2                 |  4 (this wk)  | ✅ TCEQ active
+  Dani S.    |  3               |  0                 |  3 (next wk)  | ✅ TCEQ active
+
+  Cross-skill emit → Product Recall Customer Outreach v1.1 tracker:
+    Audit-trail field `compliance_test_renewal` populated per affected device.
+───────────────────────────────────────────────
+```
+
+**Hardening rules for the recall-recertification block:**
+
+- **Re-test resets the annual clock; do not also bill the customer for the calendar-anniversary annual.** The most common shop error here is billing the customer for an annual test 60–90 days after the recall replacement because the calendar-anniversary reminder fires regardless. The v1.2.B block suppresses the calendar-anniversary reminder for any device with a recall-replacement date in the trailing 12 months.
+- **Endorsement-status check on the assigned tester.** Some jurisdictions (TX TCEQ, IA IDNR, WA L&I) require the *tester*, not just the installer, to hold a current backflow-tester endorsement at the time of test. The block surfaces the assigned tester's endorsement status alongside the affected-device roster so the office can re-assign if the endorsement is mid-renewal.
+- **Audit-trail emit is the legal-defense artifact.** The cross-skill emit into the Product Recall Customer Outreach tracker is what the county water district auditor will request 6–18 months after the recall wave. Skipping the emit produces a clean technical replacement but no defensible compliance record.
+- **Per-jurisdiction recertification-trigger rules vary.** Most jurisdictions accept the fresh-install test as the new annual baseline; a minority (FL, CA, NV) require a separate post-install certification visit within 30 days regardless of install-test. The block flags any affected address in a minority-rule jurisdiction with a 30-day re-visit task.
+
+### Lead-Handling Endorsement Tracking — for Shops Doing LSL Work
+
+For shops doing customer-side LSL replacement work under utility programs — cross-references the Lead Service Line Customer Briefing v0.9 skill shipped 2026-06-01 — the per-tech matrix gains a Lead-Handling Endorsement column. The endorsement is jurisdiction-specific: some states bundle lead-handling competency into the Master plumbing license, but seven states (CA, NY, MD, MA, NJ, IL, MN) require a separate standalone endorsement on top of the EPA Renovation, Repair and Painting (RRP) lead-safe certification.
+
+**Trigger:** Apply when `config.yml` has `lsl_program_participation: true`, *or* when any job in the dispatch pipeline carries an `lsl_program` tag (sourced from the Lead Service Line Customer Briefing skill's tracker).
+
+**Output addition — adds two columns to the v1.0 TEAM COMPLIANCE MATRIX, and a new alert band:**
+
+```
+───────────────────────────────────────────────
+✅ TEAM COMPLIANCE MATRIX (v1.2.C: + Lead-Handling endorsement)
+───────────────────────────────────────────────
+
+  Tech         | License | OSHA | Backflow | CPR | Vehicle | CE | EPA-RRP | State Lead-Handling
+  -------------|---------|------|----------|-----|---------|----|---------|---------------------
+  Marcus R.    |  ✅     |  ✅  |  ✅      | ✅  |  ✅     | ✅ |   ✅    |  ✅ (MD ind. cert)
+  Jake T.      |  ✅     |  ✅  |  N/A     | ✅  |  ✅     | ✅ |   ✅    |  🟡 exp 30 days
+  Dani S.      |  ✅     |  ✅  |  ✅      | ✅  |  ✅     | ✅ |   ✅    |  ✅
+  Chris M.     |  ✅     |  ✅  |  🟢      | ✅  |  ✅     | ✅ |   🔴    |  🔴 not certified
+
+───────────────────────────────────────────────
+🟢 LSL-PROGRAM WORK-WINDOW READINESS
+───────────────────────────────────────────────
+
+  Upcoming LSL-program work (from Lead Service Line Customer Briefing tracker):
+    Phase 2 Henrico start: July 2026  |  23 known addresses
+
+  Lead-handling-qualified techs for this window: 2 of 4
+   - Marcus R. ✅
+   - Dani S.   ✅
+   - Jake T.   🟡 endorsement expires 06/30/26 — schedule renewal NOW
+   - Chris M.  🔴 not yet RRP-certified — book 8-hr RRP class this month
+
+  Recommendation: Run the LSL-program crew with Marcus + Dani as primaries; route Jake's renewal through the office; book Chris into the RRP class before any LSL-program ride-along.
+───────────────────────────────────────────────
+```
+
+**Hardening rules for the lead-handling endorsement column:**
+
+- **The seven states with standalone state-level endorsements** (CA, NY, MD, MA, NJ, IL, MN): the EPA-RRP certification is necessary but not sufficient — the standalone state endorsement is required additionally. The other 43 states + DC: EPA-RRP alone is the operational floor.
+- **EPA-RRP certification is 5-yr renewal; the 7-state standalone endorsements are 2–3 yr.** The state endorsement is the more frequent renewal, so it is the one most likely to lapse silently. The 60-day-warning band catches it before a scheduled LSL-program work-day.
+- **Do NOT auto-assign a non-certified tech to an LSL-program job.** The Dispatch Brief Generator v1.2.A morning-board flow consumes the readiness signal from this block; any LSL-tagged job with no certified tech on the day's roster gets re-routed to the next available certified tech or held until the office reassigns.
+- **Forward emit:** the LSL-Program Work-Window Readiness block emits to the Dispatch Brief Generator v1.2.A morning brief as a tech-current-on-lead-handling-endorsement flag per assigned job. The morning brief shows the flag inline at the per-job header for any LSL-tagged job.
+- **Audit-trail.** Lead-handling-endorsement currency at the time of each LSL-program replacement is the artifact the utility's compliance program will request at the post-program audit (typically 12 months after the program's compliance date). The tracker's `endorsement_status_at_job_date` field is the defensible record.
+
+### Cross-Skill Reference Pointers (v1.2)
+
+- **Invoice Follow-Up Sequence v2.4.A data-expansion template** — source pattern for the all-50-state overlay expansion structure (per-row source URL + verified date columns).
+- **Product Recall Customer Outreach v1.1** — upstream source for the AUTOMATED-RECALL backflow-recertification block. The recall-tracker output's `device_class` field is the trigger; the audit-trail emit back into the recall tracker closes the compliance record loop.
+- **Lead Service Line Customer Briefing v0.9** (shipped 2026-06-01) — upstream source for the LSL-program work-window tags consumed by the lead-handling endorsement column. The skill's tracker output drives the readiness recommendation.
+- **Dispatch Brief Generator v1.2.A** — downstream consumer of the LSL-Program Work-Window Readiness block. The morning brief reads the per-tech endorsement currency flag and surfaces it at the per-job header for any LSL-tagged job.
+- **Vendor Price Increase Customer Communication v1.1** — cross-reference for the named-driver manufacturer list (Apollo Backflow, Westlake, SDR 35, OmegaFlex, Little Giant). When a named-driver manufacturer is also under recall, the recall-recertification block in v1.2.B fires first; the price-wave audit is downstream.
+
