@@ -16,6 +16,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | After-Hours Call Summary | Turn a batch of overnight voicemails, missed-call logs, and answering-service notes into a prioritized morning briefing. | ~15 min/morning |
 | CSR Performance Debrief | Turn a batch of inbound call recordings, booking logs, and CRM notes into a structured coaching debrief for each customer service representative (CSR) or dispatcher. | ~25 min/debrief |
 | Dispatch Brief Generator | Summarize the job scope, customer history, recommended parts, and optimal routing for the technician heading out. | ~10 min/dispatch |
+| Field Service Report Writer | Turn what a technician actually did on a service, repair, or install call into two things at once: a clean, plain-language report the customer can read and trust, and a structured office record the shop can drop straight into an invoice, a warranty file, or a review request — without anyone re-typing the job from memory at 6 p.m. | ~15–20 min per completed job — turns a tech's voice memo or scribbled job-ticket notes into a customer-ready service report and a clean office record, before the truck leaves the driveway |
 | Parts & Materials List Generator | Generate a complete parts and materials list for a plumbing job based on the job description, scope notes, or estimate. | ~10 min/job |
 | Pricebook Q&A | Ask plain-English questions about your pricebook and get instant answers with line-item references, price comparisons, and margin analysis. | ~5 min/lookup |
 | Sewer Camera Inspection Report Drafter | Turn a technician's raw sewer-camera notes — the kind they dictate in a truck or scribble on a job ticket after a CCTV inspection — into a structured, customer-facing sewer/drain inspection report that a homeowner, real-estate agent, or commercial property manager can actually understand and act on. | ~25 min/inspection |
@@ -42,7 +43,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
 
-**Total time saved per use: ~658+ minutes across all skills.**
+**Total time saved per use: ~678+ minutes across all skills.**
 
 ## Quick Start
 
