@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/call + fewer return trips"
-version: 1.1
-last_eval_score: 9.6
+version: 1.2
+last_eval_score: 9.7
 ---
 
 # Pre-Visit Diagnostic Intake
@@ -366,3 +366,93 @@ The flag is the first thing the tech and dispatcher see; it changes the posture 
 ---
 
 **End of v1.1 additions. v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**
+
+---
+
+## v1.2 Additions (2026-06-08)
+
+The v1.0 and v1.1 sections above are unchanged. The two sub-sections below are additive. They close two carries: the four-cycle-overdue customer-language allowed-values refresh (named in the 05-25 and 06-01 Remaining Opportunities as the v1.2 vector) and the AI-RX hybrid-posture calibration framing pass (06-01 Remaining Opportunities #1, the highest-priority next-cycle target). Use them in addition to v1.0/v1.1 when the trigger conditions named in each apply.
+
+### v1.2.A — Customer-Language Allowed-Values Refresh (en / es / pt / vi)
+
+The v1.1.C AI-Receptionist handoff JSON used `language: en | es | other`. The repo's bilingual thread has since expanded to four languages (English, Spanish, Brazilian Portuguese, Vietnamese — established by Review Request Drafter v2.4.C on 2026-05-11 and carried by After-Hours Call Summary v2.1.C and Field Service Report Writer v1.1.A). v1.2.A brings this skill's language handling onto the same four-value enum so a Portuguese- or Vietnamese-preferred intake routes correctly instead of falling into `other`.
+
+**Schema change to the v1.1.C handoff JSON** — `customer.language` allowed values become:
+
+```json
+"language": "en | es | pt | vi | other"
+```
+
+The `skill_version` field in the v1.1.C JSON updates to `"1.2"` when this enum is in use.
+
+**Don't-auto-detect-from-name rule (unchanged, restated for the new languages):** Never infer language from the caller's name. "Nguyen" is not a Vietnamese-preference signal; "Silva" is not a Portuguese-preference signal. Use only (a) an explicit language declaration by the caller or the AI-RX platform's language field, (b) a non-English segment ≥ 5 seconds with a confidence flag, or (c) the CRM's stored preference for an existing customer. When confidence is medium, route to a bilingual CSR in that language but revert to English if the caller answers in English.
+
+**Tier-defining safety phrases — Brazilian Portuguese (pt) and Vietnamese (vi).** These join the v1.1.B Spanish safety-phrase table. Only the three highest-stakes, do-not-paraphrase phrases are pre-translated here (the full conversational script localizes from these anchors); the rule is that the gas-leak and shutoff phrases are always carried verbatim, never improvised:
+
+| English (v1.0) | Português (pt) | Tiếng Việt (vi) |
+|---|---|---|
+| "Is water actively flowing or is anyone in immediate danger?" | "A água está correndo agora, ou há alguém em perigo imediato?" | "Nước có đang chảy không, hoặc có ai đang gặp nguy hiểm không?" |
+| "If you smell gas, leave the house now and call from outside. Do not turn on lights or use any switches." | "Se sentir cheiro de gás, saia de casa agora e ligue de fora. Não acenda luzes nem use interruptores." | "Nếu ngửi thấy mùi gas, hãy ra khỏi nhà ngay và gọi từ bên ngoài. Đừng bật đèn hay dùng công tắc nào." |
+| "Where is your main water shutoff? Turn it clockwise until it stops." | "Onde fica o registro principal de água? Gire no sentido horário até parar." | "Van khóa nước chính ở đâu? Vặn theo chiều kim đồng hồ cho đến khi ngừng." |
+
+**Dispatch-record language flag (extends v1.1.B):** When the intake runs in pt or vi, the dispatch-ready record gets `Customer language: Portuguese` / `Customer language: Vietnamese (intake captured in [language]; English summary follows for tech)`, and the recommended-callback line maps to the Review Request Drafter v2.4.C templates for that language. When the shop has no CSR for pt/vi, the flag reads `no in-house [language] CSR — use phone translation on arrival; confirm comprehension of the safety steps before ending the call.`
+
+**Cross-skill consistency:** The four-value enum now matches After-Hours Call Summary v2.1.A, Review Request Drafter v2.4.C, and Field Service Report Writer v1.1.A. This is the skill that the 06-01 summary named as the remaining holdout on the `en | es | other` → `en | es | pt | vi | other` migration; v1.2.A closes it. (Shared-artifact note: once a `_shared/bilingual-tone-guide.md` is formalized, this table and the v1.1.B Spanish table both DRY into it.)
+
+### v1.2.B — Hybrid-Posture Calibration Framing for the AI-Receptionist Handoff
+
+The v1.1.C handoff treats every AI-RX-captured intake the same. But intake is the *first touch* on a call, and the Blanchard / ServiceForge counter-thesis (Contractor Magazine, May 12 2026 — ~1 in 3 homeowners hang up when AI answers; 78% prefer a human-answering business when reviews are comparable) is most consequential precisely at first touch. v1.2.B applies the canonical hybrid-posture framing (source: Pricebook Q&A v2.3.A) to the intake handoff so the AI receptionist escalates to a human at the right moments instead of pushing every caller through the full intake script.
+
+**New fields added to the v1.1.C handoff JSON:**
+
+```json
+{
+  "hybrid_posture_mode": "AFTER_HOURS | OVERFLOW | BUSINESS_HOURS_OVERRIDE",
+  "human_available": true,
+  "escalation_to_human": false,
+  "escalation_reason": null,
+  "skill_version": "1.2"
+}
+```
+
+The three modes carry the canonical meaning from Pricebook Q&A v2.3.A:
+
+- **AFTER_HOURS** — Call outside published business hours, or overflow when all human dispatchers are busy. The AI-RX runs the full v1.0/v1.1 intake; this is the mode it is structurally suited for. After-hours intake is high-value (the 2 AM emergency that would otherwise go to a competitor), so the AI completes the intake and books or queues.
+- **OVERFLOW** — Same posture as AFTER_HOURS but with a 90-second soft cap: if a human dispatcher comes free mid-intake, warm-transfer ("I'm going to bring our dispatcher in — she just came free") rather than finishing the script with the AI.
+- **BUSINESS_HOURS_OVERRIDE** — The shop deploys AI-RX during business hours despite human availability. Apply the more aggressive escalation rules below.
+
+**Intake-specific escalation triggers (the AI receptionist sets `escalation_to_human: true` and stops the intake script):**
+
+1. **`PREFERS_HUMAN`** — Any explicit ask for a person ("can I just talk to someone?", "is there a real person there?"). Sub-15-second transfer; the AI does not restate or re-confirm — it says "Let me bring someone on for you right now" and transfers. **No exceptions, in any mode.** The intake is abandoned cleanly; the human picks up from the caller's own words.
+2. **`SAFETY_ESCALATION`** — Any suspected gas leak, any "someone is hurt / there's water around the electrical panel," or any caller in evident panic. The AI runs the safety micro-script (evacuate-for-gas, shutoff guidance) and transfers to a human immediately; it does not continue collecting name/address fields while a live safety situation is open. This trigger fires in every mode, business hours or not.
+3. **`COMPLEX_INTAKE`** (BUSINESS_HOURS_OVERRIDE only) — Commercial / property-manager / insurance-claim intake, a callback/workmanship dispute (the v1.1.D red-flag patterns), or a multi-property/investor signal. These are relationship-and-judgment calls that a business-hours human should own; the AI captures the caller's words and transfers rather than forcing them through a residential intake script.
+4. **`REPEAT_CALLER_FLAG`** (BUSINESS_HOURS_OVERRIDE only) — When the v1.1.D auto-flag fires (third un-booked inbound in 90 days, CRM do-not-service flag, prior payment dispute), escalate to a human instead of re-running the intake. Pairs with the v1.1.D owner-review channel.
+
+**Worked example — BUSINESS_HOURS_OVERRIDE, caller asks for a person on a no-hot-water call:**
+
+```json
+{
+  "skill_version": "1.2",
+  "channel": "phone",
+  "hybrid_posture_mode": "BUSINESS_HOURS_OVERRIDE",
+  "human_available": true,
+  "presenting_problem": { "caller_words": "No hot water since this morning — can I just talk to a person?", "dispatcher_restatement": null },
+  "urgency_tier": "urgent",
+  "escalation_to_human": true,
+  "escalation_reason": "PREFERS_HUMAN",
+  "booked_for": null
+}
+```
+
+The intake record carries the partial capture (caller words + urgency tier) so the human who picks up does not restate the problem — they continue from where the caller left off.
+
+**Hardening rules (inherited from Pricebook Q&A v2.3.A):**
+
+- **Mode is per-call, not per-shop** — a runtime input from the platform's scheduling logic, not a `config.yml` constant. The same shop runs AFTER_HOURS at 9 PM and may never run BUSINESS_HOURS_OVERRIDE.
+- **`PREFERS_HUMAN` and `SAFETY_ESCALATION` have no exceptions** and fire in every mode. The 1-in-3 hang-up cost is the reason the transfer is non-negotiable; the safety cost is self-evident.
+- **Log the mode in the audit trail** so the morning review (After-Hours Call Summary v2.1.A / v2.2.A) can correlate intake outcomes against mode. This skill's handoff is one of the inputs to that morning briefing; the mode field flows downstream.
+- **Hybrid posture is calibration, not abandonment.** The AI-RX intake is the right first touch for after-hours and overflow; v1.2.B sharpens *when it should hand the call to a human*, it does not withdraw the adapter.
+
+---
+
+**End of v1.2 additions. v1.0 example output above remains the canonical example. The v1.1 and v1.2 sub-sections layer on without modifying any prior instruction or example.**

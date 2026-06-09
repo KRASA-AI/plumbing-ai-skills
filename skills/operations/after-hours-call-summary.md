@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~15 min/morning"
-version: 2.1
-last_eval_score: 9.6
+version: 2.2
+last_eval_score: 9.7
 ---
 
 # 📞 After-Hours Call Summary
@@ -394,3 +394,78 @@ When confidence is medium, the recommended callback line reads: `"Try [bilingual
 ---
 
 **End of v2.1 additions. v2.0 example output above remains the canonical example. The v2.1 sub-sections layer on without modifying any v2.0 instruction or example. Eight-cycle additive-only streak holds on this skill (v1.0 → v2.0 was a structural rewrite shipped 2026-04-14; v2.0 → v2.1 returns to the additive-only pattern).**
+
+---
+
+## v2.2 Additions (2026-06-08)
+
+The v2.0 and v2.1 sections above are unchanged. The single sub-section below is additive. It applies the repo-wide hybrid-posture calibration framing (06-01 Remaining Opportunities #1, the highest-priority next-cycle target; canonical source: Pricebook Q&A v2.3.A) to this skill's AI-RX overnight adapter. After-Hours Call Summary is the most natural home for the framing because its entire domain *is* the after-hours / overflow window — the exact deployment modes the hybrid-posture thesis says AI-RX is right for. Use it in addition to v2.1 when the AI-RX overnight batch is present.
+
+### v2.2.A — Hybrid-Posture Mode on the AI-RX Overnight Batch
+
+The Blanchard / ServiceForge counter-thesis (Contractor Magazine, May 12 2026 — ~1 in 3 homeowners hang up when AI answers; 78% prefer human-answering when reviews are comparable) is often read as an argument against AI-RX. The hybrid-posture reframing (06-01 monitor cycle) is the opposite: it says AI-RX is *right* for after-hours and overflow and *wrong* as a business-hours default — which means the overnight batch this skill processes is squarely in AI-RX's strong zone. v2.2.A makes the morning briefing surface, per call, which posture mode the AI-RX ran in and whether it correctly escalated a caller who asked for a human, so the owner can confirm the AI is firing and transferring in the right places.
+
+**Trigger:** When the v2.1.A AI-RX overnight batch is present, consume the two new per-call fields below if the platform emits them; when the platform does not yet emit them, default `hybrid_posture_mode` to `AFTER_HOURS` (the structurally correct mode for an overnight batch) and treat absent escalation data as none.
+
+**Input schema addition to the v2.1.A overnight-batch call object:**
+
+```json
+{
+  "hybrid_posture_mode": "AFTER_HOURS | OVERFLOW | BUSINESS_HOURS_OVERRIDE",
+  "human_available": false,
+  "escalation_to_human": false,
+  "escalation_reason": "PREFERS_HUMAN | SAFETY_ESCALATION | COMPLEX_INTAKE | null"
+}
+```
+
+The modes and escalation reasons carry the canonical meaning from Pricebook Q&A v2.3.A and Pre-Visit Diagnostic Intake v1.2.B. For an overnight batch, `AFTER_HOURS` is the dominant mode; `OVERFLOW` appears when the daytime window bleeds into a surge; `BUSINESS_HOURS_OVERRIDE` should be rare-to-absent in a *night* batch and, if present, is itself worth a dispatcher note.
+
+**New disposition added to the v2.1.A `ai_disposition` enum:**
+
+```json
+"ai_disposition": "BOOKED | QUEUED_FOR_HUMAN | SCOPE_LIMIT_TRANSFER | PREFERS_HUMAN_TRANSFER | DROPPED"
+```
+
+`PREFERS_HUMAN_TRANSFER` is distinct from `SCOPE_LIMIT_TRANSFER`: the caller was inside the AI's scope but explicitly asked for a person (or hit a safety escalation). This is a *correct* transfer, not a scope miss — and separating the two keeps the routing-rule diagnostic honest (a `PREFERS_HUMAN_TRANSFER` should never count against the AI's scope calibration).
+
+**New output block — insert inside the 🤖 AI-RX OVERNIGHT section, after the SCOPE-LIMIT TRANSFER group:**
+
+```
+  🙋 PREFERS-HUMAN / SAFETY TRANSFER (the AI correctly handed off)
+     5. [Caller Name] — [Phone]
+        ⏰ Called: [time]
+        🔧 Issue: [Normalized problem]
+        🤝 Why transferred: [PREFERS_HUMAN — caller asked for a person |
+                            SAFETY_ESCALATION — gas/active-hazard script ran]
+        ✅ Correct handoff — count as an AI win, not a scope miss.
+        📞 Morning action: confirm the overnight on-call actually picked up;
+           if the transfer dropped to voicemail, this is a call-back-NOW lead.
+```
+
+**Addition to the 🤖 AI-RX OVERNIGHT METRICS block:**
+
+```
+  ↳ Prefers-human / safety transfers: [N] ([%])   ← correct handoffs, not scope misses
+
+  Posture-mode mix this batch:
+    AFTER_HOURS:            [N]
+    OVERFLOW:              [N]
+    BUSINESS_HOURS_OVERRIDE: [N]   ← if >0 in a NIGHT batch, flag for review
+```
+
+**Routing-rule diagnostic adjustment (refines the v2.1.A rule):**
+
+- **Exclude `PREFERS_HUMAN_TRANSFER` and `SAFETY_ESCALATION` from the scope-limit transfer rate.** The v2.1.A CALIBRATED / TIGHTEN-SCOPE thresholds are computed on *scope-miss* transfers only. A shop whose AI correctly transfers every caller who asks for a person should read as CALIBRATED, not TIGHTEN-SCOPE. Mixing the two would punish the AI for doing the right thing.
+- **A high `PREFERS_HUMAN_TRANSFER` rate (>20% of AI calls) is a positioning signal, not a scope signal.** It usually means the after-hours greeting is making callers feel they reached "just a robot." The fix is the v2.1.B named-teammate greeting ("you've reached Olivia, [Company]'s after-hours assistant — I can book your emergency right now or get a person on for you"), not narrowing the AI's scope. Surface this as a SCOPE-CALIBRATION NOTE variant when the rate crosses the threshold.
+
+**Hardening rules (inherited from Pricebook Q&A v2.3.A):**
+
+- **Mode is per-call, not per-shop.** The briefing reports the mix; it does not assume one mode for the batch.
+- **`PREFERS_HUMAN` and `SAFETY_ESCALATION` transfers are always correct handoffs.** Never recommend tightening AI scope to reduce them.
+- **The mode field flows in from upstream.** Pre-Visit Diagnostic Intake v1.2.B sets the mode and escalation at first touch; this skill reports it at the morning review. The two skills close the loop: intake decides the posture in the moment, the briefing audits whether the posture was right overnight.
+
+**Cross-skill reference:** The CSR Performance Debrief v1.1.B AI-vs-Human comparative block should likewise exclude `PREFERS_HUMAN_TRANSFER` and `SAFETY_ESCALATION` from any AI scope-miss comparison; the two skills already share the routing-rule vocabulary, and v2.2.A keeps them aligned on the corrected definition.
+
+---
+
+**End of v2.2 additions. v2.0 example output above remains the canonical example. The v2.1 and v2.2 sub-sections layer on without modifying any prior instruction or example.**

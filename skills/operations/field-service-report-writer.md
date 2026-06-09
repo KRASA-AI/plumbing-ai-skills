@@ -4,9 +4,9 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15–20 min per completed job — turns a tech's voice memo or scribbled job-ticket notes into a customer-ready service report and a clean office record, before the truck leaves the driveway"
-version: 1.0
-last_eval_score: null
-notes_for_next_eval: "v1.0 debut (2026-06-08 landscape monitor). Fills the post-job documentation gap that the existing operations skills do not cover: Sewer Camera Inspection Report Drafter is CCTV-inspection-specific, After-Hours Call Summary is inbound-call-specific, Dispatch Brief Generator is pre-job. This skill is the general post-job 'what was done' report generator for any service, repair, or install call — the workflow the 2026 FSM platforms (ServiceTitan Field Pro, BuildOps OpsAI, QuoteIQ, Workiz) have made mainstream via voice-note-to-report capture. Implements the AI-RX-adjacent structured-output discipline (clean JSON-friendly section schema) so the report can feed an invoice, a review request, and a warranty record without re-keying. Bilingual Spanish variant flagged (joins the bilingual thread). Cross-skill handoffs documented to Estimate Writer (recommended follow-on work), Review Request Drafter (post-job send), Invoice Follow-Up Sequence (line items), and Sewer Camera Inspection Report Drafter (escalation when a camera run is part of the job)."
+version: 1.1
+last_eval_score: 9.6
+notes_for_next_eval: "v1.0 debut (2026-06-08 landscape monitor) first-evaluated at 9.5; improved to v1.1 (9.6) the same 2026-06-08 evaluator cycle. Fills the post-job documentation gap that the existing operations skills do not cover: Sewer Camera Inspection Report Drafter is CCTV-inspection-specific, After-Hours Call Summary is inbound-call-specific, Dispatch Brief Generator is pre-job. This skill is the general post-job 'what was done' report generator for any service, repair, or install call — the workflow the 2026 FSM platforms (ServiceTitan Field Pro, BuildOps OpsAI, QuoteIQ, Workiz) have made mainstream via voice-note-to-report capture. Implements the AI-RX-adjacent structured-output discipline (clean JSON-friendly section schema) so the report can feed an invoice, a review request, and a warranty record without re-keying. v1.1 (2026-06-08) builds out the previously-flagged bilingual Spanish customer-report variant (the v1.0 debut only flagged it) and adds the hybrid-posture send-gate framing to the downstream review-request handoff (mirrors Pricebook Q&A v2.3.A / After-Hours Call Summary v2.2.A). Cross-skill handoffs documented to Estimate Writer (recommended follow-on work), Review Request Drafter (post-job send), Invoice Follow-Up Sequence (line items), and Sewer Camera Inspection Report Drafter (escalation when a camera run is part of the job). v1.2 vectors for a future cycle: pt/vi customer-report variants (joins the four-language bilingual thread); a structured `service_report` JSON adapter matching the canonical AI-RX schema for shops whose FSM platform ingests the office record via webhook; per-job-type as-found/as-left prompt checklists (water heater, repipe, backflow) so a sparse voice memo still produces a complete record."
 ---
 
 # Field Service Report Writer
@@ -233,3 +233,135 @@ This skill is designed to feed the rest of the repo without re-keying the job:
 ## Bilingual Spanish Variant (flagged)
 
 The customer report (Deliverable A) translates to Spanish for Spanish-preferred customers; the office record (Deliverable B) stays English-default as a shop-internal artifact. Terminology calibration: *calentador de agua* (water heater), *válvula de alivio de temperatura y presión* (T&P valve), *válvula reductora de presión* (PRV / pressure-reducing valve), *tanque de expansión* (expansion tank). Register follows the shop's existing customer-communication convention. Joins the repo's bilingual thread.
+
+> **Note (v1.1):** The flag above is superseded by the fully built variant in the v1.1 Additions below. The paragraph is retained for the v1.0 history; for any Spanish-preferred customer, use the v1.1.A built variant.
+
+---
+
+## v1.1 Additions (2026-06-08)
+
+The v1.0 sections above are unchanged. The two sub-sections below are additive — they build out the bilingual variant the v1.0 debut only flagged, and they wire the downstream review-request handoff into the repo-wide hybrid-posture send framing. Use them in addition to v1.0 when the trigger conditions named in each apply.
+
+### v1.1.A — Built Bilingual Spanish Customer Report
+
+The v1.0 ship flagged a Spanish variant but did not build it. v1.1.A builds it. Only **Deliverable A (the customer report)** translates; **Deliverable B (the office record)** stays English-default as a shop-internal artifact that feeds CRM/invoice/warranty systems built in English. When a job runs both languages, produce the English office record once and the customer report in the customer's preferred language.
+
+**Trigger:** Build the Spanish customer report when the job's `customer_language` is `es` (carried from the Pre-Visit Diagnostic Intake record, the AI-RX overnight batch, or the CRM's stored preference). **Don't-auto-detect-from-name rule** (consistent across the repo's bilingual thread): never infer Spanish preference from the customer's surname — use an explicit language field or a stored CRM preference only.
+
+**Terminology table (precise term → customer-register Spanish; do not paraphrase the safety items):**
+
+| English (office-record term) | Spanish (customer report) |
+|---|---|
+| water heater | calentador de agua |
+| temperature-and-pressure (T&P) relief valve | válvula de alivio de temperatura y presión |
+| T&P discharge / drain line | tubo de descarga de la válvula de alivio |
+| pressure-reducing valve (PRV) | válvula reductora de presión |
+| expansion tank | tanque de expansión |
+| main water shutoff | llave principal del agua |
+| shutoff valve (fixture) | llave de paso |
+| static water pressure | presión del agua |
+| leak / leaking | fuga / con fuga |
+| we recommend (optional) | recomendamos (opcional) |
+| code-required | requerido por el código |
+| you chose to wait on this today | usted decidió esperar en esto por ahora |
+| labor warranty | garantía de mano de obra |
+| manufacturer / parts warranty | garantía del fabricante / de las piezas |
+| what to watch for | qué vigilar |
+
+**Section-header translations (keep the five-section structure identical to Deliverable A):**
+
+- **Resumen** (Summary — ≤4 sentences)
+- **Lo que encontramos** (What we found)
+- **Lo que hicimos** (What we did)
+- **Lo que recomendamos (y lo que usted decidió hoy)** (What we recommend / what you decided today)
+- **Qué vigilar / próximos pasos** (What to watch for / next steps), including the **Garantía** (warranty) line.
+
+**Worked Spanish customer report — same Henderson water-heater job as the v1.0 example:**
+
+```
+Reporte de Servicio
+Cliente: Sr. Henderson  |  Dirección: 2200 Maple Court, [Ciudad, Estado]
+Fecha: 06/08/2026  |  Técnico: [NOMBRE]  |  Licencia #: [LICENCIA]
+Orden de trabajo #: [WO]
+
+Resumen: Su calentador de agua de 11 años se había oxidado por dentro y
+tenía una fuga — llegó al final de su vida útil y no se podía reparar. Lo
+reemplazamos por un calentador de agua AO Smith ProLine nuevo de 40 galones,
+cambiamos el tanque de expansión (requerido por el código en su sistema) y
+corregimos el tubo de descarga de la válvula de alivio. Ya tiene agua
+caliente y todo quedó sin fugas. Un punto pendiente: su presión de agua está
+alta y recomendamos una válvula reductora de presión cuando usted guste.
+
+Lo que encontramos
+- El calentador AO Smith de 40 galones (aprox. 11 años) tenía el tanque
+  oxidado y con fuga en la base. Un tanque oxidado no se puede reparar.
+- El tanque de expansión estaba saturado de agua (falló).
+- Al tubo de descarga de la válvula de alivio (T&P) le faltaba un tramo
+  correcto hacia el piso — un punto de seguridad.
+- La presión del agua midió 92 psi en la llave de la lavandería. La presión
+  normal es de 40 a 60 psi. La presión alta daña sus tuberías, llaves y el
+  calentador nuevo.
+
+Lo que hicimos
+- Retiramos y desechamos el calentador con fuga.
+- Instalamos un calentador AO Smith ProLine nuevo de 40 galones.
+- Cambiamos el tanque de expansión (requerido por el código en su sistema).
+- Corregimos el tubo de descarga de la válvula de alivio: ahora llega a 6
+  pulgadas del piso, como exige el código.
+- Revisamos todas las conexiones (sin fugas), encendimos la unidad y
+  confirmamos que calienta bien.
+
+Lo que recomendamos (y lo que usted decidió hoy)
+- Recomendamos (opcional): válvula reductora de presión (PRV). Sus 92 psi
+  están por encima del rango seguro y acortan la vida de las llaves y del
+  calentador nuevo. Una PRV la baja al rango de 50 a 60 psi. Usted decidió
+  esperar en esto por ahora — sin problema; lo dejamos anotado y puede
+  agendarlo cuando guste.
+
+Qué vigilar / próximos pasos
+- Durante la primera semana, revise el piso alrededor del calentador nuevo
+  cada noche. A veces un tanque nuevo muestra una pequeña humedad en una
+  conexión que es fácil de corregir a tiempo — llámenos si ve humedad.
+- Garantía: 1 año de garantía de mano de obra de nuestra parte; 6 años de
+  garantía del fabricante en el tanque AO Smith (registramos su número de
+  serie).
+- Para agendar la válvula reductora de presión, llámenos al [TELÉFONO].
+```
+
+**Register and safety rules for the Spanish variant:**
+
+- Use the formal **usted** register throughout, consistent with the repo's customer-facing Spanish convention.
+- **Safety findings are never softened in translation.** A T&P correction, a venting issue, or a gas finding reads as plainly in Spanish as in English. The "never minimize a safety issue" core principle applies in both languages.
+- **The office record stays English.** Serial numbers, part models, `safety_flags`, and the `downstream` block remain in English so the shop's systems and any English-reading office staff, adjuster, or warranty registrar read one canonical record.
+- Numbers, pressures, model numbers, and serials are **not** translated or localized — 92 psi stays 92 psi; AO Smith ProLine stays AO Smith ProLine.
+
+### v1.1.B — Hybrid-Posture Review-Request Send Gate
+
+The v1.0 `downstream.review_request_ready` field is a yes/no gate. v1.1.B aligns it with the repo-wide hybrid-posture send framing (canonical source: Pricebook Q&A v2.3.A; after-hours application: After-Hours Call Summary v2.2.A) so a shop running an AI-RX or automated post-job sequence does not fire a review request at the wrong moment or in a way that should have routed to a human first.
+
+**The gate is not just "is the job done" — it is "is this the right moment and channel to ask."** Set `review_request_ready: yes` only when ALL of the following hold; otherwise set `no` with a one-line reason:
+
+- `status: completed` (never on `diagnostic_only`, `partial_parts_on_order`, or `return_scheduled`).
+- `safety_flags` is empty OR every safety flag is recorded as corrected/resolved on this visit. Never ask for a review while a live safety finding is open.
+- No declined recommendation involved a dispute, a price complaint, or visible customer dissatisfaction on the visit. A declined upsell on good terms is fine; a tense decline is a `no` with reason `customer_friction_present`.
+
+**New `downstream` sub-field — review-request send posture:**
+
+```
+review_request: {
+  ready: yes | no,
+  hold_reason: <string or null>,         # required when ready: no
+  send_posture: HUMAN_FIRST | AUTOMATED_OK,
+  earliest_send: <same-day-evening | next-morning>
+}
+```
+
+- **HUMAN_FIRST** — Set when the job carried any complexity the customer may want to talk through: a large-ticket replacement, a multi-day job, a property-manager/insurance/commercial reader, an elderly customer flagged in the intake, or a corrected safety issue the customer should hear about by voice. The review ask still goes out, but a human touch (the tech's or office's thank-you call) precedes the automated review request. This mirrors the hybrid-posture principle that relationship-bearing moments get a human first; the automation follows, it does not lead.
+- **AUTOMATED_OK** — Routine completed job, no friction, homeowner reader, no open safety item. The Review Request Drafter automated post-job send (respecting its own hybrid-posture send rules) can fire on the shop's normal cadence.
+- **earliest_send** — `same-day-evening` for routine work the customer is glad is done; `next-morning` when the job ran late, the customer was stressed, or a HUMAN_FIRST touch needs to land first.
+
+**Handoff note:** This field is consumed by the **Review Request Drafter** (which owns the actual review-ask copy and the channel send rules). This skill only sets the posture and the gate; it does not draft the review request. The two skills speak the same hybrid-posture vocabulary so the post-job sequence is coherent end to end: the field report decides *whether and how soon* to ask, the Review Request Drafter decides *what to say and on which channel*.
+
+---
+
+**End of v1.1 additions. The v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**
