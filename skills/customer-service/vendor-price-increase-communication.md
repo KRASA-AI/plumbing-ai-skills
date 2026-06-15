@@ -4,10 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump"
-version: 1.1
+version: 1.2
 last_eval_score: 9.7
 last_eval_date: 2026-05-25
-notes_for_next_eval: "v1.1 (2026-05-25) re-evaluated 2026-05-25; score lifted 9.6 → 9.7 on confirmation of Specificity 9 → 10 (calibration band 3.5–5.5% residential / 6–9% commercial defensible) and Output Quality 9 → 10 (May 2026 inputs pre-loaded, ~30–45 min upstream research saved). v1.2 vector: when the June 2026 wave lands, add a second fresh-example annex without disturbing the May block."
+notes_for_next_eval: "v1.2 (2026-06-15, landscape-monitor add) ships the June 2026 fresh-example data block alongside the existing April example and May annex — the June PHCP-PVF wave landed June 9 (P&M / Supply House Times) and confirms the monthly cadence as a five-month established pattern (Feb-Mar, April, May, June 2026). June wave is broad and insulation/valve/water-heater-led rather than press-fitting-led: Merit Brass 8–12% (import brass + stainless 150# + nipples), AO Smith water heaters 7%, Red-White Valve 10–15% on 236 Series check valves, Cello 10%, Jones Stephens 10% poly/rubber insulation, Armacell 7% elastomeric foam, plus Mountain Plumbing 4–18%, Pro-Flex 6% CSST, Uponor/Taco/Little Giant moves. No structural change to the six-artifact packet. v1.3 vector: when the July 2026 wave lands, decide whether to keep accreting per-wave annexes or collapse the April/May/June blocks into a single rolling 'most-recent-wave' table (annex sprawl is the emerging maintenance cost). last_eval_score 9.7 reflects the 2026-05-25 formal eval; the June annex awaits next evaluator-cycle scoring."
 ---
 
 # Vendor Price Increase Customer Communication
@@ -413,6 +413,81 @@ April 2026 weighted-average net effective move on a typical residential service-
 The six-artifact structure (decision matrix → membership-holder announcement → commercial-account announcement → service-agreement compliance letter → pending-quote confirmation → office briefing → kitchen-table script → 90-day tracker). The grandfather-window logic. The "name the manufacturers, do not blame inflation" discipline. The one-week-lead-time rule. The "single topic, single call to action, signed by name" rule for the announcement email. The membership-plan-fee-is-unchanged reassurance up high.
 
 The only things that change wave-over-wave are the named manufacturers, the percentages, the weighted-average for the specific shop, the effective date, and the grandfather window dates. The packet itself is templated; the input data is what gets refreshed.
+
+---
+
+## Fresh-Example Data Block — June 2026 Wave (v1.2, 2026-06-15)
+
+This is the third per-wave data block. Use it the same way as the May block: drop the values into Required Input and let the skill calibrate the packet to the actual June 2026 wave. The June wave confirms the monthly cadence as a five-month established pattern (Feb-Mar, April, May, June 2026) — a shop that has not yet formalized its price-increase communication discipline after five consecutive named waves is leaving margin on the table every month.
+
+**Wave window:** Effective dates staggered across June 2026 (June 1, June 6, June 13, June 15, June 22), announced late May through early June, reported in *Plumbing & Mechanical* and *Supply House Times* ("PHCP-PVF Price Increases: June 2026," published June 9, 2026).
+
+**Named drivers:**
+
+| Manufacturer / Brand | Move | Categories Affected | Effective |
+|---|---|---|---|
+| Merit Brass — **headline driver** | **+8%** import brass fittings; **+8–12%** stainless steel 150# fittings and SS nipples; **+10.5%** domestic brass / import brass / chrome-plated nipples | Brass and stainless fittings and nipples | June 22, 2026 |
+| Mountain Plumbing | **+4–18%** | Decorative / specialty plumbing products | June 1, 2026 |
+| Red-White Valve Corp | **+10–15%** | 236 Series check valves | June 1, 2026 |
+| Cello | **+10%** (some items slightly more) | Plumbing product lines | June 15, 2026 |
+| Jones Stephens | **+10%** | Poly and rubber insulation | June 1, 2026 |
+| AO Smith Water Heaters | **+7%** | Water heaters | June 22, 2026 |
+| Armacell | +7% | Flexible elastomeric foam insulation (all products) | June 1, 2026 |
+| Plumberex | +7% | Insulation / protection products | June 1, 2026 |
+| Pro-Flex | Varies; **+6% on CSST and fittings** | Gas piping (CSST) | June 1, 2026 |
+| Noritz Parts | +5% | Tankless water-heater parts | June 1, 2026 |
+| Filtration Manufacturing | +3–5% select lines; +7% polyester | Water filtration | June 15, 2026 |
+| Bradley Corp. | +3–5% | Commercial fixtures / washroom | June 15, 2026 |
+| Resideo / Honeywell | +3% (Honeywell); 0–10% (Resideo) | Controls, valves | June 1 / June 6, 2026 |
+| Little Giant Pumps | +2–3% | Pump products | June 15, 2026 |
+| DiversiTech | +1% | HVAC/R accessories | June 1, 2026 |
+| Taco Pumps | Increase (unspecified %) | Pumps / hydronics | June 13, 2026 |
+| Uponor | Increase (unspecified %) | PEX / fittings | June 15, 2026 |
+
+**Sources to cite internally:**
+
+- *Plumbing & Mechanical*, "PHCP-PVF Price Increases: June 2026" (June 9, 2026)
+- *Supply House Times*, "PHCP-PVF Price Increases: June 2026"
+
+**What is structurally different about this wave vs. the April and May waves:**
+
+- **June is brass-, valve-, water-heater-, and insulation-led — not pipe-led (April) or press-fitting-led (May).** The headline category is Merit Brass's broad brass-and-stainless move (8–12%, the wave's largest broad-category increase), which lands on almost every service call that touches a brass fitting, nipple, or stainless connection — i.e., nearly all of them. This is a "background increase" wave in the same spirit as May's Westlake move, but on a category (brass and nipples) that residential service shops touch far more often than press fittings. Residential service-heavy shops will likely feel June *more* than they felt May.
+- **Water heaters move directly this wave.** AO Smith +7% effective June 22 is the most customer-visible single item, because a water-heater replacement is a high-ticket, frequently-quoted job and customers comparison-shop it. Shops sitting on open water-heater quotes should run the Section 3 pending-quote confirmation aggressively before June 22, and re-quote new water-heater jobs against the 7% after.
+- **Valves move double-digits again.** Red-White Valve 236 Series +10–15% and Cello +10% keep valves in the double-digit column for a second consecutive wave (after Apollo's May C&I valve and Backflow moves), which matters for repipe, backflow, and commercial valve-replacement work.
+- **Insulation is now a named recurring line.** Armacell +7%, Jones Stephens +10% poly/rubber, Plumberex +7%, Filtration polyester +7% — pipe insulation and protection products are moving as a category this wave. Low dollar-share for most shops, but it is the kind of incidental line item that, if not in the pricebook at the new cost, quietly erodes margin on every job that uses it.
+- **Gas piping (Pro-Flex CSST +6%) continues the OmegaFlex TracPipe +6% thread from May** — gas-line-active shops see a second consecutive ~6% on CSST/flexible gas products.
+
+**Recommended weighted-average framing for a typical residential service shop's announcement:**
+
+> "In June, several of the manufacturers we buy from raised prices — Merit Brass on brass and stainless fittings and nipples (8–12%), AO Smith on water heaters (7%), Red-White on check valves (10–15%), and a handful of insulation and gas-piping suppliers (6–10%). Weighted against our typical residential service material mix — which is brass-fitting-heavy — the net effective adjustment works out to about [X]%."
+
+**Recommended weighted-average framing for a shop doing heavy commercial install work:**
+
+> "In June, Merit Brass raised stainless 150# fittings and nipples 8–12%, Red-White raised 236 Series check valves 10–15%, and Bradley raised commercial fixtures 3–5%. Weighted against our typical commercial material mix, the net effective adjustment is approximately [X]%."
+
+**Field-back-fill (compute against the shop's own spend mix):**
+
+| Material category | Typical residential service-call weight | Typical commercial install weight | June 2026 move |
+|---|---|---|---|
+| Brass fittings & nipples (Merit Brass) | ~18–26% of spend | ~12–18% of spend | +8–10.5% |
+| Stainless 150# fittings & nipples (Merit Brass) | <2% | ~6–10% | +8–12% |
+| Check / specialty valves (Red-White, Cello) | ~3–6% | ~6–10% | +10–15% |
+| Water heaters (AO Smith) | ~10–16% (replacement-active shops higher) | ~4–8% | +7% |
+| Pipe & gas insulation (Armacell, Jones Stephens, Plumberex) | ~2–4% | ~3–5% | +7–10% |
+| Gas piping CSST (Pro-Flex) | ~3–6% (gas-active shops) | ~3–5% | +6% |
+| Pumps (Taco, Little Giant) | ~2–4% | ~2–4% | +2–3% |
+| Tankless parts (Noritz) | ~2–4% (tankless-active shops) | ~2–3% | +5% |
+| Commercial fixtures (Bradley) | <2% | ~4–8% | +3–5% |
+
+**Calibration cross-check (compare against April and May waves):**
+
+April 2026 weighted-average net effective move on a typical residential service-call material load: **~6.4%**. May 2026 landed **3.5–5.5%** residential / **6–9%** commercial (press-fitting-led, lighter on residential). June 2026 will land back in the **5–8%** range for most residential service-heavy shops — *higher than May for the same residential shop* — because the headline category (brass fittings and nipples) is a large share of the residential mix, and water heaters move directly this wave. Commercial install-heavy shops will land roughly **4–7%** for June (lower than May, because June lacks the 17–20% press-fitting moves that dominated May's commercial calibration). This residential-vs-commercial flip from May to June is itself worth noting to the shop: a shop that calibrated its May announcement at the low end because it is residential-heavy should not assume June is also low — for a residential brass-heavy shop, June is the more material wave of the two. Shops where the June calibration lands above 9% or below 3% should re-check the spend-mix assumption before publishing.
+
+**What does not change between the April, May, and June packets:**
+
+Identical to the May note — the six-artifact structure, the grandfather-window logic, the "name the manufacturers, do not blame inflation" discipline, the one-week-lead-time rule, the single-topic / single-call-to-action / signed-by-name rule, and the membership-plan-fee-is-unchanged reassurance up high all carry forward unchanged. Only the named manufacturers, percentages, weighted-average, effective date, and grandfather dates refresh.
+
+**Annex-sprawl note for the operator:** This is now the third per-wave data block (April example in Section 1 + May annex + this June annex). If the monthly cadence holds into Q3 2026, the maintenance-efficient move is to collapse the April/May/June blocks into a single rolling "most-recent-wave" table and keep only the current month's named drivers loaded, rather than accreting a new annex every month. For now all three are retained because the April-vs-May-vs-June comparison is itself instructive (the wave's lead category rotates month to month: pipe → press fittings → brass/water heaters), and that rotation is the real lesson for a shop — do not assume this month's wave hits your mix the same way last month's did.
 
 ---
 
