@@ -4,8 +4,9 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~3 min/update, ~15 min/job"
-version: 1.0
-last_eval_score: 9.6
+version: 1.1
+last_eval_score: 9.7
+notes_for_next_eval: "v1.1 (2026-06-15 evaluator cycle) closes two named gaps additively. (1) Built the bilingual Spanish lifecycle variant: the v1.0 skill listed 'non-English primary language, language preference' as a customer-context flag (Required Input #4) but never built the variant — the exact flagged-but-not-built pattern the repo lifts on. v1.1 builds the per-stage Spanish drafts (booked, reminder, on-the-way, running-late, complete, post-visit care) with a terminology table, the don't-auto-detect-from-name rule, and worked SMS examples; joins the repo bilingual thread. Lifted personalization 9 -> 10. (2) Added the AI-RX hybrid-posture send gate: this skill is a core lifecycle-messaging AI-RX consumer (status texts are exactly what an AI receptionist / automation fires) and was the named #1 next-cycle priority (hybrid-posture pass on remaining consumers). v1.1 classifies each stage AUTOMATED_OK vs HUMAN_FIRST with the same vocabulary as Pricebook Q&A v2.3.A / After-Hours Call Summary v2.2.A / Field Service Report Writer v1.1.B. Net 9.6 -> 9.7. Strictly additive; all v1.0 content preserved. v1.2 vectors: pt/vi stage variants; a structured status_event JSON adapter so an FSM webhook can fire the right stage draft automatically."
 ---
 
 # Job Status Update Drafter
@@ -204,3 +205,74 @@ Short bullet on when this stage's message should be suppressed:
 > "Priya — Sam is on the way, ETA about 25 min. White truck with blue logo. Live tracker: [LINK]."
 
 *(97 characters)*
+
+---
+
+## v1.1 Additions (2026-06-15)
+
+The v1.0 sections above are unchanged. The two sub-sections below are additive: they build the Spanish lifecycle variant the v1.0 skill flagged but did not build (Required Input #4 names a language-preference flag), and they wire the per-stage messages into the repo-wide AI-RX hybrid-posture send framing so an automated status sequence fires the right stage in the right way.
+
+### v1.1.A — Bilingual Spanish Lifecycle Variant (built)
+
+**Trigger:** Produce the Spanish draft when the job's `customer_language` is `es` — carried from the Pre-Visit Diagnostic Intake record (`customer_language: en|es|pt|vi|other`), the CRM's stored preference, or an explicit field. **Don't-auto-detect-from-name rule** (consistent across the repo's bilingual thread): never infer Spanish preference from a surname; use an explicit language field or stored CRM preference only. When a customer's language is unknown, default to the shop's primary language and let the first human touch confirm.
+
+**What translates:** the customer-facing SMS/email body for every stage. Links, the company name, the tech's name, addresses, and any tracker/reschedule URL stay as-is. Numbers and time windows stay in their original form (12–2 PM stays 12–2 PM).
+
+**Terminology table (English stage term → customer-register Spanish; usted register throughout):**
+
+| English | Spanish (customer message) |
+|---|---|
+| you're booked | ya está agendado / agendada |
+| arrival window | ventana de llegada |
+| running late / about 35 min behind | con un retraso de unos 35 min |
+| on the way / en route | en camino |
+| live tracker | rastreo en vivo |
+| reschedule | reagendar |
+| we wrapped your install | terminamos su instalación |
+| warranty | garantía |
+| what to watch for | qué vigilar |
+| reply or text us | responda o envíe un mensaje |
+| thanks for your patience | gracias por su paciencia |
+
+**Worked Spanish SMS drafts (same Priya / 50-gal gas water-heater job as the v1.0 example):**
+
+- **BOOKED:** "Hola Priya — ya está agendado con [Company] mañana de 12–2 PM para el reemplazo de su calentador de agua. Su técnico es Sam (camioneta blanca, logo azul). ¿Necesita cambiarlo? Responda aquí o [LINK]. Nos vemos mañana."
+- **REMINDER (evening before):** "Hola Priya — recordatorio de su ventana de mañana 12–2 PM con Sam para su calentador de agua. Si hay un perro en casa, avísenos. Reagendar: [LINK]."
+- **ON-THE-WAY:** "Priya — Sam va en camino, llega en unos 25 min. Camioneta blanca con logo azul. Rastreo en vivo: [LINK]."
+- **RUNNING LATE:** "Priya — un aviso rápido de [Company]. Sam lleva unos 35 min de retraso sobre la ventana de 12–2 — el trabajo anterior necesitó un arreglo extra que no podíamos dejar a medias. Nueva hora estimada: 2:35. Rastreo: [LINK]. Si ya no le funciona, responda y lo reagendamos. Gracias por su paciencia."
+- **COMPLETE:** "Priya — Sam terminó la instalación de su calentador nuevo. Déle unos 90 min para llegar a temperatura. El recibo y la garantía de 10 años le llegan por correo. Si alguna llave de agua caliente no se siente bien en 24 h, respóndame y pasamos. ¡Gracias por confiar en nosotros!"
+- **POST-VISIT CARE (next morning):** "Hola Priya — soy Sam. Dos notas de su calentador nuevo: (1) el primer baño del día puede salir un poco más caliente la primera semana; está a 120°F, un nivel seguro. (2) Puede oír un leve tic del tanque de expansión — es normal, no es una fuga. Su garantía va adjunta por correo. Cualquier cosa, respóndame."
+
+**Register and safety rules:**
+- Use the formal **usted** register throughout, consistent with the repo's customer-facing Spanish convention.
+- An honest-late message is honest in Spanish too: state the real delay in minutes, never soften it ("un pequeño retraso" is not acceptable for a 35-minute delay).
+- Never put a price or change-order number into a Spanish status text either — the v1.0 "never quote price changes via SMS" rule applies in both languages.
+- Keep each Spanish SMS within the same 2-SMS / 320-character budget; Spanish runs ~15–20% longer than English, so trim adjectives before links.
+
+### v1.1.B — AI-RX Hybrid-Posture Send Gate (per stage)
+
+This skill sits between the Pre-Visit Diagnostic Intake (which now sets `HYBRID_POSTURE_MODE` and flags `PREFERS_HUMAN` / `SAFETY_ESCALATION` / `COMPLEX_INTAKE` / `REPEAT_CALLER_FLAG`) and the Review Request Drafter. When a shop runs an AI receptionist or an automated status sequence, the lifecycle messages should not all fire the same way. v1.1.B classifies each stage with the repo-wide vocabulary (canonical source: Pricebook Q&A v2.3.A; applied in After-Hours Call Summary v2.2.A and Field Service Report Writer v1.1.B).
+
+**Per-stage default send posture:**
+
+| Stage | Default posture | Why |
+|---|---|---|
+| Booked | AUTOMATED_OK | Confirmation; routine. |
+| Reminder | AUTOMATED_OK | Routine; reduces no-shows. |
+| On-the-way | AUTOMATED_OK | Time-sensitive, benefits from automation speed. |
+| Running late | **HUMAN_FIRST if** the delay >45 min, the customer was flagged `PREFERS_HUMAN`/elderly, or it's the second slip on the same job; else AUTOMATED_OK | A trust-bearing moment; a big or repeated slip should carry a human voice, not a bot text. |
+| On-site arrival | AUTOMATED_OK | Useful for absentee customers; low risk. |
+| Delay / parts run | **HUMAN_FIRST** | Service-recovery moment; the revised plan and ETA should come from a person. |
+| Wrap-up / complete | **HUMAN_FIRST if** large-ticket replacement, multi-day job, property-manager/insurance/commercial reader, elderly/`PREFERS_HUMAN` flag, or a corrected safety issue the customer should hear by voice; else AUTOMATED_OK | Relationship-bearing close; mirrors Field Service Report Writer's review-request gate. |
+| Post-visit care | AUTOMATED_OK | The "quietly brilliant" message; safe to automate, and consistency is the value. |
+
+**Rules:**
+- **HUMAN_FIRST** does not mean "don't send the text" — it means a human touch (tech or office) precedes or replaces the automated send for that stage; the automation follows, it does not lead. The drafted message is still produced; the gate governs *who sends it and when*.
+- Any `SAFETY_ESCALATION` flag from intake overrides every posture to HUMAN_FIRST for that job and routes per the v1.0 "Do not use for emergency / safety communications" rule.
+- A `status_event` produced by an FSM webhook can carry the posture inline: `{stage, send_posture: HUMAN_FIRST|AUTOMATED_OK, reason}` so the automation routes correctly without re-deciding.
+
+**Handoff note:** the completion stage's posture should agree with the Field Service Report Writer's `downstream.review_request.send_posture` for the same job — if the field report set HUMAN_FIRST, the completion status message is HUMAN_FIRST too, and the review request follows the human touch. The three skills speak one hybrid-posture vocabulary so the post-job sequence (status complete → field report → review ask) is coherent end to end.
+
+---
+
+**End of v1.1 additions. The v1.0 stages, principles, and examples remain canonical; the Spanish variant and the send-gate layer on without modifying any v1.0 instruction.**

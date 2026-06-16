@@ -4,9 +4,9 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15–20 min per completed job — turns a tech's voice memo or scribbled job-ticket notes into a customer-ready service report and a clean office record, before the truck leaves the driveway"
-version: 1.1
-last_eval_score: 9.6
-notes_for_next_eval: "v1.0 debut (2026-06-08 landscape monitor) first-evaluated at 9.5; improved to v1.1 (9.6) the same 2026-06-08 evaluator cycle. Fills the post-job documentation gap that the existing operations skills do not cover: Sewer Camera Inspection Report Drafter is CCTV-inspection-specific, After-Hours Call Summary is inbound-call-specific, Dispatch Brief Generator is pre-job. This skill is the general post-job 'what was done' report generator for any service, repair, or install call — the workflow the 2026 FSM platforms (ServiceTitan Field Pro, BuildOps OpsAI, QuoteIQ, Workiz) have made mainstream via voice-note-to-report capture. Implements the AI-RX-adjacent structured-output discipline (clean JSON-friendly section schema) so the report can feed an invoice, a review request, and a warranty record without re-keying. v1.1 (2026-06-08) builds out the previously-flagged bilingual Spanish customer-report variant (the v1.0 debut only flagged it) and adds the hybrid-posture send-gate framing to the downstream review-request handoff (mirrors Pricebook Q&A v2.3.A / After-Hours Call Summary v2.2.A). Cross-skill handoffs documented to Estimate Writer (recommended follow-on work), Review Request Drafter (post-job send), Invoice Follow-Up Sequence (line items), and Sewer Camera Inspection Report Drafter (escalation when a camera run is part of the job). v1.2 vectors for a future cycle: pt/vi customer-report variants (joins the four-language bilingual thread); a structured `service_report` JSON adapter matching the canonical AI-RX schema for shops whose FSM platform ingests the office record via webhook; per-job-type as-found/as-left prompt checklists (water heater, repipe, backflow) so a sparse voice memo still produces a complete record."
+version: 1.2
+last_eval_score: 9.7
+notes_for_next_eval: "v1.2 (2026-06-15 evaluator cycle) adds the per-job-type as-found/as-left prompt checklists (water heater, repipe section, backflow test, drain clear, sump pump) that were the named v1.2 vector — they were the skill's one remaining efficiency drag (a sparse voice memo produced several office-fill placeholders the tech had to backfill; the checklists let the skill prompt for the missing facts up front instead of emitting blanks). Lifted efficiency 8 -> 9; net 9.6 -> 9.7. Strictly additive; all v1.0/v1.1 content preserved. v1.0 debut (2026-06-08 landscape monitor) first-evaluated at 9.5; improved to v1.1 (9.6) the same 2026-06-08 evaluator cycle. Fills the post-job documentation gap that the existing operations skills do not cover: Sewer Camera Inspection Report Drafter is CCTV-inspection-specific, After-Hours Call Summary is inbound-call-specific, Dispatch Brief Generator is pre-job. This skill is the general post-job 'what was done' report generator for any service, repair, or install call — the workflow the 2026 FSM platforms (ServiceTitan Field Pro, BuildOps OpsAI, QuoteIQ, Workiz) have made mainstream via voice-note-to-report capture. Implements the AI-RX-adjacent structured-output discipline (clean JSON-friendly section schema) so the report can feed an invoice, a review request, and a warranty record without re-keying. v1.1 (2026-06-08) builds out the previously-flagged bilingual Spanish customer-report variant (the v1.0 debut only flagged it) and adds the hybrid-posture send-gate framing to the downstream review-request handoff (mirrors Pricebook Q&A v2.3.A / After-Hours Call Summary v2.2.A). Cross-skill handoffs documented to Estimate Writer (recommended follow-on work), Review Request Drafter (post-job send), Invoice Follow-Up Sequence (line items), and Sewer Camera Inspection Report Drafter (escalation when a camera run is part of the job). v1.2 (2026-06-15) builds the per-job-type as-found/as-left prompt checklists (water heater, repipe, backflow, drain clear, sump pump) — closing the efficiency gap. Remaining vectors for a future cycle: pt/vi customer-report variants (joins the four-language bilingual thread); a structured `service_report` JSON adapter matching the canonical AI-RX schema for shops whose FSM platform ingests the office record via webhook."
 ---
 
 # Field Service Report Writer
@@ -365,3 +365,44 @@ review_request: {
 ---
 
 **End of v1.1 additions. The v1.0 example output above remains the canonical example. The v1.1 sub-sections layer on without modifying any v1.0 instruction or example.**
+
+---
+
+## v1.2 Additions (2026-06-15)
+
+The v1.0 and v1.1 sections above are unchanged. The sub-section below is additive: it gives the skill a set of per-job-type as-found/as-left prompt checklists. These solve the one efficiency drag in the v1.0/v1.1 skill — a sparse voice memo (the common real-world input) leaves several office-record fields empty, and the skill correctly flags them rather than inventing detail, but that pushes backfill work onto the office. The checklists let the skill prompt the tech for the handful of facts that *matter for that job type* up front, so a complete record comes out of one pass instead of two.
+
+### v1.2.A — Per-Job-Type As-Found / As-Left Prompt Checklists
+
+**How to use:** When the `job_type` is one of the five below and the raw capture is missing a checklist item, the skill asks for the missing items in a single consolidated question *before* producing the deliverables — never one question at a time, and never more than the items actually missing. If the tech cannot supply an item, the skill records the documented placeholder (e.g., `serial: [CAPTURE FROM STICKER]`) exactly as v1.0 specifies — the checklist front-loads the ask, it does not change the never-invent rule. For job types not listed, fall back to the general Required Input.
+
+**Water-heater replacement / install**
+- As-found: unit age, capacity, fuel (gas/electric/tankless), failure mode (tank leak, no hot water, pilot/ignition, T&P weep), venting type (atmospheric / power / direct), expansion-tank present & condition, static water pressure
+- As-left: new unit brand/model/**serial**, capacity, expansion tank (new/existing), T&P discharge line corrected Y/N, thermostat setpoint, sediment trap / dielectric unions present, leak check + heating verification result
+- Warranty-critical: serial number, install date, labor + manufacturer tank term
+
+**Repipe section (partial or whole-home)**
+- As-found: material being replaced (galv / poly / CPVC / lead-soldered copper), section scope (which runs/fixtures), reason (corrosion, recurring leaks, pressure loss, water quality), pressure before
+- As-left: new material (PEX-A/B, copper type L), fittings method (crimp/expansion/press), number of connections, fixtures restored, pressure after, leak test result, drywall/access left open or closed, permit/inspection status
+- Warranty-critical: material warranty, workmanship term, permit & inspection status
+
+**Backflow test (RPZ / DCVA / PVB)**
+- As-found: assembly type, size, make/model, **serial**, location, last-test date if known, hazard class (containment/isolation)
+- As-left: test result PASS/FAIL with the four gauge readings (check valve #1, check valve #2, relief valve opening, shutoff tightness as applicable), repairs made if any, retest result, certification number, test-report filed with the water authority Y/N + due date
+- Warranty-critical: serial, certification number, authority filing deadline (this is a compliance clock — surface it in `safety_flags`/`permit` if the filing is pending)
+
+**Drain clear / sewer cabling**
+- As-found: fixture/line affected, symptom (slow / full backup / recurring), method needed (hand auger / machine cable / hydro-jet), distance to blockage, blockage type if identified (grease, roots, foreign object, scale)
+- As-left: method used, distance cleared, flow restored Y/N, camera run performed Y/N (if yes → hand off to **Sewer Camera Inspection Report Drafter**, do not duplicate), recommendation (root treatment, jetting, spot repair, line replacement) with customer decision
+- Note: a recurring backup or roots found is a real follow-up seed → `follow_up_estimate_suggested: yes`
+
+**Sump pump replacement**
+- As-found: pump age, type (pedestal/submersible), HP, failure mode (won't run, runs continuously, switch stuck, impeller), check-valve present & condition, pit condition, battery-backup present Y/N
+- As-left: new pump brand/model/**serial**, HP, switch type, new check valve Y/N, discharge routing verified, battery-backup installed/tested Y/N, test cycle result (poured-in test)
+- Warranty-critical: serial, labor + manufacturer term; note whether a battery backup was *recommended and declined* (common, real follow-up seed)
+
+**Cross-checklist rule:** every checklist's warranty-bearing item maps to the existing `parts[].serial` discipline — the checklist exists to make sure the serial and the as-found/as-left facts are captured *on the visit*, which is exactly the data that decides a warranty or compliance question later. The checklists reduce return trips to the customer for missing information; they never relax the never-invent rule or the documented-placeholder behavior.
+
+---
+
+**End of v1.2 additions. All v1.0/v1.1 instructions and examples remain canonical; the checklists layer on as an input-completeness aid.**

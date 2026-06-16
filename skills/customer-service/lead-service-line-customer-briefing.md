@@ -4,10 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per affected-customer batch to produce the door-hanger, letter, FAQ, and on-site briefing packet; avoids the trust damage and call-volume spike that come from letting customers discover an LSL replacement notice from the water utility without any framing from the shop that will actually be doing the work"
-version: 0.9
-last_eval_score: 9.0
-last_eval_date: 2026-06-01
-notes_for_next_eval: "v0.9 (2026-06-01) is the provisional draft. Status flagged provisional because the EPA Small Entity Compliance Guide for the LCRI has still not been published as of the 06-08 monitor cycle — 15 consecutive cycles overdue. The June 2023 LCRR inventory guide (815-B-23-005, 'Developing and Maintaining a Service Line Inventory') and the April 2026 EPA draft 'Access Tips' and 'Service Line Inventory Tips' documents (public-comment deadline April 30, 2026; final guidance not yet released) are the current authoritative references. UPDATE (2026-06-08 monitor cycle): EPA's published 'FY 2026 Milestones under the Federal Lead Action Plan' page (epa.gov/lead/epas-fy-2026-milestones-under-federal-lead-action-plan; created 2026-03-13, updated 2026-04-08) now carries a firm agency commitment to deliver six LCRI support materials — the Small Entity Compliance Guide, Service Line Inventory Guidance, Service Line Replacement Guidance, State Implementation Guidance, Schools and Child-Care Guidance, and Monitoring and Reporting Guidance — 'by end of FY 2026' (i.e., by September 30, 2026). The same page commits 'new tools and information to support LCRI flexibilities and regulatory clarity' in Spring 2026 and LSL-replacement public-engagement resources (templates, case studies, best practices) 'by Fall 2026.' This converts the v1.0 lift gate from an open-ended wait into a dated external trigger: the guide is now expected on or before 2026-09-30. Every customer-facing artifact in this skill still explicitly marks any claim that depends on the unpublished guide as 'subject to EPA final guidance.' v1.0 lift conditions (unchanged in substance, now dated): (1) EPA publishes the LCRI Small Entity Compliance Guide (committed by end of FY 2026), OR (2) the Access Tips and Service Line Inventory Tips draft documents are finalized — at which point the provisional markers are removed, the cited document numbers update, and the access-permission language in artifacts #3 and #5 is reconciled with the final EPA language. Next decisive check: the FY-2026-end window (late September 2026)."
+version: 0.9.1
+last_eval_score: 9.2
+last_eval_date: 2026-06-15
+notes_for_next_eval: "v0.9.1 (2026-06-15 evaluator cycle) is an ADDITIVE provisional improvement — it does NOT lift the skill out of provisional status and does NOT remove any [subject to EPA final guidance] marker. The full v1.0 lift (Specificity 8->10, Output Quality 8->10; projected 9.6) remains gated on the EPA LCRI Small Entity Compliance Guide (committed by end of FY 2026, <=2026-09-30) and is not repo-addressable. What v0.9.1 DOES do, both independent of the EPA gate: (1) builds out the bilingual Spanish variant the v0.9 skill only described in a paragraph — adds a terminology table, translated artifact-section headers, worked Spanish door-hanger + FAQ + homeowner-card text, and usted-register + never-soften-the-health-guidance + tracker-stays-English rules (lifts personalization 9 -> 10); (2) realizes the previously-truncated worked example for artifact #3 (on-site briefing) and artifact #4 (homeowner card), with every provisional marker preserved in place, so the example now shows the full packet shape rather than '3-6 truncated' (lifts output_quality 8 -> 9; the 9 -> 10 ceiling stays EPA-gated). Net curated 9.0 -> 9.2. Specificity holds at 8 (the 8 -> 10 lift needs the final guide). v0.9 (2026-06-01) is the provisional draft. Status flagged provisional because the EPA Small Entity Compliance Guide for the LCRI has still not been published as of the 06-08 monitor cycle — 15 consecutive cycles overdue. The June 2023 LCRR inventory guide (815-B-23-005, 'Developing and Maintaining a Service Line Inventory') and the April 2026 EPA draft 'Access Tips' and 'Service Line Inventory Tips' documents (public-comment deadline April 30, 2026; final guidance not yet released) are the current authoritative references. UPDATE (2026-06-08 monitor cycle): EPA's published 'FY 2026 Milestones under the Federal Lead Action Plan' page (epa.gov/lead/epas-fy-2026-milestones-under-federal-lead-action-plan; created 2026-03-13, updated 2026-04-08) now carries a firm agency commitment to deliver six LCRI support materials — the Small Entity Compliance Guide, Service Line Inventory Guidance, Service Line Replacement Guidance, State Implementation Guidance, Schools and Child-Care Guidance, and Monitoring and Reporting Guidance — 'by end of FY 2026' (i.e., by September 30, 2026). The same page commits 'new tools and information to support LCRI flexibilities and regulatory clarity' in Spring 2026 and LSL-replacement public-engagement resources (templates, case studies, best practices) 'by Fall 2026.' This converts the v1.0 lift gate from an open-ended wait into a dated external trigger: the guide is now expected on or before 2026-09-30. Every customer-facing artifact in this skill still explicitly marks any claim that depends on the unpublished guide as 'subject to EPA final guidance.' v1.0 lift conditions (unchanged in substance, now dated): (1) EPA publishes the LCRI Small Entity Compliance Guide (committed by end of FY 2026), OR (2) the Access Tips and Service Line Inventory Tips draft documents are finalized — at which point the provisional markers are removed, the cited document numbers update, and the access-permission language in artifacts #3 and #5 is reconciled with the final EPA language. Next decisive check: the FY-2026-end window (late September 2026)."
 ---
 
 # Lead Service Line Customer Briefing
@@ -213,9 +213,42 @@ The tracker the shop maintains across the replacement project and the post-repla
 
 `[FAQ continues — full 12-question script in the complete packet, including the access-permission walk-through with the v0.9 subject-to-EPA-final-guidance marker.]`
 
-### 3–6 Truncated for example
+### 3. On-Site Briefing — Technician-Delivered, Pre-Work (worked)
 
-`[Full packet includes: artifact #3 on-site briefing script, artifact #4 double-sided homeowner card, artifact #5 access-permission form, artifact #6 tracker — all carrying the v0.9 provisional markers where applicable.]`
+> *(Delivered by the Cardinal tech at the door, before any tools come out — ~5 minutes.)*
+>
+> "Morning, Mr. [Name] — I'm [Tech] with Cardinal Plumbing, and I'm on Henrico's approved-contractor roster for the lead service line program. I'm here today for the customer-side portion of your service-line replacement that Henrico listed your address for.
+>
+> Here's what I'll do today: I'll replace the line that runs from your meter into the house, on your side. Your water will be off for about 4 to 6 hours during the cutover — I'll give you a heads-up before I shut it down. When the new line's in, I'll flush the system and walk you through the flushing you'll keep doing for the next week.
+>
+> Before I head to the basement to find your indoor cutoff, I need your written okay to go in and do the work. `[subject to EPA final guidance — current draft references the April 2026 Access Tips document; access-permission framing may shift when the final guidance is published]` It's a one-page form, takes a second.
+>
+> A couple of things I will *not* be doing today, so you know: I'm not touching the utility-owned portion at the street — that's Henrico's crew. And I'm not doing any work on the pipes or fixtures inside the house beyond this line unless you and I set that up separately. Today is just the service line.
+>
+> Last thing before I start — here's a card for your fridge. Cold water only for drinking and cooking until we're done, a lead-certified filter on your drinking tap, and a flushing routine. Give me 60 seconds and I'll walk you through it."
+
+### 4. Homeowner Interim-Guidance Card (worked — front and back)
+
+> **CARDINAL PLUMBING — LEAD SERVICE LINE: WHAT TO DO**
+>
+> **FRONT — Until your replacement is complete**
+> - **Drinking & cooking:** Cold tap only. Hot water pulls more lead from any in-line source. After water sits unused 6+ hours, run the cold tap 30–60 seconds before drawing water to drink, cook, or mix baby formula.
+> - **Filter:** Use an **NSF/ANSI 53 lead-certified** filter for all drinking/cooking water. Check the package for the certification — not every filter qualifies.
+> - **Baby formula / pregnant household members:** Use bottled or filtered water; call Henrico Public Health at [health-dept line] for guidance.
+> - **Bathing, laundry, lawn:** Fine to use normally — skin contact exposure is minimal.
+> - **Pets:** Cold filtered water for drinking; tap is fine for everything else.
+>
+> **BACK — After your replacement is complete**
+> - **Flush:** Run cold water at full flow 5 minutes at every fixture, lowest to highest. Repeat daily for 7 days. Clean every faucet aerator at the 7-day mark — particles settle there.
+> - **Keep the NSF/ANSI 53 filter for 90 days** post-replacement; in-home solder or brass can still hold trace lead.
+> - **Call Cardinal or Henrico** if you see discoloration, sediment, or an odd taste in the first 90 days — usually normal, worth a look.
+> - **Interested in addressing older indoor plumbing** (lead-soldered joints, pre-1986 brass fixtures)? That's a separate job from this replacement — ask us for a regular estimate anytime.
+>
+> `[subject to EPA final guidance — the 7-day flushing / 90-day filter windows reflect the most-conservative practitioner consensus as of June 2026; final EPA guidance may shorten or extend these windows]`
+
+### 5–6 Truncated for example
+
+`[Full packet includes: artifact #5 access-permission form and artifact #6 tracker — both carrying the v0.9 provisional markers where applicable.]`
 
 ---
 
@@ -229,9 +262,80 @@ The tracker the shop maintains across the replacement project and the post-repla
 - This skill is not a substitute for the utility's own legally-required notification. The utility's notice goes out under the utility's name. This skill's first-touch artifact (#1) is the **second** voice — the locally-known shop framing the utility's notice — never the first or only.
 - For households with known vulnerable occupants (children under 6, pregnant household members), do not improvise the health-side guidance. Route to the local public health department contact in the FAQ and the homeowner card, and let the public-health professionals manage the medical-side conversation.
 
-## Bilingual Spanish Variant
+## Bilingual Spanish Variant (built — v0.9.1)
 
-`config.yml` flag `bilingual: true` with Spanish in the language list triggers Spanish translations of artifacts #1, #2, #4, and #5. Artifacts #3 (on-site briefing) and #6 (internal tracker) remain English-default; the on-site briefing is delivered in the customer's preferred language by the technician on the dispatch, and the internal tracker is shop-internal. Joining the bilingual thread brings the repo total to eleven Spanish-anchored skills as of 06-01. `_shared/bilingual-tone-guide.md` formalization is now eleven cycles overdue.
+`config.yml` flag `bilingual: true` with Spanish in the language list, OR a customer `language` field of `es`, triggers Spanish versions of artifacts #1 (door-hanger/letter), #2 (FAQ), #4 (homeowner card), and #5 (access-permission form). Artifact #3 (on-site briefing) is delivered in the customer's preferred language by the technician on the dispatch — produce the Spanish briefing script when the dispatch language is `es`. Artifact #6 (internal tracker) stays English-default as a shop-internal artifact. **Don't-auto-detect-from-name rule** (consistent across the repo's bilingual thread): never infer Spanish preference from a surname — use an explicit language field or stored CRM preference only.
+
+**Governing rule for this skill specifically — public-health language is never softened or simplified in translation.** The classification, the cold-water-only rule, the filter certification requirement, the formula/pregnancy guidance, and the route-to-health-department instruction read as precisely in Spanish as in English. A translation that loses a health caveat is a defect, not a simplification.
+
+**Terminology table (English → customer-register Spanish; usted register; do not paraphrase the health items):**
+
+| English | Spanish (customer artifact) |
+|---|---|
+| lead service line | línea de servicio de plomo |
+| galvanized requiring replacement (GRR) | galvanizada que requiere reemplazo |
+| service line (the pipe from street to home) | línea de servicio (la tubería de la calle a su casa) |
+| water utility | compañía de agua / servicio público de agua |
+| replacement (of the line) | reemplazo (de la línea) |
+| no out-of-pocket cost | sin costo de su bolsillo |
+| interim guidance | guía provisional |
+| cold tap only | solo agua fría de la llave |
+| NSF/ANSI 53 lead-certified filter | filtro certificado para plomo NSF/ANSI 53 |
+| baby formula | fórmula para bebé |
+| flush / flushing | purgar / purga (dejar correr el agua) |
+| faucet aerator | filtro del grifo (aireador) |
+| local health department | departamento de salud local |
+| access permission | permiso de acceso |
+| we recommend (optional) | recomendamos (opcional) |
+
+**Artifact-section header translations:**
+- Door-hanger (#1): keep the neighborly opening; **no** "Urgente" / "Acción requerida" headers — the same calm-second-voice rule applies.
+- FAQ (#2): **Preguntas frecuentes**, same 10–12 question order; the "is my water dangerous right now?" answer mirrors the utility's own wording (do not translate a stricter posture than the utility stated).
+- Homeowner card (#4): **front** — *Hasta que se complete el reemplazo*; **back** — *Después de completar el reemplazo*; keep the `[subject to EPA final guidance]` window marker in place, in English, so the provisional status is unambiguous to the shop.
+- Access form (#5): **Permiso de acceso** — one page, plain language; keep the access-language provisional marker in place.
+
+**Worked Spanish text — same Cardinal / Henrico Phase 2 scenario:**
+
+> **DOOR-HANGER (#1), maintenance-plan customer:**
+>
+> Hola [Nombre],
+>
+> El Servicio Público de Agua del Condado de Henrico publicó la Fase 2 de su inventario de líneas de servicio de plomo el 28 de mayo, y su dirección apareció en la lista como [clasificación — plomo / galvanizada que requiere reemplazo / desconocida]. Pronto recibirá una carta de ellos directamente, si no la tiene ya.
+>
+> Quería que recibiera una nota nuestra primero, porque estamos en su lista de contratistas aprobados para la parte del trabajo que le corresponde a usted, y ya nos conocemos por su plan Preferred — prefiero que lo escuche de una voz conocida.
+>
+> En corto: la línea de servicio es la tubería que lleva el agua de la calle a su casa. El programa de Henrico la reemplazará con fondos federales — según su aviso, no hay costo de su bolsillo por el reemplazo [confirme con su aviso específico]. El trabajo de la Fase 2 comienza en julio.
+>
+> Lo llamaré dentro de 48 horas para explicarle todo. Le haré llegar una tarjeta con la guía provisional mientras tanto — solo agua fría para cocinar y beber, un filtro certificado para plomo NSF/ANSI 53 en su llave de agua potable, y una rutina de purga. Nada de esto es para alarmarse; es lo prudente entre hoy y el cambio.
+>
+> Línea de Henrico para preguntas del programa: [línea]. Línea directa de Cardinal: 804-555-0100.
+>
+> — Dan Harrelson, Cardinal Plumbing Co.
+
+> **FAQ (#2), selected — front desk:**
+>
+> **"¿Qué significa esta carta — es peligroso beber mi agua ahora mismo?"**
+> La carta es Henrico avisándole que su línea de servicio — la tubería entre la calle y su casa — está en su lista de reemplazo bajo el programa federal. La guía provisional de su carta es la postura correcta: solo agua fría para cocinar y beber, y un filtro certificado para plomo en su llave de agua potable. Si no tiene un filtro, podemos ayudarle a instalar uno hoy.
+>
+> **"¿Y mis hijos? Tengo un niño de 3 años."**
+> Lo correcto ahí es hablar con Salud Pública de Henrico — su línea es [línea de salud]. Ellos pueden orientar sobre pruebas. De nuestra parte, lo práctico de inmediato es: solo agua fría para beber o para la fórmula, un filtro NSF/ANSI 53 certificado para plomo en la llave de agua potable, y agua embotellada para la fórmula hasta completar el reemplazo. Lo repasamos con usted cuando vayamos.
+
+> **HOMEOWNER CARD (#4), front (excerpt):**
+>
+> **Hasta que se complete el reemplazo**
+> - **Beber y cocinar:** solo agua fría de la llave. El agua caliente disuelve más plomo. Si el agua estuvo sin usarse 6+ horas, deje correr la llave fría de 30 a 60 segundos antes de tomar agua para beber, cocinar o preparar fórmula.
+> - **Filtro:** use un filtro certificado para plomo NSF/ANSI 53 para toda el agua de beber y cocinar. Confirme la certificación en el empaque.
+> - **Fórmula para bebé / embarazo:** use agua embotellada o filtrada; llame al departamento de salud local al [línea].
+>
+> `[subject to EPA final guidance — the 7-day flushing / 90-day filter windows reflect the most-conservative practitioner consensus as of June 2026; final EPA guidance may shorten or extend these windows]`
+
+**Register and safety rules for the Spanish variant:**
+- Use the formal **usted** register throughout.
+- Health and classification language is never softened (see the governing rule above).
+- The internal tracker (#6) and any office-side fields stay English so one canonical record feeds the shop's systems.
+- Document numbers, classifications, and the `[subject to EPA final guidance]` markers are **not** translated — they stay in English so the provisional status and the cited references are unambiguous.
+
+Joining the bilingual thread keeps this skill on the repo's Spanish-anchored set. `_shared/bilingual-tone-guide.md` formalization remains the highest-value pending shared artifact.
 
 ## Subject-to-EPA-Final-Guidance Markers — Lift Conditions
 
