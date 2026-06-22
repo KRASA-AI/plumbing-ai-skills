@@ -4,8 +4,9 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min per customer briefing; replaces a back-and-forth comparison most shops do verbally and inconsistently"
-version: 1.0
+version: 1.1
 last_eval_score: 9.7
+notes_for_next_eval: "v1.1 (2026-06-22, landscape monitor): incorporated the DOE April 24, 2026 Enforcement Policy Statement delaying enforcement of the commercial gas thermal-efficiency standards for units manufactured Oct 6, 2026 – Oct 6, 2027 (litigation-driven, ~1-year grace period). Commercial-customer guidance reframed from 'buy before the Oct 6, 2026 wall' to an accurate enforcement-discretion posture: the standard still legally takes effect Oct 6, 2026, but non-condensing commercial gas units remain manufacturable/sellable through ~Oct 2027, and the grace period is litigation-contingent. Residential May 6, 2029 guidance untouched. Watch for: Supreme Court ruling resolving the underlying litigation (could end the grace period early); whether DOE extends or narrows the policy."
 ---
 
 # Water Heater Standards Briefing
@@ -87,7 +88,11 @@ For a residential customer with an electric tank under 35 gallons, note the rela
 
 For a residential gas customer, note that the 2029 rule is much less restrictive on gas residential units; the practical implication for a gas customer is mostly that the venting and condensing-vs-non-condensing decision is unchanged in 2026.
 
-For a commercial customer with a gas water heater above the rule's covered input range, anchor on the **October 6, 2026 commercial water heater standard requiring condensing efficiency**. State the date, what changes (manufacturers can no longer manufacture or import non-condensing commercial gas water heaters in the covered class on or after October 6, 2026), and what it means for the customer (a like-for-like replacement of an existing non-condensing commercial unit installed in 2027 or later will be a condensing model — different vent material, different vent path, condensate management required, possibly different gas line sizing).
+For a commercial customer with a gas water heater above the rule's covered input range, anchor on the **October 6, 2026 commercial water heater standard requiring condensing efficiency** — but state it accurately alongside the **DOE enforcement grace period announced April 24, 2026**. The honest, current picture has two parts the customer needs together:
+- The standard still takes legal effect October 6, 2026 (manufacturers must meet condensing efficiency in the covered class), AND
+- DOE is exercising enforcement discretion to **delay enforcement** for covered commercial gas units manufactured between October 6, 2026 and October 6, 2027, so manufacturers (e.g., A.O. Smith) are expected to keep producing and selling non-condensing commercial gas units through roughly late 2027. The delay is tied to pending Supreme Court litigation and could change.
+
+What this means for the customer: a like-for-like non-condensing replacement of a covered commercial unit is likely **still available** during the grace window — the "buy before the October 2026 wall" urgency the customer may have read about has effectively moved out about a year. Frame the condensing-vs-non-condensing choice on total 10-year cost of ownership and litigation risk, not on a panic deadline. When the customer does choose a **condensing model**, explain the install differences (different vent material, different vent path, condensate management required, possibly different gas line sizing). Do not tell a commercial customer they "must" buy condensing by October 6, 2026 — that overstates the current enforcement posture and is the single most likely accuracy error on this skill right now.
 
 In every case, distinguish clearly between "manufacturers must" and "homeowners must." The rules are manufacturing standards — they change what is available to install, not what is already installed.
 
@@ -210,7 +215,8 @@ I prefer **Option [_]** instead — please re-quote.
 
 ## Notes for the Operator
 
-- The two new federal rule dates (October 6, 2026 commercial; May 6, 2029 residential) are foundational facts. Do not soften or hedge them — they are written into the final DOE rules. Do soften any specific incentive dollar amount, because state and utility programs change quarterly.
+- The two new federal rule **effective dates** (October 6, 2026 commercial; May 6, 2029 residential) are foundational facts written into the final DOE rules — state the dates plainly. But on the commercial side, pair the date with the **DOE enforcement grace period** (Enforcement Policy Statement, April 24, 2026): enforcement of the commercial gas thermal-efficiency standards is delayed for units manufactured October 6, 2026 – October 6, 2027, so non-condensing commercial gas units remain available to buy and install during that window. Do not present October 6, 2026 to a commercial customer as a hard "last day to buy non-condensing" deadline — that is now inaccurate. The May 6, 2029 residential date is unaffected and should be stated without hedging. Soften any specific incentive dollar amount, because state and utility programs change quarterly.
+- The commercial enforcement delay is litigation-contingent (it rests on DOE enforcement discretion tied to pending Supreme Court litigation). It is the current operating reality, not a guaranteed end state — do not promise a customer it will still be in place years out. Re-check before making a multi-year commercial capital-timing commitment. See `knowledge-base/regulations/water-heater-efficiency-2026-2029.md` for the full enforcement-policy detail.
 - The 25C tax credit is genuinely expired for 2026 installs. Do not include it as available.
 - HEEHRA rollout varies by state. Where a state has not yet activated HEEHRA, do not promise it as available — name the state-administered program by name (TECH Clean California, Mass Save, NYSERDA, Energize CT, etc.) or note that no current program applies.
 - The briefing is designed to be screen-readable and printable in two pages. If the shop wants a one-pager version, drop Sections 5 and 6 first; never drop Section 3 (the table is the part the customer remembers).
