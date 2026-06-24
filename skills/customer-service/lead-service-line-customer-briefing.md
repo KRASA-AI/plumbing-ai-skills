@@ -4,10 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per affected-customer batch to produce the door-hanger, letter, FAQ, and on-site briefing packet; avoids the trust damage and call-volume spike that come from letting customers discover an LSL replacement notice from the water utility without any framing from the shop that will actually be doing the work"
-version: 0.9.1
-last_eval_score: 9.2
-last_eval_date: 2026-06-15
-notes_for_next_eval: "v0.9.1 (2026-06-15 evaluator cycle) is an ADDITIVE provisional improvement — it does NOT lift the skill out of provisional status and does NOT remove any [subject to EPA final guidance] marker. The full v1.0 lift (Specificity 8->10, Output Quality 8->10; projected 9.6) remains gated on the EPA LCRI Small Entity Compliance Guide (committed by end of FY 2026, <=2026-09-30) and is not repo-addressable. What v0.9.1 DOES do, both independent of the EPA gate: (1) builds out the bilingual Spanish variant the v0.9 skill only described in a paragraph — adds a terminology table, translated artifact-section headers, worked Spanish door-hanger + FAQ + homeowner-card text, and usted-register + never-soften-the-health-guidance + tracker-stays-English rules (lifts personalization 9 -> 10); (2) realizes the previously-truncated worked example for artifact #3 (on-site briefing) and artifact #4 (homeowner card), with every provisional marker preserved in place, so the example now shows the full packet shape rather than '3-6 truncated' (lifts output_quality 8 -> 9; the 9 -> 10 ceiling stays EPA-gated). Net curated 9.0 -> 9.2. Specificity holds at 8 (the 8 -> 10 lift needs the final guide). v0.9 (2026-06-01) is the provisional draft. Status flagged provisional because the EPA Small Entity Compliance Guide for the LCRI has still not been published as of the 06-08 monitor cycle — 15 consecutive cycles overdue. The June 2023 LCRR inventory guide (815-B-23-005, 'Developing and Maintaining a Service Line Inventory') and the April 2026 EPA draft 'Access Tips' and 'Service Line Inventory Tips' documents (public-comment deadline April 30, 2026; final guidance not yet released) are the current authoritative references. UPDATE (2026-06-08 monitor cycle): EPA's published 'FY 2026 Milestones under the Federal Lead Action Plan' page (epa.gov/lead/epas-fy-2026-milestones-under-federal-lead-action-plan; created 2026-03-13, updated 2026-04-08) now carries a firm agency commitment to deliver six LCRI support materials — the Small Entity Compliance Guide, Service Line Inventory Guidance, Service Line Replacement Guidance, State Implementation Guidance, Schools and Child-Care Guidance, and Monitoring and Reporting Guidance — 'by end of FY 2026' (i.e., by September 30, 2026). The same page commits 'new tools and information to support LCRI flexibilities and regulatory clarity' in Spring 2026 and LSL-replacement public-engagement resources (templates, case studies, best practices) 'by Fall 2026.' This converts the v1.0 lift gate from an open-ended wait into a dated external trigger: the guide is now expected on or before 2026-09-30. Every customer-facing artifact in this skill still explicitly marks any claim that depends on the unpublished guide as 'subject to EPA final guidance.' v1.0 lift conditions (unchanged in substance, now dated): (1) EPA publishes the LCRI Small Entity Compliance Guide (committed by end of FY 2026), OR (2) the Access Tips and Service Line Inventory Tips draft documents are finalized — at which point the provisional markers are removed, the cited document numbers update, and the access-permission language in artifacts #3 and #5 is reconciled with the final EPA language. Next decisive check: the FY-2026-end window (late September 2026)."
+version: 0.9.2
+last_eval_score: 9.3
+last_eval_date: 2026-06-22
+notes_for_next_eval: "v0.9.2 (2026-06-22 evaluator cycle) is an ADDITIVE provisional improvement that closes the LAST gate-independent gap in the worked example: artifacts #5 (access-permission form) and #6 (internal tracker) were previously shown only as '5–6 Truncated for example.' v0.9.2 realizes both — artifact #5 as a full one-page worked Cardinal/Henrico access form WITH its [subject to EPA final guidance] access-language marker preserved in place, and artifact #6 as a full worked tracker with worked project-metrics, explicitly noted as shop-internal with NO provisional markers (none of its fields depend on the unpublished EPA guide). The worked example now shows the complete six-artifact packet shape rather than truncating the last two. Lifts output_quality 9 -> 9.5 (the 9.5 -> 10 ceiling stays EPA-gated on artifacts #3/#4/#5 access + flushing-window language). Net curated 9.2 -> 9.3. Specificity holds at 8 (the 8 -> 10 lift still needs the final guide). Status STAYS provisional; no [subject to EPA final guidance] marker removed. v0.9.1 (2026-06-15 evaluator cycle) is an ADDITIVE provisional improvement — it does NOT lift the skill out of provisional status and does NOT remove any [subject to EPA final guidance] marker. The full v1.0 lift (Specificity 8->10, Output Quality 8->10; projected 9.6) remains gated on the EPA LCRI Small Entity Compliance Guide (committed by end of FY 2026, <=2026-09-30) and is not repo-addressable. What v0.9.1 DOES do, both independent of the EPA gate: (1) builds out the bilingual Spanish variant the v0.9 skill only described in a paragraph — adds a terminology table, translated artifact-section headers, worked Spanish door-hanger + FAQ + homeowner-card text, and usted-register + never-soften-the-health-guidance + tracker-stays-English rules (lifts personalization 9 -> 10); (2) realizes the previously-truncated worked example for artifact #3 (on-site briefing) and artifact #4 (homeowner card), with every provisional marker preserved in place, so the example now shows the full packet shape rather than '3-6 truncated' (lifts output_quality 8 -> 9; the 9 -> 10 ceiling stays EPA-gated). Net curated 9.0 -> 9.2. Specificity holds at 8 (the 8 -> 10 lift needs the final guide). v0.9 (2026-06-01) is the provisional draft. Status flagged provisional because the EPA Small Entity Compliance Guide for the LCRI has still not been published as of the 06-08 monitor cycle — 15 consecutive cycles overdue. The June 2023 LCRR inventory guide (815-B-23-005, 'Developing and Maintaining a Service Line Inventory') and the April 2026 EPA draft 'Access Tips' and 'Service Line Inventory Tips' documents (public-comment deadline April 30, 2026; final guidance not yet released) are the current authoritative references. UPDATE (2026-06-08 monitor cycle): EPA's published 'FY 2026 Milestones under the Federal Lead Action Plan' page (epa.gov/lead/epas-fy-2026-milestones-under-federal-lead-action-plan; created 2026-03-13, updated 2026-04-08) now carries a firm agency commitment to deliver six LCRI support materials — the Small Entity Compliance Guide, Service Line Inventory Guidance, Service Line Replacement Guidance, State Implementation Guidance, Schools and Child-Care Guidance, and Monitoring and Reporting Guidance — 'by end of FY 2026' (i.e., by September 30, 2026). The same page commits 'new tools and information to support LCRI flexibilities and regulatory clarity' in Spring 2026 and LSL-replacement public-engagement resources (templates, case studies, best practices) 'by Fall 2026.' This converts the v1.0 lift gate from an open-ended wait into a dated external trigger: the guide is now expected on or before 2026-09-30. Every customer-facing artifact in this skill still explicitly marks any claim that depends on the unpublished guide as 'subject to EPA final guidance.' v1.0 lift conditions (unchanged in substance, now dated): (1) EPA publishes the LCRI Small Entity Compliance Guide (committed by end of FY 2026), OR (2) the Access Tips and Service Line Inventory Tips draft documents are finalized — at which point the provisional markers are removed, the cited document numbers update, and the access-permission language in artifacts #3 and #5 is reconciled with the final EPA language. Next decisive check: the FY-2026-end window (late September 2026)."
 ---
 
 # Lead Service Line Customer Briefing
@@ -246,9 +246,49 @@ The tracker the shop maintains across the replacement project and the post-repla
 >
 > `[subject to EPA final guidance — the 7-day flushing / 90-day filter windows reflect the most-conservative practitioner consensus as of June 2026; final EPA guidance may shorten or extend these windows]`
 
-### 5–6 Truncated for example
+### 5. Access-Permission Form — Customer-Side Plumbing Access (worked)
 
-`[Full packet includes: artifact #5 access-permission form and artifact #6 tracker — both carrying the v0.9 provisional markers where applicable.]`
+> **CARDINAL PLUMBING CO. — CUSTOMER-SIDE ACCESS PERMISSION**
+> Lead Service Line Replacement — Henrico County Public Utilities Program (Phase 2)
+>
+> **Address:** ______________________________  **Date:** ____________
+> **Homeowner / authorized occupant:** ______________________________
+>
+> I authorize Cardinal Plumbing Co. and its identified technician, **[Tech name]**, to enter my property today for the sole purpose of the lead service line replacement under Henrico County Public Utilities' program. Access is requested for:
+> - the water meter and curb-stop area,
+> - the indoor service-line cutoff (basement / crawlspace / utility area), and
+> - the route the new customer-side service line will follow.
+>
+> This access is for **today's cutover work only** ([date]). It does **not** authorize any unrelated diagnostic, inspection, or sales activity. I understand:
+> - the water utility — not Cardinal Plumbing — carries the legal compliance obligation for this program;
+> - I may **revoke this access at any time** during the work by telling the technician;
+> - no charge applies to me for the service-line replacement itself under the utility's funded program (confirm against your specific utility notice).
+>
+> Homeowner signature: ______________________  Date: __________
+> Technician (Cardinal): ______________________  Credential #: __________
+>
+> `[subject to EPA final guidance — current draft language reflects the April 2026 EPA Access Tips draft document for water systems; the final EPA guidance is expected to address customer-side access-permission framing more directly, and this form will be reconciled with that guidance at v1.0]`
+
+*(One page, plain language, no legal boilerplate beyond what the utility's program requires. Long forms erode trust and slow the day.)*
+
+### 6. Internal Tracking + Follow-Up Cadence (worked — shop-internal, no provisional markers)
+
+The tracker is a shop-internal artifact and stays in English regardless of the customer's preferred language. It carries no `[subject to EPA final guidance]` markers — none of its fields depend on the unpublished guide.
+
+| Address | Homeowner | Utility classification | Utility-letter date | Shop first-touch date | Channel | Customer response | Cust-side work scheduled | Cutover complete | 7-day flush check | 30-day check | 90-day close | Flag |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2218 Lakeside Ave | M. Reyes (Preferred plan) | Lead | 2026-06-09 | 2026-06-03 (ahead) | door-hanger + call | confirmed receipt; wants July slot | 2026-07-14 | [pending] | [pending] | [pending] | [pending] | — |
+| 5140 Bon Air Rd | D. Whitfield | GRR | 2026-06-09 | 2026-06-04 | mail + call | requested callback | [pending] | [pending] | [pending] | [pending] | [pending] | callback owed 06-23 |
+| 318 Glen Allen Dr | (rental — landlord J. Soto) | Unknown (pending verification) | 2026-06-09 | unreachable ×2 | mail | unreachable | [pending] | [pending] | [pending] | [pending] | [pending] | tenant standing — try tenant |
+|
+> **Project metrics (Cardinal, Henrico Phase 2 — 23 known addresses):**
+> - **First-touch coverage:** 21/23 contacted within 7 days of the utility notice (91%); 2 unreachable, retry queued.
+> - **Confirmed-receipt rate:** 17/23 (74%).
+> - **Replacement completion** at 30 / 90 / 180 days: tracked against the utility's program schedule, **not** the shop's marketing pipeline.
+> - **Indoor-plumbing-upgrade conversion:** tracked separately, booked through the normal estimate flow — **not** through the LSL program.
+> - **Incident rate:** any reported acute health concern, water-quality complaint, or property-damage event during/after replacement → escalate to owner and the utility's program lead **immediately**.
+
+The 7-day and 30-day post-replacement check-ins are the highest-leverage rows in this tracker and the ones shops most often skip. The tracker's purpose is twofold: project management for the shop, and a clean audit trail if a liability-side question arises six months later.
 
 ---
 

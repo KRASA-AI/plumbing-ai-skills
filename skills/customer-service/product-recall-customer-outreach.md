@@ -4,10 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min per recall event to produce the full outreach packet; avoids the legal and reputational cost of handling a recall ad-hoc and unlocks the service-call attach rate that comes from being the shop that notified the customer"
-version: 1.1
-last_eval_score: 9.6
-last_eval_date: 2026-05-25
-notes_for_next_eval: "v1.1 (2026-05-25) ships three additive sub-sections — per-product-class language calibration (4 severity profiles), bilingual Spanish variant (joins the 9-skill bilingual thread), and AI-RX recall-outreach adapter. Originally on the 9.5 floor since debut; v1.1 vectors named in 05-18 Remaining Opportunities. v1.2 vectors: backflow-specific recall sub-template (Apollo Backflow +3% in 05-25 wave; backflow recalls have jurisdiction-specific re-test requirements) and per-AI-platform scope-limit-pattern playbooks for the v1.1.C adapter."
+version: 1.2
+last_eval_score: 9.7
+last_eval_date: 2026-06-22
+notes_for_next_eval: "v1.2 (2026-06-22 evaluator cycle) adds v1.2.A — the AI-RX hybrid-posture send gate (AUTOMATED_OK vs HUMAN_FIRST) for OUTBOUND recall notification. Standing repo #1 priority (AI-RX hybrid-posture pass on remaining consumers) applied to the highest-stakes outreach in the repo: v1.1.C governed what the AI does DURING an inbound recall call (reactive scope-limit transfers) but not WHICH outbound notifications an AI may fire autonomously vs which a human owns first — the proactive send gate every other AI-RX consumer now carries (Pricebook Q&A v2.3.A, After-Hours Call Summary v2.2.A, Field Service Report Writer v1.1.B, Job Status Update Drafter v1.1.B). A recall is a public-safety + liability communication, so the gate is hazard-tiered: CO/fire life-safety first-touch and unverified-install-link and commercial and prior-incident and plan-member-life-safety = HUMAN_FIRST; lead-leach (reviewed template) and water-damage/property-only = AUTOMATED_OK; reminders on higher-severity classes may automate once the human first-touch lands. Adds a two-field schema extension (send_posture + reason), a send_posture tracker column (legal audit trail of who notified each customer and how), and three anti-pattern guards (never overrides reactive transfers; AUTOMATED_OK is per-event-after-human-template-approval; no sales bundling). Strictly additive; all v1.0/v1.1 content preserved; lifted to 9.7. v1.3 vectors (carried): backflow-specific recall sub-template (Apollo Backflow; jurisdiction-specific re-test requirements) and per-AI-platform scope-limit-pattern playbooks for the v1.1.C adapter. v1.1 (2026-05-25) ships three additive sub-sections — per-product-class language calibration (4 severity profiles), bilingual Spanish variant (joins the 9-skill bilingual thread), and AI-RX recall-outreach adapter. Originally on the 9.5 floor since debut; v1.1 vectors named in 05-18 Remaining Opportunities. v1.2 vectors: backflow-specific recall sub-template (Apollo Backflow +3% in 05-25 wave; backflow recalls have jurisdiction-specific re-test requirements) and per-AI-platform scope-limit-pattern playbooks for the v1.1.C adapter."
 ---
 
 # Product Recall Customer Outreach
@@ -406,4 +406,43 @@ Recommended scope edit:       none
 ```
 
 **Cross-skill loop:** the AI-RX disposition and the 30-day follow-up flag emit back to artifact #6 (Internal Tracking + 30-Day Follow-Up) so the human owner still sees every recall call in the tracker, even the ones the AI handled end-to-end. The recall tracker is the legal defense; the AI handles the volume, the tracker handles the audit trail.
+
+### v1.2.A — AI-RX Hybrid-Posture Send Gate (outbound recall notification)
+
+**Trigger:** any recall outreach (artifact #2 SMS/email first-touch, or an automated dial of the artifact #3 script) is sent or initiated through an automation or AI-voice platform — i.e., whenever a recall message could be *fired by software rather than a person*.
+
+**Purpose:** v1.1.C governs what the AI does *during* an inbound recall call (the reactive scope-limit / always-transfer states). It does not govern the prior, higher-stakes question — *which* outbound recall notifications an AI may send **on its own** versus which a human must own **first**. This is the standing repo-wide priority (AI-RX hybrid-posture pass on remaining consumers) applied to recall outreach, where the stakes are highest in the whole repo: a recall is a public-safety communication with direct liability exposure, and an automated system that fires a life-safety stop-use instruction with a wrong model match, a garbled hazard mechanism, or to the wrong household is not a marketing miss — it is a safety and legal event. This sub-section adds the proactive **send gate** classifying each outbound notification **AUTOMATED_OK** (the AI may send the touch unattended) or **HUMAN_FIRST** (a named person reviews or makes the first contact before any automated follow-up) — the same vocabulary as Pricebook Q&A v2.3.A, After-Hours Call Summary v2.2.A, Field Service Report Writer v1.1.B, and Job Status Update Drafter v1.1.B.
+
+**Per-class / per-contact send-gate classification:**
+
+| Recall class / condition | Send posture | Why |
+|---|---|---|
+| **CO / fire / explosion (life-safety) first-touch** | **HUMAN_FIRST** | A stop-use, gas-valve-shutoff message carries direct liability. The first contact on a life-safety recall is owner-reviewed; automation may carry the *follow-up* touches once the human first-touch has landed. |
+| **Scald / burn (acute, non-life-threatening)** | **HUMAN_FIRST for the first-touch, AUTOMATED_OK for reminders** | The setpoint-reduction instruction is consequential enough to warrant a reviewed first send; subsequent registration reminders can automate. |
+| **Lead-leach / chemical / NSF-61** | **AUTOMATED_OK (reviewed template)** | Chronic/delayed-harm framing, limited-use (not stop-all) posture; lower acute risk, but the template wording is human-approved once per recall event before the batch fires. |
+| **Water-damage / property-only** | **AUTOMATED_OK** | No safety-tier framing; matter-of-fact manufacturer-remedy + mitigation message is safe to automate. |
+| `shop_install_link: unverified` or `not_in_records` | **HUMAN_FIRST (or suppress)** | Outreach without a genuine install link is spam and a legal exposure per v1.0 "Do not use for" — a human verifies the install link before any send. |
+| **Commercial / property-manager / GC account** | **HUMAN_FIRST** | Different escalation path per v1.0; B2B recall notice goes person-to-person, never via an autonomous dialer. |
+| Any contact with a prior injury, property-damage, or near-miss report on the affected unit | **HUMAN_FIRST** | Incident-rate escalation territory per v1.0 artifact #6 — owner + GL carrier own these, not automation. |
+| Maintenance-plan / Preferred-tier customer on a life-safety recall | **HUMAN_FIRST** | Highest-trust relationship + highest-severity event — the one combination that always gets a live voice from the shop. |
+
+**Rule of thumb:** the higher the hazard tier and the weaker the verified install link, the more the first touch belongs to a human. Automate only the lower-severity classes and the *reminder* touches on higher-severity ones — never the life-safety first-touch, never an unverified-install send.
+
+**Schema addition** — extends the v1.1.C JSON with one field so the send gate is auditable (critical for the recall's legal trail):
+
+```json
+{
+  "send_posture": "AUTOMATED_OK | HUMAN_FIRST",
+  "send_posture_reason": "life_safety_first_touch | scald_first_touch | chronic_health_reviewed | property_only | unverified_install_link | commercial | prior_incident | plan_member_life_safety | null"
+}
+```
+
+**Tracker extension (adds to artifact #6):** a `send_posture` column per row, so the recall tracker — the legal defense — records for every contact whether the first touch was human-owned or automated, and (for HUMAN_FIRST rows) which named person sent it. On a life-safety recall this column is the audit answer to "who notified this customer, and how."
+
+**Anti-pattern guards:**
+- The send gate never overrides the v1.1.C reactive scope-limit transfers — a call that reaches the AI still transfers on a symptom report, injury, commercial flag, or insurance/legal mention regardless of how the outbound touch was classified.
+- AUTOMATED_OK is **per recall event after human template approval**, not a standing license to auto-fire any recall. A human approves the class-matched template (per v1.1.A) once before the batch sends.
+- The gate does not relax the v1.0 rule against bundling any sales/marketing content into a recall touch — automated or not.
+
+**Cross-skill agreement:** the `send_posture` carries into the Job Status Update Drafter v1.1.B 30-day follow-up (a life-safety / plan-member recall keeps its HUMAN_FIRST posture on the follow-up touch) and into the Safety & Compliance Tracker log of which technicians completed recall inspection visits.
 

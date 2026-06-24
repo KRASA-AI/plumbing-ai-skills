@@ -4,10 +4,10 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min per batch of 20 contacts; typical win-back batch of 200 contacts recoups 6–12 jobs"
-version: 1.1
-last_eval_score: 9.6
-last_eval_date: 2026-05-25
-notes_for_next_eval: "v1.1 (2026-05-25) ships three additive sub-sections — Pete & Gabi Olivia case-study calibration (1,000 → 413 → 12 deals → $21,116 published benchmark), AI-voice reactivation adapter (joins the 7-skill AI-RX adapter thread), and bilingual Spanish variant (joins the 9-skill bilingual thread). Originally on the 9.5 floor since debut; v1.1 vector named in 05-18 Remaining Opportunities. v1.2 vectors: per-AI-platform metrics-format adapters for the v1.1.B JSON schema and seasonality-by-region calibration of the dormancy thresholds."
+version: 1.2
+last_eval_score: 9.7
+last_eval_date: 2026-06-22
+notes_for_next_eval: "v1.2 (2026-06-22 evaluator cycle) adds v1.2.A — the AI-RX hybrid-posture send gate (AUTOMATED_OK vs HUMAN_FIRST) for OUTBOUND reactivation. This is the standing repo #1 priority (AI-RX hybrid-posture pass on remaining consumers) applied here: v1.1.B governed what the AI does DURING a call (reactive scope-limit transfers) but not WHICH contacts an AI may initiate outreach to autonomously vs which need a human first — the proactive send gate every other AI-RX consumer now carries (Pricebook Q&A v2.3.A, After-Hours Call Summary v2.2.A, Field Service Report Writer v1.1.B, Job Status Update Drafter v1.1.B). Adds a per-segment/per-contact classification table (low-stakes check-ins AUTOMATED_OK; commitment asks, commercial, high-AOV, plan-member-voice, prior-complaint, and stale-data contacts HUMAN_FIRST), a two-field schema extension (send_posture + reason), a human_first_share metric, and opt-out-rate-read-against-posture diagnostic. Matters more for outbound than almost anywhere — an autonomous dialer hitting the wrong segment is how a shop's number gets spam-flagged and the list equity this skill protects is burned. Strictly additive; all v1.0/v1.1 content preserved; lifted to 9.7. v1.3 vectors (carried): per-AI-platform metrics-format adapters for the v1.1.B JSON schema and seasonality-by-region calibration of the dormancy thresholds. v1.1 (2026-05-25) ships three additive sub-sections — Pete & Gabi Olivia case-study calibration (1,000 → 413 → 12 deals → $21,116 published benchmark), AI-voice reactivation adapter (joins the 7-skill AI-RX adapter thread), and bilingual Spanish variant (joins the 9-skill bilingual thread). Originally on the 9.5 floor since debut; v1.1 vector named in 05-18 Remaining Opportunities. v1.2 vectors: per-AI-platform metrics-format adapters for the v1.1.B JSON schema and seasonality-by-region calibration of the dormancy thresholds."
 ---
 
 # Dormant Customer Reactivation Outreach
@@ -388,4 +388,46 @@ The AI-RX disposition counts flow into the section 6 metrics block exactly:
 **Bilingual-household handoff guidance:** if the SMS goes out in English to a Spanish-dominant decision-maker and the reply comes back in Spanish (very common — the English-named utility account holder forwards the text to a Spanish-dominant spouse or adult child), continue the conversation in Spanish from that point. Do not switch back to English on the next touch to "match the name on the account."
 
 **Cross-skill handoff:** if the reactivation call books an appointment, the resulting Pre-Visit Diagnostic Intake inherits `customer_language: es` and the bilingual handoff continues end-to-end (intake → dispatch brief → tech visit → review request via Review Request Drafter v2.4.C Spanish template).
+
+## v1.2 Additions (2026-06-22)
+
+### v1.2.A — AI-RX Hybrid-Posture Send Gate (outbound reactivation)
+
+**Trigger:** the shop runs reactivation outreach (SMS, email, or the v1.1.B voice-agent script) through any automation or AI-voice platform — i.e., whenever a message or call could be *initiated by software rather than a person*.
+
+**Purpose:** the v1.1.B adapter governs what the AI does *during* a call (the reactive scope-limit / always-transfer states). It does not govern the prior question every other AI-RX consumer in the repo now answers explicitly — *which* contacts an AI may dial or text **on its own** versus which a human must touch **first**. This is the standing repo-wide priority (AI-RX hybrid-posture pass on remaining consumers) applied to outbound reactivation, and it matters more here than almost anywhere else: an autonomous system cold-dialing the wrong dormant segment is the single fastest way to get the shop's number reported as spam and burn the list equity this skill exists to protect. This sub-section adds the proactive **send gate** so each contact is classified **AUTOMATED_OK** (the AI may initiate the touch unattended) or **HUMAN_FIRST** (a person reviews or makes the first contact before any automated follow-up) — the same vocabulary as Pricebook Q&A v2.3.A, After-Hours Call Summary v2.2.A, Field Service Report Writer v1.1.B, and Job Status Update Drafter v1.1.B.
+
+**Per-segment / per-contact send-gate classification:**
+
+| Cohort / condition | Send posture | Why |
+|---|---|---|
+| 18–36mo repair cohort, no flags | **AUTOMATED_OK** | Lowest-stakes, highest-volume, neutral "check-in" framing. The cohort this automation exists for. |
+| 12–18mo installed-equipment, no flags | **AUTOMATED_OK** | Highest-intent, service-specific, benign maintenance ask. |
+| 36+mo reintroduction | **AUTOMATED_OK (email-first)** | Many have moved or switched; lead with the lower-friction email channel before any voice dial. |
+| 6–12mo lapsed-plan | **HUMAN_FIRST (or named-sender automated)** | Price-lock / renewal language is a commitment ask — send under a named person, or have the CSR glance at the list before it fires. |
+| **Commercial cohort** | **HUMAN_FIRST** | Already email-primary per v1.0; B2B relationships are not opened by an autonomous dialer. |
+| Any contact with a prior complaint, warranty issue, or open dispute on the record | **HUMAN_FIRST** | These are excluded from the reactivation queue entirely per v1.0 "Do not use for"; if one slips through, a human owns the first touch. |
+| High prior AOV (e.g., a past $8k+ repipe / remodel customer) | **HUMAN_FIRST** | A high-value relationship deserves a person's first contact, not a templated blast. |
+| Maintenance-plan / Preferred-tier customer | **HUMAN_FIRST for voice; AUTOMATED_OK for SMS/email** | The relationship is the asset; a live voice from the shop reads as care, an AI dial reads as churn. |
+| Any contact where the cohort data is stale or unverified (bounced number, returned mail) | **HUMAN_FIRST** | Verify before automating; spamming a wrong number is how opt-out rates spike. |
+
+**Rule of thumb:** automate the neutral, low-commitment, well-verified check-ins; put a human first on anything that is a commitment ask, a high-value relationship, a known sensitivity, or unverified data.
+
+**Schema addition** — extends the v1.1.B JSON with one field so the send gate is auditable:
+
+```json
+{
+  "send_posture": "AUTOMATED_OK | HUMAN_FIRST",
+  "send_posture_reason": "low_stakes_checkin | high_intent_maintenance | commitment_ask | commercial | prior_complaint | high_aov | plan_member_voice | stale_data | null"
+}
+```
+
+**Metrics-block extension (adds to v1.0 section 6 / v1.1.B back-fill):**
+
+- New `human_first_share` row — % of the batch routed HUMAN_FIRST. If it trends toward zero the gate is being ignored (everything is being automated); if it trends high the shop is leaving automation value on the table. Healthy batches usually land 15–35% HUMAN_FIRST depending on cohort mix.
+- `opt_out_rate` is now read **against** `send_posture`: if opt-outs concentrate in AUTOMATED_OK contacts, the automated opener or the cohort filter is the problem; if they concentrate in HUMAN_FIRST contacts, the human sender's script is the problem.
+
+**Anti-pattern guard:** the send gate is **not** a quality ranking of customers — it is a risk-and-relationship routing decision. A HUMAN_FIRST contact is not "worth less"; usually the opposite. And the gate never overrides the v1.0 exclusions: opted-out, do-not-service, and open-complaint contacts are removed before classification, not routed to HUMAN_FIRST.
+
+**Cross-skill agreement:** the `send_posture` classification agrees with the same job's downstream postures — a HUMAN_FIRST reactivation that books an appointment carries that relationship-sensitivity signal into the Pre-Visit Diagnostic Intake and the Dispatch Brief Generator v1.2.A morning board, so a high-AOV or plan-member reactivated customer is not then handed to a fully-automated downstream touch.
 
