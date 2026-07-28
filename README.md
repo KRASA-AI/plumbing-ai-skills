@@ -22,6 +22,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Sewer Camera Inspection Report Drafter | Turn a technician's raw sewer-camera notes — the kind they dictate in a truck or scribble on a job ticket after a CCTV inspection — into a structured, customer-facing sewer/drain inspection report that a homeowner, real-estate agent, or commercial property manager can actually understand and act on. | ~25 min/inspection |
 | Technician Performance Debrief | Turn raw call recordings, job notes, and customer feedback into a structured coaching debrief for each technician. | ~20 min/debrief |
 | AI Search Visibility Content Pack | Produce the structured content a plumbing shop needs to get *cited* — not just ranked — by ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, and Copilot when a homeowner asks "who's the best emergency plumber in [city]?" or "how much does a water heater replacement cost in [ZIP]?". | ~4 hrs per service-area content pack; replaces a one-off agency deliverable at $1,500–$3,500 |
+| Agentic-Call Answer Pack | Get the shop *booked* when the caller is a customer's AI, not the customer. | ~2 hrs to build once; prevents the auto-drop that silently forfeits AI-routed calls thereafter |
 | Estimate Writer | Transform rough scope notes and site visit findings into a branded, professionally formatted estimate with line-item pricing and good/better/best options. | ~20 min/estimate |
 | Plumbing Membership Plan Drafter | Produce a complete, shop-specific membership / maintenance plan package — tiered structure, pricing logic, included services, fine print, customer-facing one-pager, sell-in scripts for techs at the kitchen table, renewal messaging, and upgrade paths from one tier to the next. | ~2–3 hrs per plan launch; replaces a one-off consultant deliverable at $1,500–$4,000 |
 | Smart Leak Detection Install Briefing | Produce a customer-facing briefing that translates the 2026 home-insurance landscape around smart leak detection — several major carriers now *require* or heavily discount for an installed smart leak-detection device on renewal — into a clear "which device, why, where it installs, what it costs, and what the letter to the insurer says" recommendation for one customer at one property. | ~45 min per customer briefing; replaces a verbal explanation + a follow-up 'what do I tell my insurance?' back-and-forth most shops handle inconsistently |
@@ -42,6 +43,7 @@ This repo is a complete AI toolkit for plumbing. Every skill is a standalone pro
 | Email Drafter | Turn rough notes into a professional email matching your company's voice and tone. | ~10 min/use |
 | Meeting Summarizer | Summarize meeting notes into action items, decisions, and follow-ups. | ~10 min/use |
 | Review Responder | Craft professional responses to online reviews — both positive and negative. | ~10 min/use |
+| Voice & Config Contract |  | — |
 
 **Total time saved per use: ~678+ minutes across all skills.**
 

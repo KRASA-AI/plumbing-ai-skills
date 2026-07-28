@@ -4,9 +4,12 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.1
-last_eval_score: 7.5
-notes_for_next_eval: "v1.1 (2026-06-29, evaluator first-pass + improvement): first formal evaluation after 15+ cycles unevaluated. v1.0 was the generic three-line template (scored ~4.6, below the 6.0 threshold). This skill fills a real gap — the repo has Review *Request* Drafter (asking for reviews) but no skill for *responding* to reviews once posted. v1.1 preserves v1.0 intent and adds: star-rating-tiered response playbooks (5-star, 3-4 star, 1-2 star), the plumbing-specific HIPAA-style privacy rule (never confirm service details or address publicly), a de-escalation structure for negative reviews that moves the conversation offline, config-driven personalization (company name, owner name, warranty, service area, never_use words), platform notes (Google/Yelp length norms), and worked examples for a 5-star and a 1-star. Strictly additive. Pairs with Review Request Drafter (request -> respond loop). Next: shared `_shared/voice-and-config-contract.md`; optional fake/extortion-review flagging sub-block."
+version: 1.4
+last_eval_score: 8.1
+notes_for_next_eval: "v1.4 (2026-07-20, evaluator): additive, closes the one carried next-step from 07-13. Adds a **Per-Platform Format & Length** table (Google Business Profile, Yelp, Facebook, Nextdoor, BBB) with the practical length target and the front-load rule for each surface, plus a truncation note (Google collapses a long reply behind a 'More' fold in the mobile app, so the concession and the offer-to-fix must land in the first ~1-2 lines or a skimming prospect never sees them). This is the reputation-management mechanics layer the tier playbooks assume but never spelled out. Strictly additive: v1.3's tier playbooks, fake/extortion block, response-timing rules, Local-SEO note, bilingual note, output discipline, and all three worked examples preserved verbatim. Next: an owner-response A/B note if a shop wants to test warmth vs. brevity on 5-star replies."
+notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive, closes the one carried next-step from 07-06. (1) Adds the worked **mixed 3-star example** — the tier that had a playbook but no example, and the hardest tier to write well (the response has to be gracious without conceding, and it is read by more prospects than any other tier). (2) Adds a **Local-SEO note**: responses are indexed and read by prospects comparing shops, so name the city/service naturally once, never keyword-stuff — a real, commonly-botched reputation-management practice. (3) Adds a **response-timing rule** (respond within 24-48h; negative reviews same business day) so the skill produces a cadence, not just a draft. Strictly additive: v1.2's tier playbooks, fake/extortion block, bilingual note, output discipline, and both prior examples preserved verbatim. Next: a per-platform character-limit table if a shop reports truncation on Yelp/Facebook."
+notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive deepening, addresses both carried next-steps from 06-29. (1) References the new `_shared/voice-and-config-contract.md` for the config-load + public-privacy rules. (2) Adds the fake/extortion/wrong-business review flagging sub-block that was explicitly queued at 06-29 — a decision aid for spotting non-genuine reviews, a calm public holding response, and the platform-report path, without accusing publicly. (3) Adds a bilingual (Spanish) note pointing at the shared contract. Strictly additive: all v1.1 tier playbooks, output discipline, and both worked examples preserved verbatim. Next: a worked mixed (3-star) example."
+notes_for_next_eval_prior: "v1.1 (2026-06-29, evaluator first-pass + improvement): first formal evaluation after 15+ cycles unevaluated. v1.0 was the generic three-line template (scored ~4.6). v1.1 added star-rating-tiered playbooks (5-star, 3-4 star, 1-2 star), the public-privacy rule, offline de-escalation, config-driven personalization, platform length notes, and 5-star + 1-star examples. Fills the request->respond loop opposite Review Request Drafter."
 ---
 
 # Review Responder
@@ -22,14 +25,16 @@ You are responding **publicly** on behalf of a **plumbing company** to a custome
 the shop's rating, so it is a marketing asset and a reputation defense at the same time.
 
 **Before you start:**
-- Load `config.yml`. Use:
+- **Apply the [Voice & Config Contract](./voice-and-config-contract.md)** — it defines the
+  `config.yml` load, the voice rules, the no-fabrication rule, and the public-writing privacy
+  rule (§5) that govern this skill. This skill relies especially on:
   - `company.name` (sign as the shop / owner, warmly), `company.service_area`, owner name
   - `voice.tone`, `voice.always_use`, `voice.never_use`
   - `pricing.financing` only if relevant; `services` for honest references to what the shop does
-- This is **public** writing. Never confirm private specifics: do not state the customer's
-  address, what was wrong with their plumbing, what they paid, or whether they are a customer
-  at all beyond what they themselves disclosed in the review. Treat service details like
-  protected information — move anything specific to a private channel.
+- Reminder of the contract's public-privacy rule, because it governs every line here: this is
+  **public** writing — never confirm the customer's address, what was wrong with their
+  plumbing, what they paid, or whether they are a customer at all beyond what they themselves
+  disclosed. Move anything specific to a private channel.
 
 **Process:**
 1. Read the review and note the **star rating** and the **specific points** raised.
@@ -61,6 +66,93 @@ the argument. Structure:
 Never argue, never reveal job/payment details to "correct" them, never threaten. If the
 review looks fake or like an extortion attempt, still respond calmly for the public record
 and flag it for the owner to report through the platform — don't accuse publicly.
+
+## Fake / Extortion / Wrong-Business Review Handling
+
+Before responding to a negative review, sanity-check whether it is even a genuine customer.
+Google and Yelp both allow removal of reviews that violate their policies, but only if you
+respond correctly and report them — a public accusation can get *your* response flagged
+instead. Watch for these signals (any one is a yellow flag; two or more is a strong flag):
+
+- **No record of the job** — name, address, or dates match nothing in the CRM.
+- **Wrong business** — details describe a service the shop doesn't offer, a location it
+  doesn't serve, or a competitor's tech name.
+- **Pay-to-remove pressure** — the reviewer (or a follow-up message) offers to delete the
+  review for money, a free job, or a discount. This is extortion; do not pay.
+- **Bulk / bot pattern** — reviewer's history is a burst of 1-stars across unrelated
+  businesses, or generic wording with no specifics.
+- **Ex-employee / competitor tells** — internal knowledge no customer would have, or
+  language aimed at hurting rather than resolving.
+
+**How to respond when a review is likely fake:** post one calm, short holding response for
+the public record — *do not accuse, do not argue, do not confirm or deny any customer
+relationship.* Then hand the removal to the owner. Template:
+
+> "Thank you for the feedback. We take every review seriously, but we don't have a record of
+> service matching this. If we've worked together, please reach [owner] directly at [number]
+> so we can make it right — we'd genuinely like to help. — [Company]"
+
+Then, in a separate note to the owner (not posted publicly), flag:
+1. Which signals fired and why you suspect it isn't genuine.
+2. The exact platform-report path — Google: the review's ⋮ → "Report review" → the matching
+   policy (off-topic, conflict of interest, fake engagement); Yelp: "Report review" flag.
+3. A reminder to **never pay** an extortion demand and to screenshot any pay-to-remove
+   message before responding.
+
+Escalate to the owner rather than deciding unilaterally when the review *might* be a real
+customer with a distorted account — when in doubt, treat it as genuine and de-escalate offline.
+
+## Bilingual responses
+
+If the shop serves Spanish-speaking customers and the review is in Spanish (or the owner
+wants a Spanish reply), follow the bilingual pattern in the Voice & Config Contract (§6):
+translate for warmth and meaning, keep the same `voice.tone`, and carry the intent of
+`always_use`/`never_use` rather than translating them literally.
+
+## Response Timing (part of the deliverable)
+
+A good response posted late is worth less than a decent one posted fast — prospects read the
+*most recent* reviews and the shop's replies to them.
+
+- **1-2 star:** same business day. If the owner needs to check the job first, post the
+  short acknowledgment ("Thank you — I'm looking into this now and will reach out today")
+  and follow up in the same thread once resolved.
+- **3-4 star:** within 24 hours.
+- **5-star:** within 48 hours. Don't let them sit unanswered — an unreplied wall of 5-stars
+  reads as an absent owner.
+- **After an offline resolution:** if the customer updates or removes the review, thank
+  them once, briefly. Never ask them to change the rating as a condition of the fix.
+
+## Local-SEO Note (why the wording matters beyond the one customer)
+
+Review responses are public, indexed, and read by prospects comparison-shopping shops in
+the same town. Two rules:
+
+- **Name the service and the city once, naturally** — "glad we could get your water heater
+  back up in [city]" — because that is how the response reads to a prospect who is skimming
+  for "does this shop do what I need, near me."
+- **Never keyword-stuff.** "Best emergency plumber [city] drain cleaning water heater
+  repair" in a review reply is transparently spammy to a human, and it makes the shop look
+  desperate to the exact person deciding whether to call. One natural mention, maximum.
+
+## Per-Platform Format & Length
+
+The tier playbooks set the *content*; the platform sets how much of it a prospect actually
+sees. The single rule that matters across all of them: **front-load the concession and the
+offer-to-fix.** A prospect skimming on a phone reads the first line or two and moves on, and
+several surfaces literally hide the rest behind a fold.
+
+| Platform | Practical length | What to know |
+|---|---|---|
+| **Google Business Profile** | 2-5 sentences | The reply shows under the review; on mobile a longer reply collapses behind **"More"** — put the acknowledgment and the direct contact in the first ~1-2 lines, before the fold. Most-read surface; treat it as primary. |
+| **Yelp** | 3-5 sentences | Public comment vs. a private Direct Message — for a negative review, post a short public reply *and* send the offer-to-resolve by DM. Yelp is touchy about anything that reads as incentivizing reviews; keep the public reply purely about service. |
+| **Facebook / Recommendations** | 2-4 sentences | Threaded and casual; a warmer register fits. Replies are visible to the reviewer's network, so it doubles as light social proof — but never tag or name the customer beyond the first name they used. |
+| **Nextdoor** | 2-4 sentences | Hyper-local and neighbor-to-neighbor; the city/service mention from the Local-SEO note lands naturally here, and neighbors read owner replies closely. Same-day on anything negative — Nextdoor threads pile on fast. |
+| **BBB** | Slightly longer OK | More formal, complaint-resolution framing; factual and process-oriented ("we've reached out directly to schedule the re-visit") reads better than warmth. Still no private job or payment details. |
+
+If a reply must run long (a detailed negative response), write it so the first sentence stands
+alone as a complete, reasonable-sounding acknowledgment — that is the sentence most prospects
+read, and on Google it may be the only one they see before the fold.
 
 ## Output Discipline
 
@@ -95,3 +187,26 @@ ourselves to — a clean worksite and clear pricing are non-negotiable for us. I
 understand what happened and make it right. Please reach me directly: Tom, owner, at
 (916) 555-0142 or tom@exampleplumbing.com. Every job we do is backed by our workmanship
 warranty, and I want the chance to stand behind this one. — Tom, Example Plumbing Co
+
+---
+
+**3-star input (mixed):** "Work itself was fine, no complaints about the repair. But the
+window was 8-12 and the tech didn't show until almost 2, and nobody called me. I took a
+half day off for this."
+
+**Response:**
+Thank you for the honest review, Priya — and you're right, that's on us. The repair holding
+up is the baseline; keeping you posted when a window slips is part of the job too, and we
+missed it. We text an updated ETA when a tech gets held on a prior call, and that clearly
+didn't reach you. I've flagged it with dispatch so it doesn't repeat. If you'll give me a
+call at (916) 555-0142, I'd like to make the lost half day right. Thanks for trusting us
+with the repair in the meantime. — Tom, Example Plumbing Co
+
+**Why this works (the mixed tier is the one shops get wrong):**
+- It **concedes the specific gap** (the missed ETA call) without conceding the work — the
+  customer already said the repair was fine, so defending it would look tone-deaf.
+- It states **what the shop's standard actually is** (an ETA text when a window slips) as
+  identity, not as an excuse — a prospect reading this learns the shop *has* a policy.
+- It offers a concrete remedy **offline**, and does not negotiate the rating.
+- No non-apology ("sorry you feel that way"), no over-apology, no discount promised that
+  the owner didn't authorize.

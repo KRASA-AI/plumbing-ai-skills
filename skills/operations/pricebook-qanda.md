@@ -652,20 +652,25 @@ The v2.1.C stale-pricing layer produces a flat list of SKUs with no price update
    Pricebook last full audit: [date]  |  Days since: [N]
 ───────────────────────────────────────────────
 
-  WAVE-AFFECTED SKUs (cross-ref Vendor Price Increase Communication v1.1 May 2026 annex)
-  Named-driver manufacturers in the trailing 90-day wave window:
-   • Apollo Backflow (+3% May 2026 wave)
-   • Westlake Pipe & Fittings (May 2026 wave)
-   • SDR 35 plastic pipe (May 2026 wave)
-   • OmegaFlex (May 2026 wave)
-   • Little Giant pumps (May 2026 wave)
+  WAVE-AFFECTED SKUs (cross-ref Vendor Price Increase Communication v1.3 —
+    "Rolling Wave Data Block", which always holds the current wave's drivers)
+  Named-driver manufacturers in the trailing 90-day wave window
+    (example below is populated from the July 2026 wave — repopulate from the
+     Rolling Wave Data Block each time a new wave lands):
+   • Moen (+10% commercial fixture line, July 2026 wave)
+   • A.Y. McDonald (+6–15% select categories, July 2026 wave)
+   • JB Industries (+7.5% brass access valves/fittings, July 2026 wave)
+   • Duravent / Centrotherm (+7% venting, July 2026 wave)
+   • Jones Stephens (+3–10% select PEX, July 2026 wave)
+   • Oatey (+1–5.4% select categories, July 2026 wave)
 
   Stale SKUs in wave-affected classes ([N] SKUs):
     Audit window: THIS WEEK
     Estimated margin-impact-per-month-of-delay: $[amount] (computed from
        trailing-90-day sell volume × wave-percentage × days-since-wave)
     Action: Update the per-SKU price by the named-driver percentage from the
-       Vendor Price Increase v1.1 annex; backfill the v2.0 margin block; emit
+       Vendor Price Increase Rolling Wave Data Block (current wave); backfill
+       the v2.0 margin block; emit
        to the v2.2.D per-tech discount-authorization guardrails to refresh the
        tech-floor numbers.
 

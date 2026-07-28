@@ -4,17 +4,17 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~60–90 min per price-increase event to produce the decision matrix plus the full customer-comms packet; avoids the revenue leakage from pricing in-progress jobs at yesterday's cost and the trust damage from surprising members and pending-quote customers with a silent mid-cycle bump"
-version: 1.2
+version: 1.3
 last_eval_score: 9.7
 last_eval_date: 2026-05-25
-notes_for_next_eval: "v1.2 (2026-06-15, landscape-monitor add) ships the June 2026 fresh-example data block alongside the existing April example and May annex — the June PHCP-PVF wave landed June 9 (P&M / Supply House Times) and confirms the monthly cadence as a five-month established pattern (Feb-Mar, April, May, June 2026). June wave is broad and insulation/valve/water-heater-led rather than press-fitting-led: Merit Brass 8–12% (import brass + stainless 150# + nipples), AO Smith water heaters 7%, Red-White Valve 10–15% on 236 Series check valves, Cello 10%, Jones Stephens 10% poly/rubber insulation, Armacell 7% elastomeric foam, plus Mountain Plumbing 4–18%, Pro-Flex 6% CSST, Uponor/Taco/Little Giant moves. No structural change to the six-artifact packet. v1.3 vector: when the July 2026 wave lands, decide whether to keep accreting per-wave annexes or collapse the April/May/June blocks into a single rolling 'most-recent-wave' table (annex sprawl is the emerging maintenance cost). last_eval_score 9.7 reflects the 2026-05-25 formal eval; the June annex awaits next evaluator-cycle scoring."
+notes_for_next_eval: "v1.3 (2026-07-13, landscape-monitor) executes the annex-collapse decision that v1.2 queued. The July 2026 PHCP-PVF wave landed July 8 (P&M / Supply House Times), making six consecutive named monthly waves (Feb-Mar, Apr, May, Jun, Jul 2026) — the monthly cadence has held into Q3, which was the stated trigger. The May and June per-wave annexes are REMOVED as standalone sections and replaced by a single **Rolling Wave Data Block** that holds only the current wave's named drivers in full, plus a compact five-row Wave History table that preserves the one durable cross-wave lesson (the lead category rotates month to month: pipe → press fittings → brass/valves/water heaters → fixtures/water-works/venting). This caps the skill's growth at a fixed size regardless of how many more waves land. Current wave loaded: July 2026 — Moen +10% commercial line (first major fixture-brand move in the cadence), A.Y. McDonald +6–15% water-works brass, JB Industries +7.5% brass access valves, Duravent +7% / Centrotherm +7% venting, Johns Manville +6–8%, Jones Stephens +3–10% PEX, Oatey +1–5.4%, Supco +3–5%, Mission Rubber +3%, Florestone +3.3%, Rectorseal up to 3%, DiversiTech/LACO/JPL TBA. No water-heater OEM move this wave, but venting is up 7% at two suppliers, which raises the installed cost of a water-heater job even with the tank price flat. No structural change to the six-artifact packet. Maintenance rule now encoded in the skill: each new wave REPLACES the current-wave block and appends one row to the Wave History table. last_eval_score 9.7 reflects the 2026-05-25 formal eval; v1.3 awaits next evaluator-cycle scoring — evaluator should specifically check that the collapse did not cost the skill any calibration fidelity."
 ---
 
 # Vendor Price Increase Customer Communication
 
 ## Purpose
 
-Produce the complete decision matrix and customer-facing communication packet a plumbing shop needs when its supply houses and manufacturers push through a wave of price increases. In 2026 this is no longer a rare event — the PHCP-PVF industry has compressed from quarterly waves into a monthly cadence. April 2026 alone brought Charlotte Pipe 10% on PVC/CPVC, Merit Brass 6–12% on brass fittings and nipples, Matco-Norca 2.5%, ICP Parts 4%, Honeywell 5%, IPEX 10%, Crane 5.3%, and National Comfort Products 7%. May 2026 followed immediately with another wave — Apollo up to 20% on PowerPress, up to 17% on SmartPress, up to 12% on Shurjoint grooved products, 3% on Backflow and on commercial/industrial valves; Westlake's Brownsville Fittings division +8% across large-diameter, Schedule 40/80, CPVC, HVAC/DWV, and electrical conduit fittings; SDR 35 S/P Series +10%; OmegaFlex TracPipe +6%; Little Giant Pumps +2% — on top of continued upward pressure on copper, brass, and resin globally. Four consecutive months of named manufacturer waves (Feb-Mar, April, May 2026) is now a stable pattern, not a 2025 hangover, and shops that wait for the wave to "settle down" before formalizing their communication discipline are losing margin every month. The shop has to decide three things very quickly each time: which of its outstanding quotes, signed proposals, and in-progress jobs get grandfathered at the old price and which get re-quoted; how its membership-plan covered services and flat-rate pricebook items absorb the increase (or not); and how it tells customers about it without sounding like it is nickel-and-diming them.
+Produce the complete decision matrix and customer-facing communication packet a plumbing shop needs when its supply houses and manufacturers push through a wave of price increases. In 2026 this is no longer a rare event — the PHCP-PVF industry has compressed from quarterly waves into a monthly cadence. April 2026 alone brought Charlotte Pipe 10% on PVC/CPVC, Merit Brass 6–12% on brass fittings and nipples, Matco-Norca 2.5%, ICP Parts 4%, Honeywell 5%, IPEX 10%, Crane 5.3%, and National Comfort Products 7%. May 2026 followed immediately with another wave — Apollo up to 20% on PowerPress, up to 17% on SmartPress, up to 12% on Shurjoint grooved products, 3% on Backflow and on commercial/industrial valves; Westlake's Brownsville Fittings division +8% across large-diameter, Schedule 40/80, CPVC, HVAC/DWV, and electrical conduit fittings; SDR 35 S/P Series +10%; OmegaFlex TracPipe +6%; Little Giant Pumps +2% — on top of continued upward pressure on copper, brass, and resin globally. Six consecutive months of named manufacturer waves (Feb-Mar, April, May, June, and July 2026) is now a stable pattern that has carried into Q3 — not a 2025 hangover — and shops that wait for the wave to "settle down" before formalizing their communication discipline are losing margin every month. **The current wave's named drivers and the cross-wave calibration history live in the Rolling Wave Data Block near the end of this skill; go there for the numbers to actually quote.** The shop has to decide three things very quickly each time: which of its outstanding quotes, signed proposals, and in-progress jobs get grandfathered at the old price and which get re-quoted; how its membership-plan covered services and flat-rate pricebook items absorb the increase (or not); and how it tells customers about it without sounding like it is nickel-and-diming them.
 
 This skill produces that full packet in six artifacts: a shop-internal decision matrix that routes every open commitment into grandfather / pass-through / absorb / re-quote; a customer-facing announcement for the shop's membership-plan holders and top commercial accounts (the ones who will notice first); a "your estimate is still honored through date X" confirmation template for customers sitting on an open quote; a pricebook-update briefing the dispatchers and office staff use when a customer asks "why did the price go up"; the technician kitchen-table script for the first two weeks after the new pricing goes live (customers will ask in person); and the internal tracking block for measuring the communication's landing — plan-cancel rate, quote-reconfirm rate, and the resulting margin delta.
 
@@ -353,141 +353,105 @@ A simple tracker and the metrics the shop watches for the next 90 days to confir
 
 ---
 
-## Fresh-Example Data Block — May 2026 Wave (v1.1, 2026-05-25)
+## Rolling Wave Data Block — Current Wave: July 2026 (v1.3, 2026-07-13)
 
-This block exists so the operator does not have to re-research the May 2026 named drivers each time a customer-comms packet is run. Drop these values directly into the Required Input section above and the skill will produce a packet calibrated to the actual May 2026 wave rather than to the older April example. The shop's specific weighting depends on its rolling-90-day spend mix; the percentages here are the announced list/net increases per the manufacturer.
+**How this section works (read once, then ignore).** The PHCP-PVF price wave is now a monthly event, not an occasional one. Rather than accreting a new annex every month — which was making this skill longer without making it better — the skill holds exactly **one wave in full detail** (the current one) plus a **compact history table** that preserves the only lesson that generalizes across waves. When the next wave lands, the operator replaces the current-wave block below and appends one row to the history table. The skill's size stays fixed; its data stays current.
 
-**Wave window:** May 1 effective dates (announced mid-to-late April 2026), reported in *Supply House Times* and *Plumbing & Mechanical* magazine.
+The April 2026 wave remains inside the worked Example Output in Section 1 above, because that example is a fully-rendered packet and is instructive as a packet, not as pricing data. Treat those April numbers as *illustrative of the format*, and the numbers below as *the numbers to actually use*.
 
-**Named drivers:**
+**Wave window:** Effective dates staggered across July 2026 (July 1, 5, 6, 7, 12, 27), announced late June through early July, reported in *Plumbing & Mechanical* and *Supply House Times* ("PHCP-PVF Price Increases: July 2026," published July 8, 2026).
 
-| Manufacturer / Brand | Move | Categories Affected | Effective |
-|---|---|---|---|
-| Apollo (Aalberts IPS) — **headline driver** | Up to **+20%** | PowerPress press fittings | May 1, 2026 |
-| Apollo (Aalberts IPS) | Up to **+17%** | SmartPress press fittings | May 1, 2026 |
-| Apollo (Aalberts IPS) | Up to **+12%** | Shurjoint grooved products | May 1, 2026 |
-| Apollo (Aalberts IPS) | +3% | Backflow products | May 1, 2026 |
-| Apollo (Aalberts IPS) | +3% | Commercial and industrial valves | May 1, 2026 |
-| Westlake Brownsville Fittings | +8% (list and net) | Large-diameter fittings, Schedule 40 & 80, CPVC, HVAC and DWV, electrical conduit fittings, swing joints, heavy turf, inserts and nipples, select residential/commercial product lines | May 1, 2026 |
-| Westlake — SDR 35 S/P Series | +10% | SDR 35 sewer and drain pipe | May 1, 2026 |
-| OmegaFlex TracPipe | +6% | TracPipe fitting products | May 1, 2026 |
-| Little Giant Pumps | +2% | Pump products | May 1, 2026 |
-
-**Sources to cite internally:**
-
-- *Plumbing & Mechanical*, "PHCP-PVF Price Increases May 2026"
-- *Supply House Times*, "PHCP-PVF Price Increases May 2026"
-
-**What is structurally different about this wave vs. the April wave:**
-
-- **Press fittings are the headline category, not plastic pipe.** The April wave was led by plastic pipe (Charlotte Pipe +10% PVC/CPVC, IPEX +10%); the May wave is led by press-fitting systems (Apollo PowerPress +20%, SmartPress +17%). Shops doing heavy commercial install work — where press systems are now the default joining method for copper, stainless, and carbon steel — will feel this wave more than the April one. Shops doing predominantly residential service and drain work will feel it less.
-- **SDR 35 +10% is the largest single move in any sewer/drain category in the four-month cadence.** Shops doing sewer lateral and main-line replacement work should price this through cleanly — the residential sewer-line jobs that customers most often defer-and-call-around on are about to see a noticeable bump in material cost.
-- **The Westlake Brownsville Fittings +8% is broad-spectrum.** Unlike the press-fittings move (concentrated on Apollo's branded systems), the Westlake move touches everything from large-diameter to Schedule 40/80 to CPVC to HVAC/DWV to electrical conduit. This is the wave's "background increase" that affects almost every quote, even residential service calls that touch any of those categories incidentally.
-
-**Recommended weighted-average framing for a typical residential service shop's announcement:**
-
-> "Between late April and May 1, four of the manufacturers we buy from — Apollo (which makes the press fittings and valves we use on commercial work), Westlake (large-diameter and Schedule 40 fittings, CPVC, DWV), OmegaFlex (TracPipe), and Little Giant Pumps — raised their prices by 2% to 20% by category. Weighted against our typical residential service material mix, the net effective adjustment works out to about [X]%."
-
-**Recommended weighted-average framing for a shop doing heavy commercial install work:**
-
-> "Between late April and May 1, our press-fitting and grooved-system manufacturer Apollo raised prices on PowerPress by up to 20%, SmartPress by up to 17%, and Shurjoint grooved products by up to 12%. Westlake also raised prices on large-diameter and Schedule 40/80 fittings by 8%. Weighted against our typical commercial install material mix — where press and grooved systems dominate the joining-method line — the net effective adjustment is approximately [X]%."
-
-**Field-back-fill (compute against the shop's own spend mix):**
-
-| Material category | Typical residential service-call weight | Typical commercial install weight | May 2026 move |
-|---|---|---|---|
-| Press fittings (Apollo PowerPress/SmartPress) | ~3–5% of spend | ~18–25% of spend | +17–20% |
-| Grooved products (Apollo Shurjoint) | <2% | ~5–8% | +12% |
-| Large-diameter / Sch 40/80 / CPVC / HVAC-DWV / electrical conduit (Westlake) | ~8–12% | ~15–20% | +8% |
-| SDR 35 sewer/drain (Westlake S/P Series) | ~3–5% (sewer-heavy shops higher) | ~2–4% | +10% |
-| Gas piping (OmegaFlex TracPipe fittings) | ~4–7% (gas-line-active shops) | ~3–5% | +6% |
-| Pumps (Little Giant) | ~2–4% | ~2–3% | +2% |
-| Backflow + C&I valves (Apollo) | ~2–3% | ~6–10% | +3% |
-
-**Calibration cross-check (compare against April 2026 wave):**
-
-April 2026 weighted-average net effective move on a typical residential service-call material load: **~6.4%** (per the example in Section 1 of this skill). May 2026 wave will land in the **3.5–5.5%** range for most residential service-heavy shops (because press fittings, where the largest moves are, are a smaller share of the residential mix) and the **6–9%** range for commercial install-heavy shops (because press and grooved systems are a much larger share of the commercial mix). Shops where the May calibration lands above 9% or below 3% should double-check the spend-mix assumption before publishing the percentage in customer-facing communication — outliers in either direction are usually a math error, not a real number.
-
-**What does not change between the April and May packets:**
-
-The six-artifact structure (decision matrix → membership-holder announcement → commercial-account announcement → service-agreement compliance letter → pending-quote confirmation → office briefing → kitchen-table script → 90-day tracker). The grandfather-window logic. The "name the manufacturers, do not blame inflation" discipline. The one-week-lead-time rule. The "single topic, single call to action, signed by name" rule for the announcement email. The membership-plan-fee-is-unchanged reassurance up high.
-
-The only things that change wave-over-wave are the named manufacturers, the percentages, the weighted-average for the specific shop, the effective date, and the grandfather window dates. The packet itself is templated; the input data is what gets refreshed.
-
----
-
-## Fresh-Example Data Block — June 2026 Wave (v1.2, 2026-06-15)
-
-This is the third per-wave data block. Use it the same way as the May block: drop the values into Required Input and let the skill calibrate the packet to the actual June 2026 wave. The June wave confirms the monthly cadence as a five-month established pattern (Feb-Mar, April, May, June 2026) — a shop that has not yet formalized its price-increase communication discipline after five consecutive named waves is leaving margin on the table every month.
-
-**Wave window:** Effective dates staggered across June 2026 (June 1, June 6, June 13, June 15, June 22), announced late May through early June, reported in *Plumbing & Mechanical* and *Supply House Times* ("PHCP-PVF Price Increases: June 2026," published June 9, 2026).
-
-**Named drivers:**
+### Named drivers — July 2026
 
 | Manufacturer / Brand | Move | Categories Affected | Effective |
 |---|---|---|---|
-| Merit Brass — **headline driver** | **+8%** import brass fittings; **+8–12%** stainless steel 150# fittings and SS nipples; **+10.5%** domestic brass / import brass / chrome-plated nipples | Brass and stainless fittings and nipples | June 22, 2026 |
-| Mountain Plumbing | **+4–18%** | Decorative / specialty plumbing products | June 1, 2026 |
-| Red-White Valve Corp | **+10–15%** | 236 Series check valves | June 1, 2026 |
-| Cello | **+10%** (some items slightly more) | Plumbing product lines | June 15, 2026 |
-| Jones Stephens | **+10%** | Poly and rubber insulation | June 1, 2026 |
-| AO Smith Water Heaters | **+7%** | Water heaters | June 22, 2026 |
-| Armacell | +7% | Flexible elastomeric foam insulation (all products) | June 1, 2026 |
-| Plumberex | +7% | Insulation / protection products | June 1, 2026 |
-| Pro-Flex | Varies; **+6% on CSST and fittings** | Gas piping (CSST) | June 1, 2026 |
-| Noritz Parts | +5% | Tankless water-heater parts | June 1, 2026 |
-| Filtration Manufacturing | +3–5% select lines; +7% polyester | Water filtration | June 15, 2026 |
-| Bradley Corp. | +3–5% | Commercial fixtures / washroom | June 15, 2026 |
-| Resideo / Honeywell | +3% (Honeywell); 0–10% (Resideo) | Controls, valves | June 1 / June 6, 2026 |
-| Little Giant Pumps | +2–3% | Pump products | June 15, 2026 |
-| DiversiTech | +1% | HVAC/R accessories | June 1, 2026 |
-| Taco Pumps | Increase (unspecified %) | Pumps / hydronics | June 13, 2026 |
-| Uponor | Increase (unspecified %) | PEX / fittings | June 15, 2026 |
+| Moen — **headline driver** | **+10%** | Commercial fixture line | July 1, 2026 |
+| A.Y. McDonald | **+6–15%** | "Select plumbing product categories" per the announcement — category detail not specified. *Inferred from the brand's line:* water-works brass (meter setters, curb stops, corporation stops, service-line fittings). **Confirm with your supply house before quoting a specific category to a customer.** | July 7, 2026 |
+| JB Industries | **+7.5%** | Brass access valves, capillary tubing, fittings | July 1, 2026 |
+| Duravent Group | **+7%** | Full venting product portfolio | July 1, 2026 |
+| Centrotherm | **+7%** | Venting (polypropylene / high-efficiency appliance venting) | July 12, 2026 |
+| Johns Manville | **+6–8%** | Insulation | July 1, 2026 |
+| Jones Stephens | **+3–10%** | Select PEX products | July 1, 2026 |
+| Supco | +3–5% (average) | HVAC/R and appliance parts | July 6, 2026 |
+| Oatey | +1.0–5.4% | "Select product categories" per the announcement — detail not specified. *Inferred from the brand's line:* solvent cements, DWV, drains, supply-line accessories. **Confirm before quoting.** | July 27, 2026 |
+| Florestone | +3.3% | Shower/bath fixture products | July 6, 2026 |
+| Mission Rubber | +3% | Standard and heavyweight no-hub couplings | July 5, 2026 |
+| Rectorseal | Up to +3% | Sealants, chemicals, specialty products | July 6, 2026 |
+| DiversiTech | Varies by item | HVAC/R accessories | July 1, 2026 |
+| LACO | TBA | Chemicals / specialty | July 1, 2026 |
+| JPL | TBA | — | July 5, 2026 |
 
 **Sources to cite internally:**
 
-- *Plumbing & Mechanical*, "PHCP-PVF Price Increases: June 2026" (June 9, 2026)
-- *Supply House Times*, "PHCP-PVF Price Increases: June 2026"
+- *Plumbing & Mechanical*, "PHCP-PVF Price Increases: July 2026" (July 8, 2026)
+- *Supply House Times*, "PHCP-PVF Price Increases: July 2026"
 
-**What is structurally different about this wave vs. the April and May waves:**
+### What is structurally different about the July wave
 
-- **June is brass-, valve-, water-heater-, and insulation-led — not pipe-led (April) or press-fitting-led (May).** The headline category is Merit Brass's broad brass-and-stainless move (8–12%, the wave's largest broad-category increase), which lands on almost every service call that touches a brass fitting, nipple, or stainless connection — i.e., nearly all of them. This is a "background increase" wave in the same spirit as May's Westlake move, but on a category (brass and nipples) that residential service shops touch far more often than press fittings. Residential service-heavy shops will likely feel June *more* than they felt May.
-- **Water heaters move directly this wave.** AO Smith +7% effective June 22 is the most customer-visible single item, because a water-heater replacement is a high-ticket, frequently-quoted job and customers comparison-shop it. Shops sitting on open water-heater quotes should run the Section 3 pending-quote confirmation aggressively before June 22, and re-quote new water-heater jobs against the 7% after.
-- **Valves move double-digits again.** Red-White Valve 236 Series +10–15% and Cello +10% keep valves in the double-digit column for a second consecutive wave (after Apollo's May C&I valve and Backflow moves), which matters for repipe, backflow, and commercial valve-replacement work.
-- **Insulation is now a named recurring line.** Armacell +7%, Jones Stephens +10% poly/rubber, Plumberex +7%, Filtration polyester +7% — pipe insulation and protection products are moving as a category this wave. Low dollar-share for most shops, but it is the kind of incidental line item that, if not in the pricebook at the new cost, quietly erodes margin on every job that uses it.
-- **Gas piping (Pro-Flex CSST +6%) continues the OmegaFlex TracPipe +6% thread from May** — gas-line-active shops see a second consecutive ~6% on CSST/flexible gas products.
+- **Fixtures move for the first time in the cadence.** Moen +10% on its commercial line is the wave's headline and the first major fixture-brand increase in six months of waves. Every prior wave hit *behind the wall* (pipe, fittings, valves, brass, water heaters). This one hits the part of the job the customer can see and has an opinion about — which changes the communication problem, not just the pricing problem. A customer who has been shown a Moen commercial faucet in a spec package will comparison-shop that line item in a way they never comparison-shop a no-hub coupling. Shops with open commercial fixture packages should run the Section 3 pending-quote confirmation on those specifically.
+- **Water-works brass is the likely broad-spectrum move — but verify it.** A.Y. McDonald announced +6–15% on "select plumbing product categories" *without naming the categories*. Given the brand's line, this most likely lands on water-works brass — meter setters, curb stops, corporation stops, service-line fittings — i.e., on water-service and main-line work, including lead-service-line replacement jobs, a growing category under the LCRI. If that read is right, this is the wave's most material line for service-line-active shops. **It is an inference, not a sourced fact: call the supply house and confirm which categories moved before you put a number in front of a customer.** This is the general rule whenever a manufacturer announces a percentage without a category — the percentage is quotable, the category is not.
+- **Venting is up 7% at two suppliers simultaneously (Duravent and Centrotherm), and no water-heater OEM moved this month.** This is a trap worth naming to the operator: a shop that checks only tank pricing will conclude "water heaters didn't move in July" and quote the old installed price. But the *venting* on a high-efficiency or condensing water-heater install is up 7%, so the installed cost of the job moved even though the appliance did not. Re-price the water-heater job at the **installed** level, not the appliance level.
+- **PEX re-enters the mix.** Jones Stephens +3–10% on select PEX is the first PEX-category move since Uponor's unspecified June increase — relevant to repipe-heavy residential shops.
+- **Oatey +1–5.4% is the classic incidental-erosion line.** Solvent cements, DWV components, and supply accessories are small-dollar items that appear on nearly every job. If they are not updated in the pricebook at the new cost, the margin loss is invisible per-job and material across a quarter.
 
-**Recommended weighted-average framing for a typical residential service shop's announcement:**
+### Recommended weighted-average framing — residential service shop
 
-> "In June, several of the manufacturers we buy from raised prices — Merit Brass on brass and stainless fittings and nipples (8–12%), AO Smith on water heaters (7%), Red-White on check valves (10–15%), and a handful of insulation and gas-piping suppliers (6–10%). Weighted against our typical residential service material mix — which is brass-fitting-heavy — the net effective adjustment works out to about [X]%."
+> "In July, several of the manufacturers we buy from raised prices — A.Y. McDonald on water-service brass (6–15%), JB Industries on brass valves and fittings (7.5%), Jones Stephens on PEX (3–10%), Duravent and Centrotherm on venting (7%), and Oatey on the solvent cements and drain components we use on almost every job (1–5.4%). Weighted against our typical residential service material mix, the net effective adjustment works out to about [X]%."
 
-**Recommended weighted-average framing for a shop doing heavy commercial install work:**
+### Recommended weighted-average framing — commercial install shop
 
-> "In June, Merit Brass raised stainless 150# fittings and nipples 8–12%, Red-White raised 236 Series check valves 10–15%, and Bradley raised commercial fixtures 3–5%. Weighted against our typical commercial material mix, the net effective adjustment is approximately [X]%."
+> "In July, Moen raised its commercial fixture line 10%, A.Y. McDonald raised water-works brass 6–15%, Johns Manville raised insulation 6–8%, and Duravent and Centrotherm each raised venting 7%. Weighted against our typical commercial install material mix — where the fixture package and the venting are both large line items — the net effective adjustment is approximately [X]%."
 
-**Field-back-fill (compute against the shop's own spend mix):**
+### Field-back-fill (compute against the shop's own spend mix)
 
-| Material category | Typical residential service-call weight | Typical commercial install weight | June 2026 move |
+| Material category | Typical residential service-call weight | Typical commercial install weight | July 2026 move |
 |---|---|---|---|
-| Brass fittings & nipples (Merit Brass) | ~18–26% of spend | ~12–18% of spend | +8–10.5% |
-| Stainless 150# fittings & nipples (Merit Brass) | <2% | ~6–10% | +8–12% |
-| Check / specialty valves (Red-White, Cello) | ~3–6% | ~6–10% | +10–15% |
-| Water heaters (AO Smith) | ~10–16% (replacement-active shops higher) | ~4–8% | +7% |
-| Pipe & gas insulation (Armacell, Jones Stephens, Plumberex) | ~2–4% | ~3–5% | +7–10% |
-| Gas piping CSST (Pro-Flex) | ~3–6% (gas-active shops) | ~3–5% | +6% |
-| Pumps (Taco, Little Giant) | ~2–4% | ~2–4% | +2–3% |
-| Tankless parts (Noritz) | ~2–4% (tankless-active shops) | ~2–3% | +5% |
-| Commercial fixtures (Bradley) | <2% | ~4–8% | +3–5% |
+| Commercial fixtures (Moen commercial line) | <2% | ~10–18% of spend | +10% |
+| Water-works brass (A.Y. McDonald) | ~6–12% (service-line-active shops higher) | ~5–9% | +6–15% |
+| Brass access valves / fittings (JB Industries) | ~4–8% | ~4–7% | +7.5% |
+| Venting (Duravent, Centrotherm) | ~4–8% (water-heater-replacement-active shops higher) | ~6–10% | +7% |
+| Insulation (Johns Manville) | ~2–4% | ~4–8% | +6–8% |
+| PEX (Jones Stephens) | ~6–12% (repipe-active shops higher) | ~4–8% | +3–10% |
+| Solvent cement / DWV / accessories (Oatey) | ~4–7% | ~3–5% | +1–5.4% |
+| No-hub couplings (Mission Rubber) | ~2–4% | ~3–5% | +3% |
+| Chemicals / sealants (Rectorseal, LACO) | ~2–3% | ~2–3% | ≤ +3% |
+| HVAC/R + appliance parts (Supco, DiversiTech) | ~2–4% | ~2–4% | +3–5% |
 
-**Calibration cross-check (compare against April and May waves):**
+### Calibration cross-check
 
-April 2026 weighted-average net effective move on a typical residential service-call material load: **~6.4%**. May 2026 landed **3.5–5.5%** residential / **6–9%** commercial (press-fitting-led, lighter on residential). June 2026 will land back in the **5–8%** range for most residential service-heavy shops — *higher than May for the same residential shop* — because the headline category (brass fittings and nipples) is a large share of the residential mix, and water heaters move directly this wave. Commercial install-heavy shops will land roughly **4–7%** for June (lower than May, because June lacks the 17–20% press-fitting moves that dominated May's commercial calibration). This residential-vs-commercial flip from May to June is itself worth noting to the shop: a shop that calibrated its May announcement at the low end because it is residential-heavy should not assume June is also low — for a residential brass-heavy shop, June is the more material wave of the two. Shops where the June calibration lands above 9% or below 3% should re-check the spend-mix assumption before publishing.
+Run the July calibration and sanity-check it against the history table below. A typical **residential service-heavy** shop should land in the **4–6.5%** range for July — comparable to April, below June (June's brass-and-water-heater move was heavier on the residential mix), and above May. A typical **commercial install-heavy** shop should land in the **5–8%** range, driven by the Moen fixture line and venting.
 
-**What does not change between the April, May, and June packets:**
+If the calibration lands **above 9% or below 3%**, re-check the spend-mix assumption before publishing the number in customer-facing communication. Outliers in either direction are usually a math error, not a real number. This has held across all six waves and is the single most reliable guardrail in this section.
 
-Identical to the May note — the six-artifact structure, the grandfather-window logic, the "name the manufacturers, do not blame inflation" discipline, the one-week-lead-time rule, the single-topic / single-call-to-action / signed-by-name rule, and the membership-plan-fee-is-unchanged reassurance up high all carry forward unchanged. Only the named manufacturers, percentages, weighted-average, effective date, and grandfather dates refresh.
+### Wave History — the rotation is the lesson
 
-**Annex-sprawl note for the operator:** This is now the third per-wave data block (April example in Section 1 + May annex + this June annex). If the monthly cadence holds into Q3 2026, the maintenance-efficient move is to collapse the April/May/June blocks into a single rolling "most-recent-wave" table and keep only the current month's named drivers loaded, rather than accreting a new annex every month. For now all three are retained because the April-vs-May-vs-June comparison is itself instructive (the wave's lead category rotates month to month: pipe → press fittings → brass/water heaters), and that rotation is the real lesson for a shop — do not assume this month's wave hits your mix the same way last month's did.
+Keep this table. Add one row per wave. Do **not** re-load the full driver detail for past waves — this summary is all that is needed.
+
+| Wave | Lead category | Headline driver | Residential net | Commercial net |
+|---|---|---|---|---|
+| Feb–Mar 2026 | Mixed / early cadence | — | — | — |
+| April 2026 | Plastic pipe | Charlotte Pipe +10% PVC/CPVC; IPEX +10% | ~6.4% | ~6–7% |
+| May 2026 | Press fittings | Apollo PowerPress +20%, SmartPress +17% | 3.5–5.5% | 6–9% |
+| June 2026 | Brass / valves / water heaters / insulation | Merit Brass +8–12%; AO Smith +7% | 5–8% | 4–7% |
+| **July 2026** | **Fixtures / water-works brass / venting** | **Moen +10% commercial; A.Y. McDonald +6–15%** | **4–6.5%** | **5–8%** |
+
+**The lesson this table encodes — and the one thing the operator must internalize:** *the wave's lead category rotates every month.* Pipe, then press fittings, then brass and valves and water heaters, then fixtures and water-works and venting. A shop that assumes this month's wave hits its mix the way last month's did will mis-price.
+
+Look down the last two columns. Of the four waves with numbers, commercial ran hotter than residential in April, May, and July — but in **June** the order **inverted**, and residential took the heavier hit, because that wave's lead category (brass fittings and nipples) is a much larger share of a residential service mix than of a commercial install mix. One inversion in four waves is enough: a residential-heavy shop that had learned from April and May to expect the low end of the range would have under-priced June by two to three points. Recompute the weighted average against the shop's own rolling-90-day spend mix every single wave. **Never carry last month's percentage forward.**
+
+### What never changes, wave to wave
+
+The six-artifact structure — decision matrix → customer-facing announcement (which renders in three variants: membership-holder, commercial-account, and service-agreement compliance letter) → pending-quote confirmation → office briefing → kitchen-table script → 90-day tracker. The grandfather-window logic. The "name the manufacturers, do not blame inflation" discipline. The one-week-lead-time rule. The single-topic / single-call-to-action / signed-by-name rule for the announcement email. The membership-plan-fee-is-unchanged reassurance up high.
+
+Only the named manufacturers, the percentages, the shop's weighted average, the effective date, and the grandfather-window dates refresh. The packet is templated; the input data is what gets replaced.
+
+### Maintenance rule (for whoever updates this skill next)
+
+When the next PHCP-PVF wave is published:
+
+1. **Replace** the "Named drivers" table, the "What is structurally different" section, the two framing quotes, the field-back-fill table, and the calibration cross-check with the new wave's data.
+2. **Append one row** to the Wave History table for the wave being retired.
+3. **Do not** add a new standalone annex section. The v1.2 → v1.3 collapse exists specifically to stop that pattern.
 
 ---
 
