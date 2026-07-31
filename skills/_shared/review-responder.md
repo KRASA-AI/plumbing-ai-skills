@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.4
-last_eval_score: 8.1
-notes_for_next_eval: "v1.4 (2026-07-20, evaluator): additive, closes the one carried next-step from 07-13. Adds a **Per-Platform Format & Length** table (Google Business Profile, Yelp, Facebook, Nextdoor, BBB) with the practical length target and the front-load rule for each surface, plus a truncation note (Google collapses a long reply behind a 'More' fold in the mobile app, so the concession and the offer-to-fix must land in the first ~1-2 lines or a skimming prospect never sees them). This is the reputation-management mechanics layer the tier playbooks assume but never spelled out. Strictly additive: v1.3's tier playbooks, fake/extortion block, response-timing rules, Local-SEO note, bilingual note, output discipline, and all three worked examples preserved verbatim. Next: an owner-response A/B note if a shop wants to test warmth vs. brevity on 5-star replies."
+version: 1.5
+last_eval_score: 8.2
+notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive, closes the one carried next-step from 07-20. Adds a **5-Star A/B Note** — two response styles (Warm/relationship vs. Brief/efficient) for 5-star and warm-4-star reviews, with guidance on when each fits: Warm for a shop leaning on personal-relationship positioning or a low volume of 5-stars where each reply is a chance to reinforce the relationship; Brief for a shop with high 5-star volume where a long reply to every one starts to look automated, or where the owner's time is the binding constraint. Includes both variants written against the same input so the difference is concrete, not just described. Scored +0.1 (reference/technique addition, not a new capability) — same tier as the 07-20 per-platform table. Strictly additive: all tier playbooks, the fake/extortion block, response-timing rules, the Local-SEO note, the Per-Platform Format & Length table, the bilingual note, output discipline, and all three worked examples preserved verbatim. Next: none currently queued — the _shared skill trio has now closed every next-step from its last four cycles; watch for a natural next capability rather than force one."
+notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive, closes the one carried next-step from 07-13. Adds a **Per-Platform Format & Length** table (Google Business Profile, Yelp, Facebook, Nextdoor, BBB) with the practical length target and the front-load rule for each surface, plus a truncation note (Google collapses a long reply behind a 'More' fold in the mobile app, so the concession and the offer-to-fix must land in the first ~1-2 lines or a skimming prospect never sees them). This is the reputation-management mechanics layer the tier playbooks assume but never spelled out. Strictly additive: v1.3's tier playbooks, fake/extortion block, response-timing rules, Local-SEO note, bilingual note, output discipline, and all three worked examples preserved verbatim. Next: an owner-response A/B note if a shop wants to test warmth vs. brevity on 5-star replies."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive, closes the one carried next-step from 07-06. (1) Adds the worked **mixed 3-star example** — the tier that had a playbook but no example, and the hardest tier to write well (the response has to be gracious without conceding, and it is read by more prospects than any other tier). (2) Adds a **Local-SEO note**: responses are indexed and read by prospects comparing shops, so name the city/service naturally once, never keyword-stuff — a real, commonly-botched reputation-management practice. (3) Adds a **response-timing rule** (respond within 24-48h; negative reviews same business day) so the skill produces a cadence, not just a draft. Strictly additive: v1.2's tier playbooks, fake/extortion block, bilingual note, output discipline, and both prior examples preserved verbatim. Next: a per-platform character-limit table if a shop reports truncation on Yelp/Facebook."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive deepening, addresses both carried next-steps from 06-29. (1) References the new `_shared/voice-and-config-contract.md` for the config-load + public-privacy rules. (2) Adds the fake/extortion/wrong-business review flagging sub-block that was explicitly queued at 06-29 — a decision aid for spotting non-genuine reviews, a calm public holding response, and the platform-report path, without accusing publicly. (3) Adds a bilingual (Spanish) note pointing at the shared contract. Strictly additive: all v1.1 tier playbooks, output discipline, and both worked examples preserved verbatim. Next: a worked mixed (3-star) example."
 notes_for_next_eval_prior: "v1.1 (2026-06-29, evaluator first-pass + improvement): first formal evaluation after 15+ cycles unevaluated. v1.0 was the generic three-line template (scored ~4.6). v1.1 added star-rating-tiered playbooks (5-star, 3-4 star, 1-2 star), the public-privacy rule, offline de-escalation, config-driven personalization, platform length notes, and 5-star + 1-star examples. Fills the request->respond loop opposite Review Request Drafter."
@@ -153,6 +154,39 @@ several surfaces literally hide the rest behind a fold.
 If a reply must run long (a detailed negative response), write it so the first sentence stands
 alone as a complete, reasonable-sounding acknowledgment — that is the sentence most prospects
 read, and on Google it may be the only one they see before the fold.
+
+## 5-Star A/B Note (two valid styles — pick one and stay consistent)
+
+The 5-star tier playbook above is deliberately short, but "short and genuine" still leaves
+room for two different, both-correct styles. Which one fits depends on the shop, not the
+review:
+
+- **Warm / relationship style** — a full 3-4 sentences, echoes a specific detail, invites
+  them back by name-checking the tech again. Fits a shop that positions on personal
+  relationship and neighborliness, or one with a lower volume of 5-stars where each reply is
+  worth the extra beat.
+- **Brief / efficient style** — 1-2 sentences, still genuine, no filler. Fits a shop getting
+  a high volume of 5-stars, where a long, similar-sounding reply under every single one starts
+  to read as templated (prospects notice), or where the owner is doing this themselves between
+  jobs and needs it fast.
+
+Neither is "more correct" — pick one and apply it consistently so the shop's reply voice
+reads as a deliberate choice, not inconsistency. Same input, both styles:
+
+**Input:** "Dave came out same day, fixed our water heater, super clean and friendly. Highly
+recommend!"
+
+**Warm / relationship:**
+> Thank you, Karen! We're glad Dave got your hot water back the same day — he's one of the
+> good ones. We stand behind the work, so if anything ever comes up, just call. Thanks for
+> choosing us, and welcome back anytime. — Example Plumbing Co
+
+**Brief / efficient:**
+> Thanks, Karen — glad Dave got you fixed up same-day. We're here if you need us again. —
+> Example Plumbing Co
+
+If the shop hasn't stated a preference, default to Warm for the first few replies you draft
+and ask which style they'd rather standardize on; don't silently switch styles reply to reply.
 
 ## Output Discipline
 

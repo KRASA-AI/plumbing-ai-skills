@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.4
-last_eval_score: 8.1
-notes_for_next_eval: "v1.4 (2026-07-20, evaluator): additive. Adds a **third worked example — vendor price-increase pushback** — which *demonstrates* the v1.3 cross-link into the Vendor Price Increase Communication skill's Rolling Wave Data Block. v1.3 added the cross-link as a pointer but left it structure-without-demonstration (the same gap the customer-service-recovery example filled for that type); this closes it. The example quotes the actual announced July move (Oatey +1–5.4% on select categories, announced without named categories) and asks the one question that gets a real answer from a supply house — 'which categories, and does our contract pricing follow list?' — instead of a vague 'prices seem high.' It models the discipline the vendor skill teaches: the percentage is quotable, the category is not until the supply house confirms it. Strictly additive: email-type menu, bilingual note, pre-send checklist, output discipline, and the Ramirez and Nguyen examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them."
+version: 1.5
+last_eval_score: 8.2
+notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive. Adds a **fourth worked example — job-complete / thank-you**, the highest-volume email type in the menu and, until now, the one with a structure line but no demonstration. The example shows the plain-language work summary, the warranty statement, and a maintenance reminder, and adds a **routing note**: a review ask belongs in this email only as one soft optional line when `voice.tone` invites it and the shop doesn't already run a formal campaign; if the shop wants a structured, timed review ask, route to the **Review Request Drafter** skill instead of building a second review-ask mechanism inside this one. Same discipline as the v1.4 vendor cross-link: point at the specialized skill's data/cadence rather than duplicating it. Scored +0.1 (not +0.2) — a fourth demonstration of an established pattern (worked example for a type that had structure but not one) rather than a new capability, matching the diminishing-returns scoring the repo already applies to Review Responder's reference-table additions. Strictly additive: email-type menu, bilingual note, 7-check pre-send checklist, output discipline, and the Ramirez, Nguyen, and Oatey examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them (still conditional — no fourth _shared skill exists yet)."
+notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive. Adds a **third worked example — vendor price-increase pushback** — which *demonstrates* the v1.3 cross-link into the Vendor Price Increase Communication skill's Rolling Wave Data Block. v1.3 added the cross-link as a pointer but left it structure-without-demonstration (the same gap the customer-service-recovery example filled for that type); this closes it. The example quotes the actual announced July move (Oatey +1–5.4% on select categories, announced without named categories) and asks the one question that gets a real answer from a supply house — 'which categories, and does our contract pricing follow list?' — instead of a vague 'prices seem high.' It models the discipline the vendor skill teaches: the percentage is quotable, the category is not until the supply house confirms it. Strictly additive: email-type menu, bilingual note, pre-send checklist, output discipline, and the Ramirez and Nguyen examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive. (1) Adds a **second worked example — customer service recovery** — the highest-stakes email type in the menu and the one most likely to be sent badly under pressure; it had a structure line but no example. (2) Adds a **pre-send checklist** (7 checks) so the skill's deliverable is send-ready, not draft-ready. (3) Points the vendor-email type at the Vendor Price Increase Communication skill's Rolling Wave Data Block (v1.3) for the current named-driver percentages, so a price-increase pushback email quotes real numbers instead of vague ones — first cross-link from a _shared skill into a specialized skill's live data. Strictly additive: the email-type menu, bilingual note, output discipline, and the Ramirez example preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive. (1) References the new `_shared/voice-and-config-contract.md` for the config-load + voice + no-fabrication rules instead of repeating the field list inline (the carried next-step from 06-29). (2) Adds a bilingual (Spanish) variant note pointing at the shared contract's §6 pattern — matches what the nine Spanish-anchored specialized skills already do. Strictly additive: the email-type menu, output discipline, routing-to-specialized-skills notes, and the worked Ramirez example are all preserved verbatim. Next: fold the per-type structures into the shared contract if a fourth _shared skill reuses them."
 notes_for_next_eval_prior: "v1.1 (2026-06-29, evaluator first-pass + improvement): first formal evaluation after 15+ cycles. v1.0 was a generic three-line template (scored ~4.3). v1.1 added a plumbing email-type menu with per-type structure, config-driven personalization beyond voice, a deliverable format spec, routing to specialized skills, and a worked example."
@@ -56,6 +57,9 @@ template.
   and the callback number.
 - **Job-complete / thank-you** — what was done in plain language, the warranty on the work,
   maintenance reminder if relevant, and a review ask only if the shop's voice invites it.
+  *(A one-line soft ask is fine here. If the shop wants a real review campaign — timed
+  follow-ups, platform links, a nudge sequence — route to the **Review Request Drafter**
+  skill instead of building a second ask mechanism inside this one.)*
 - **Customer service recovery** — acknowledge the issue, own it without over-apologizing,
   state the concrete fix and timeline, give a direct contact. Never offer money the user
   did not authorize.
@@ -220,3 +224,45 @@ detail.
   decision the rep can actually answer, not an open-ended complaint.
 - Nothing is invented: the only number in the email is the one the Rolling Wave Data Block
   supplies; everything else is a question.
+
+### Example 4 — Job-complete / thank-you (with the review-ask routing note in use)
+
+The highest-volume type in the menu: plain-language summary of the work, the warranty, a
+maintenance reminder if it applies, and — only if the shop's voice invites it — one soft line,
+not a campaign.
+
+**Input:** "wrap up the Delgado job. replaced the main shutoff valve and two supply lines
+under the kitchen sink, no other issues found. standard 2yr labor warranty. they're on our
+quarterly maintenance plan already so no need to pitch that. voice is friendly, we like to
+ask for reviews when the job went clean"
+
+**Output:**
+
+**Subject:** Your shutoff valve replacement is done — 4417 Birchwood Ct
+
+Hi Marcus,
+
+Good news — we replaced the main shutoff valve and the two supply lines under your kitchen
+sink today, and didn't find anything else that needed attention. Everything's tested and
+holding pressure with no leaks.
+
+The work is covered under our **2-year labor warranty**, so if anything comes up, just call.
+Since you're already on our quarterly maintenance plan, we'll see you at your next visit — no
+action needed on your end.
+
+If you have a minute, a quick review helps other homeowners in the neighborhood find us —
+here's the link: [Google review link]. No pressure either way, and thanks for trusting us
+with the work.
+
+— Tom, Example Plumbing Co
+(916) 555-0142 · exampleplumbing.com
+
+**Why this works:**
+- Leads with **what was fixed, in plain language** — no jargon about valve types or pipe
+  sizing the homeowner didn't ask for.
+- The **maintenance mention is a status note, not a pitch** — the user said they're already
+  enrolled, so re-selling the plan would read as not paying attention.
+- The **review ask is one line, optional, and un-pressured** — exactly the ceiling the menu
+  sets for this type. If the shop instead wanted a timed, multi-touch review campaign, this
+  email would route to **Review Request Drafter**, not grow a second ask mechanism here.
+- Warranty term is the exact one the user gave (2-year labor) — nothing rounded up or assumed.

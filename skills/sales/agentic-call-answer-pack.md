@@ -5,7 +5,8 @@ tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~2 hrs to build once; prevents the auto-drop that silently forfeits AI-routed calls thereafter"
 version: 1.0
-last_eval_score: null
+last_eval_score: 9.6
+notes_for_next_eval: "v1.0 (2026-07-20, evaluator, debut): first formal evaluation, scored 9.6 — six numbered artifacts (Answer Sheet, Phone-Pickup Protocol, CSR Quick-Reference Card, AI-Receptionist Configuration Notes, Consistency Reconciliation, Auto-Drop Red-Flag Checklist) plus a fully worked Bluegrass Plumbing example. Positioning confirmed clean against AI Search Visibility Content Pack — this skill converts the call, the visibility pack gets the shop called; no overlap. Front-matter last_eval_score was left null at debut and is corrected to 9.6 as of the 2026-07-28 cycle (no content change, hygiene fix only — see evals/results/2026-07-28/agentic-call-answer-pack.yml). Held, no change, at 07-28. Next: watch for the Answer Sheet's default question order needing revision if a competing assistant ships the same feature with a different question set."
 ---
 
 # Agentic-Call Answer Pack

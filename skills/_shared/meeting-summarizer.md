@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.4
-last_eval_score: 8.0
-notes_for_next_eval: "v1.4 (2026-07-20, evaluator): additive. Adds **Recurring-Meeting Mode** — when the notes are from a meeting that recurs (weekly ops review, morning huddle), diff against last week's summary: carry every unresolved action item into a **Carried Over** block, tag each with how many weeks it has slipped, auto-close items the notes confirm done, and escalate anything aged 3+ weeks. This is the natural next step now that handoffs and the decision-durability rule exist — it turns the skill from a per-meeting snapshot into a rolling accountability ledger, which is where the actual shop value is (the same three AR invoices sitting open week after week, the stale water-heater price that was flagged last Thursday and still isn't in the pricebook). Includes a worked Carried-Over snippet built on the Example 2 ops review. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, and both worked examples preserved verbatim. Next: a monthly rollup mode, or auto-generating next week's agenda from the unresolved carry-over items."
+version: 1.5
+last_eval_score: 8.2
+notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive. Adds **Monthly Rollup Mode** — the queued next step from 07-20. When the user supplies four or more weeks of recurring-mode summaries (or just their Carried Over blocks) for the same meeting, the skill produces a monthly view: every item that was ever Carried Over gets a total-weeks-tracked count, a resolution status, and a **🔴 Chronic** flag if it was still open in 3+ of the weekly summaries (distinct from the single-week 🔺 Aging flag, which fires per-week). It closes by auto-generating a **Next Meeting Agenda Seed** — the still-open items ranked oldest-first, pulled straight from the latest Carried Over block, so the next meeting opens with them instead of a blank page. Includes a worked four-week rollup extending the water-heater-price / Castillo-invoice saga from the v1.4 example: the water-heater price is now flagged chronic at week 4, Castillo closed at week 3. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, Recurring-Meeting Mode, and both worked examples preserved verbatim. Next: consider having the skill draft the actual next-meeting invite/agenda text from the seed, not just the ranked list."
+notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive. Adds **Recurring-Meeting Mode** — when the notes are from a meeting that recurs (weekly ops review, morning huddle), diff against last week's summary: carry every unresolved action item into a **Carried Over** block, tag each with how many weeks it has slipped, auto-close items the notes confirm done, and escalate anything aged 3+ weeks. This is the natural next step now that handoffs and the decision-durability rule exist — it turns the skill from a per-meeting snapshot into a rolling accountability ledger, which is where the actual shop value is (the same three AR invoices sitting open week after week, the stale water-heater price that was flagged last Thursday and still isn't in the pricebook). Includes a worked Carried-Over snippet built on the Example 2 ops review. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, and both worked examples preserved verbatim. Next: a monthly rollup mode, or auto-generating next week's agenda from the unresolved carry-over items."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive. (1) **Expands the cross-skill handoff map from 4 routes to 9** and turns it into a table — adds Pricebook Q&A (a rate/price decision in a huddle is worthless if it never reaches the pricebook: the exact failure the v1.1 worked example already dangles in its Follow-ups line), Dispatch Brief Generator, CSR Performance Debrief, Parts & Materials List, and Estimate Writer (open quotes). (2) Adds a **second worked example — weekly ops review** — the meeting type with the most decisions and the most handoffs, showing the handoff column in use. (3) Adds the **decision-durability rule** (a decision with no owner and no system-of-record entry is a decision that will be re-litigated next week). Strictly additive: the meeting-type menu, fixed output structure, output discipline, and the huddle example preserved verbatim. Next: consider a recurring-meeting mode that diffs this week's summary against last week's open items."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive, addresses both carried next-steps from 06-29. (1) References the new `_shared/voice-and-config-contract.md` for the config-load block. (2) Adds the queued cross-skill handoff lines — when a meeting surfaces a tracked item, route it to the matching specialized skill (Safety & Compliance Tracker, Technician Performance Debrief, Change Order Tracker, Invoice Follow-Up Sequence). Strictly additive: the meeting-type menu, fixed output structure, owner-and-date discipline, output discipline, and worked huddle example are preserved verbatim. Lowest of the three _shared skills because meeting summarization is the most generic of the trio, but now clearly passing and better integrated with the specialized set."
 notes_for_next_eval_prior: "v1.1 (2026-06-29, evaluator first-pass + improvement): first formal evaluation after 15+ cycles. v1.0 was a generic three-line template (scored ~4.4). v1.1 added a plumbing-meeting-type menu, a fixed Decisions/Actions/Follow-ups/Parked structure, owner-and-date discipline, config-driven personalization, and a worked example."
@@ -154,11 +155,62 @@ The value is item #1: a decision that was "made" two weeks ago and still hasn't 
 system of record is exactly the failure the decision-durability rule names — recurring mode
 is what stops it from being made a third time.
 
+## Monthly Rollup Mode (four or more weeks)
+
+Recurring mode catches the week-to-week slip; it doesn't by itself show the owner the pattern
+across a month — that the *same* item has now missed four huddles in a row versus one that
+took two weeks and closed. If the user provides **four or more weeks of recurring-mode
+summaries (or just their Carried Over blocks) for the same meeting**, run a rollup instead of
+(or in addition to) the normal weekly output:
+
+1. **Build one row per item that was ever Carried Over.** For each: how many weeks it was
+   tracked, its current status, and the week it closed (if it did).
+2. **Flag chronic items.** Anything still open in **3 or more** of the weekly summaries gets
+   a **🔴 Chronic** flag — distinct from the single-week `🔺 Aging` flag, which just means "old
+   this week." Chronic means the shop's normal follow-up cadence isn't working on this item and
+   it needs a different fix (an owner decision, a policy change, reassigning it), not another
+   "carry it again."
+3. **Generate the Next Meeting Agenda Seed.** Pull every still-open item from the *latest*
+   Carried Over block, rank oldest-first, and hand it back as a ready-to-use opening list — so
+   the next meeting starts from what's actually unresolved instead of a blank page.
+
+**Monthly Rollup** (from [date range], [N] meetings)
+| # | Item | Weeks tracked | Status | Chronic? |
+|---|------|---------------|--------|----------|
+| 1 | [item] | 4 | Open | 🔴 Chronic |
+| 2 | [item] | 2 | ✓ Closed (week 2) | — |
+
+**Next Meeting Agenda Seed** (oldest first)
+1. [oldest open item] — week [N], [why it's stuck]
+2. [next item] — week [N]
+
+**Worked rollup** (extending the Example 2 ops review saga across a month of weekly reviews):
+
+**Monthly Rollup** (from Jun 25 – Jul 16, 4 weekly ops reviews)
+| # | Item | Weeks tracked | Status | Chronic? |
+|---|------|---------------|--------|----------|
+| 1 | Update water-heater installed price for the July venting move | 4 | Open | 🔴 Chronic |
+| 2 | Work the 3 invoices past 60 days (Castillo 90+ dispute) | 3 | ✓ Closed (week 3 — dispute resolved) | — |
+| 3 | Re-quote 11 open quotes unsigned as of Friday | 1 | ✓ Closed (week 1) | — |
+| 4 | Review Dave's two drain callbacks for a technique pattern | 2 | ✓ Closed (week 2 — job-mix issue, not technique) | — |
+
+**Next Meeting Agenda Seed** (oldest first)
+1. Water-heater installed price — week 4, still not in the pricebook. The handoff to
+   **Pricebook Q&A** has fired three weeks running with no reported completion; this is now
+   an owner-decision item, not a follow-up reminder.
+
+The value is item #1 surfacing as 🔴 Chronic: three individual "carry it again" weeks looked
+like normal slippage on their own, but the rollup shows a decision that has now failed to reach
+the pricebook for a full month — the exact pattern the decision-durability rule exists to catch,
+made visible at the scale where an owner actually acts on it.
+
 ## Required Input
 
 Provide the raw meeting notes or transcript (and the meeting date and attendees if known).
 For **recurring meetings**, also provide last week's summary for the same meeting if you have
-it, and the skill will diff against it (see Recurring-Meeting Mode).
+it, and the skill will diff against it (see Recurring-Meeting Mode). For a **monthly rollup**,
+provide four or more weeks of prior summaries (or their Carried Over blocks) for the same
+recurring meeting (see Monthly Rollup Mode).
 
 ## Examples
 
