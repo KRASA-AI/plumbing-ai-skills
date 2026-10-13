@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.5
-last_eval_score: 8.2
-notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive. Adds a **fourth worked example — job-complete / thank-you**, the highest-volume email type in the menu and, until now, the one with a structure line but no demonstration. The example shows the plain-language work summary, the warranty statement, and a maintenance reminder, and adds a **routing note**: a review ask belongs in this email only as one soft optional line when `voice.tone` invites it and the shop doesn't already run a formal campaign; if the shop wants a structured, timed review ask, route to the **Review Request Drafter** skill instead of building a second review-ask mechanism inside this one. Same discipline as the v1.4 vendor cross-link: point at the specialized skill's data/cadence rather than duplicating it. Scored +0.1 (not +0.2) — a fourth demonstration of an established pattern (worked example for a type that had structure but not one) rather than a new capability, matching the diminishing-returns scoring the repo already applies to Review Responder's reference-table additions. Strictly additive: email-type menu, bilingual note, 7-check pre-send checklist, output discipline, and the Ramirez, Nguyen, and Oatey examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them (still conditional — no fourth _shared skill exists yet)."
+version: 1.6
+last_eval_score: 8.4
+notes_for_next_eval: "v1.6 (2026-10-13, evaluator): additive. Adds **Reply Mode** — the skill previously only composed outbound email from notes; it now handles the more common case of answering an inbound customer email: enumerate every ask first, answer each in the customer's order, insert [ANSWER NEEDED] placeholders rather than inventing, never improvise price/warranty/diagnosis, keep the Re: subject and the customer's formality, close on one next step; adds a Reply Mode pre-send check and a worked water-heater-warranty fragment. Everything prior preserved verbatim. Next: none queued — re-read fresh."
+notes_for_next_eval_prior_v15: "v1.5 (2026-07-28, evaluator): additive. Adds a **fourth worked example — job-complete / thank-you**, the highest-volume email type in the menu and, until now, the one with a structure line but no demonstration. The example shows the plain-language work summary, the warranty statement, and a maintenance reminder, and adds a **routing note**: a review ask belongs in this email only as one soft optional line when `voice.tone` invites it and the shop doesn't already run a formal campaign; if the shop wants a structured, timed review ask, route to the **Review Request Drafter** skill instead of building a second review-ask mechanism inside this one. Same discipline as the v1.4 vendor cross-link: point at the specialized skill's data/cadence rather than duplicating it. Scored +0.1 (not +0.2) — a fourth demonstration of an established pattern (worked example for a type that had structure but not one) rather than a new capability, matching the diminishing-returns scoring the repo already applies to Review Responder's reference-table additions. Strictly additive: email-type menu, bilingual note, 7-check pre-send checklist, output discipline, and the Ramirez, Nguyen, and Oatey examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them (still conditional — no fourth _shared skill exists yet)."
 notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive. Adds a **third worked example — vendor price-increase pushback** — which *demonstrates* the v1.3 cross-link into the Vendor Price Increase Communication skill's Rolling Wave Data Block. v1.3 added the cross-link as a pointer but left it structure-without-demonstration (the same gap the customer-service-recovery example filled for that type); this closes it. The example quotes the actual announced July move (Oatey +1–5.4% on select categories, announced without named categories) and asks the one question that gets a real answer from a supply house — 'which categories, and does our contract pricing follow list?' — instead of a vague 'prices seem high.' It models the discipline the vendor skill teaches: the percentage is quotable, the category is not until the supply house confirms it. Strictly additive: email-type menu, bilingual note, pre-send checklist, output discipline, and the Ramirez and Nguyen examples preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive. (1) Adds a **second worked example — customer service recovery** — the highest-stakes email type in the menu and the one most likely to be sent badly under pressure; it had a structure line but no example. (2) Adds a **pre-send checklist** (7 checks) so the skill's deliverable is send-ready, not draft-ready. (3) Points the vendor-email type at the Vendor Price Increase Communication skill's Rolling Wave Data Block (v1.3) for the current named-driver percentages, so a price-increase pushback email quotes real numbers instead of vague ones — first cross-link from a _shared skill into a specialized skill's live data. Strictly additive: the email-type menu, bilingual note, output discipline, and the Ramirez example preserved verbatim. Next: fold per-type structures into the shared contract if a fourth _shared skill reuses them."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive. (1) References the new `_shared/voice-and-config-contract.md` for the config-load + voice + no-fabrication rules instead of repeating the field list inline (the carried next-step from 06-29). (2) Adds a bilingual (Spanish) variant note pointing at the shared contract's §6 pattern — matches what the nine Spanish-anchored specialized skills already do. Strictly additive: the email-type menu, output discipline, routing-to-specialized-skills notes, and the worked Ramirez example are all preserved verbatim. Next: fold the per-type structures into the shared contract if a fourth _shared skill reuses them."
@@ -108,6 +109,51 @@ The deliverable is a **send-ready** email, so check it the way the owner would:
    strip it.
 7. **Financing mentioned only if `pricing.financing` is true** *and* the email touches a
    priced job.
+
+## Reply Mode (answering an email the customer sent)
+
+Most of a shop's email is not a fresh message — it's a reply to a customer who wrote in with
+three questions buried in one paragraph. Drafting a reply from rough notes alone is where
+questions get skipped, and a skipped question is the most common reason a customer calls the
+office to ask again. When the user pastes an **inbound email** (with or without notes on how to
+answer), switch to Reply Mode:
+
+1. **Extract every ask first.** Before drafting, list each question, request, or complaint in
+   the inbound email as a numbered line (*Ask 1: can you come Saturday? Ask 2: is the water
+   heater still under warranty? Ask 3: do you take financing?*). Count them — this list is
+   shown to the user above the draft.
+2. **Answer every ask, in the customer's order.** One short paragraph or line per ask. If the
+   user's notes don't cover an ask, write `[ANSWER NEEDED: Ask 2 — warranty status]` in place
+   rather than inventing an answer or quietly leaving it out (no-fabrication rule, contract §4).
+3. **Don't answer what config can't support.** Prices beyond what the user supplied,
+   warranty terms not in config, and diagnoses from a description are never improvised: route
+   pricing to the Estimate Writer, and phrase diagnosis as "we'll confirm on site."
+4. **Match the thread, not the template.** Keep the customer's subject line with "Re:" (do not
+   write a new one), match their level of formality, and keep the reply shorter than their
+   email when the asks are simple. Skip the type-menu opening paragraph — they already know
+   who you are.
+5. **Close on the one next step.** End with a single concrete action (a time slot to confirm,
+   a photo to send, a call to expect) — not a menu of options.
+
+**Reply Mode check (append to the Pre-Send Checklist when in this mode):** every numbered ask
+has a matching answer or an `[ANSWER NEEDED]` placeholder; the reply keeps the original
+subject line; no price, warranty term, or diagnosis appears that wasn't in the user's notes or
+config.
+
+**Worked fragment:**
+
+> *Inbound:* "Hi — the guy who put in our water heater last spring said it had a 6-year
+> warranty, is that parts and labor? It's making a popping noise now. Also can someone come
+> before Friday, I work from home Weds. Thanks, Dana"
+>
+> *Asks found (3):* 1) warranty coverage — parts and labor? 2) popping noise 3) visit before
+> Friday, Wednesday preferred
+>
+> *Draft (body excerpt):* "Hi Dana — thanks for reaching out. **Warranty:** [ANSWER NEEDED:
+> Ask 1 — confirm manufacturer tank/parts term and our labor term from the install record].
+> **The popping:** that sound is usually sediment settling at the bottom of the tank and is
+> often fixed with a flush — our tech will confirm on site. **Timing:** we can be there
+> Wednesday between [window from notes]. Reply 'yes' and you're on the schedule."
 
 ## Required Input
 

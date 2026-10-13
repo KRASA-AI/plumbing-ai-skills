@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.5
-last_eval_score: 8.2
-notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive, closes the one carried next-step from 07-20. Adds a **5-Star A/B Note** — two response styles (Warm/relationship vs. Brief/efficient) for 5-star and warm-4-star reviews, with guidance on when each fits: Warm for a shop leaning on personal-relationship positioning or a low volume of 5-stars where each reply is a chance to reinforce the relationship; Brief for a shop with high 5-star volume where a long reply to every one starts to look automated, or where the owner's time is the binding constraint. Includes both variants written against the same input so the difference is concrete, not just described. Scored +0.1 (reference/technique addition, not a new capability) — same tier as the 07-20 per-platform table. Strictly additive: all tier playbooks, the fake/extortion block, response-timing rules, the Local-SEO note, the Per-Platform Format & Length table, the bilingual note, output discipline, and all three worked examples preserved verbatim. Next: none currently queued — the _shared skill trio has now closed every next-step from its last four cycles; watch for a natural next capability rather than force one."
+version: 1.6
+last_eval_score: 8.3
+notes_for_next_eval: "v1.6 (2026-10-13, evaluator): additive. Adds an **AI-Receptionist / Automation Complaint Reviews** playbook — the new review genre that follows shops adopting AI voice agents and answering services ('I got a robot,' 'nobody called back'): treat it as a responsiveness complaint, be honest about what answered, show the human path, fix offline, and route an internal note to the After-Hours Call Summary / CSR Performance Debrief / Agentic-Call Answer Pack owners; with avoid-phrases and a worked 2-star Google example. Everything prior preserved verbatim. Next: none queued — re-read fresh."
+notes_for_next_eval_prior_v15: "v1.5 (2026-07-28, evaluator): additive, closes the one carried next-step from 07-20. Adds a **5-Star A/B Note** — two response styles (Warm/relationship vs. Brief/efficient) for 5-star and warm-4-star reviews, with guidance on when each fits: Warm for a shop leaning on personal-relationship positioning or a low volume of 5-stars where each reply is a chance to reinforce the relationship; Brief for a shop with high 5-star volume where a long reply to every one starts to look automated, or where the owner's time is the binding constraint. Includes both variants written against the same input so the difference is concrete, not just described. Scored +0.1 (reference/technique addition, not a new capability) — same tier as the 07-20 per-platform table. Strictly additive: all tier playbooks, the fake/extortion block, response-timing rules, the Local-SEO note, the Per-Platform Format & Length table, the bilingual note, output discipline, and all three worked examples preserved verbatim. Next: none currently queued — the _shared skill trio has now closed every next-step from its last four cycles; watch for a natural next capability rather than force one."
 notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive, closes the one carried next-step from 07-13. Adds a **Per-Platform Format & Length** table (Google Business Profile, Yelp, Facebook, Nextdoor, BBB) with the practical length target and the front-load rule for each surface, plus a truncation note (Google collapses a long reply behind a 'More' fold in the mobile app, so the concession and the offer-to-fix must land in the first ~1-2 lines or a skimming prospect never sees them). This is the reputation-management mechanics layer the tier playbooks assume but never spelled out. Strictly additive: v1.3's tier playbooks, fake/extortion block, response-timing rules, Local-SEO note, bilingual note, output discipline, and all three worked examples preserved verbatim. Next: an owner-response A/B note if a shop wants to test warmth vs. brevity on 5-star replies."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive, closes the one carried next-step from 07-06. (1) Adds the worked **mixed 3-star example** — the tier that had a playbook but no example, and the hardest tier to write well (the response has to be gracious without conceding, and it is read by more prospects than any other tier). (2) Adds a **Local-SEO note**: responses are indexed and read by prospects comparing shops, so name the city/service naturally once, never keyword-stuff — a real, commonly-botched reputation-management practice. (3) Adds a **response-timing rule** (respond within 24-48h; negative reviews same business day) so the skill produces a cadence, not just a draft. Strictly additive: v1.2's tier playbooks, fake/extortion block, bilingual note, output discipline, and both prior examples preserved verbatim. Next: a per-platform character-limit table if a shop reports truncation on Yelp/Facebook."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive deepening, addresses both carried next-steps from 06-29. (1) References the new `_shared/voice-and-config-contract.md` for the config-load + public-privacy rules. (2) Adds the fake/extortion/wrong-business review flagging sub-block that was explicitly queued at 06-29 — a decision aid for spotting non-genuine reviews, a calm public holding response, and the platform-report path, without accusing publicly. (3) Adds a bilingual (Spanish) note pointing at the shared contract. Strictly additive: all v1.1 tier playbooks, output discipline, and both worked examples preserved verbatim. Next: a worked mixed (3-star) example."
@@ -187,6 +188,50 @@ recommend!"
 
 If the shop hasn't stated a preference, default to Warm for the first few replies you draft
 and ask which style they'd rather standardize on; don't silently switch styles reply to reply.
+
+## AI-Receptionist / Automation Complaint Reviews
+
+Shops increasingly answer after-hours and overflow calls with an AI voice agent, an
+answering-service script, or an auto-text — and a new kind of negative review follows: "I got a
+robot," "the AI took my info and nobody called back," "it booked me for the wrong day." These
+read as tech complaints but are really **responsiveness** complaints, and prospects reading
+them are asking one thing: *if I call this shop, will a person actually help me?*
+
+**Playbook (any star tier):**
+1. **Name the real failure, not the tool.** Acknowledge the missed callback, the wrong booking,
+   or the wait — that's what hurt. Don't defend or explain the software, and never blame the
+   vendor publicly.
+2. **Be honest about what answered.** If an automated system or answering service took the
+   call, don't imply a staff member did. Never claim "a team member spoke with you" unless one
+   did. Saying plainly that the shop uses an after-hours system *and* how a human follows up is
+   more reassuring to prospects than a vague apology.
+3. **Show the human path.** Give the direct line (from `company.phone`) or say a named person
+   (owner/office manager role from config) will reach out — one sentence, no policy lecture.
+4. **Fix-forward, privately.** Offer to make it right offline; never restate the job details,
+   address, or what the customer said on the recording (public-privacy rule, contract §5).
+5. **Internal note (not posted):** flag the review for whoever owns phone handling — it is a
+   data point for the After-Hours Call Summary, CSR Performance Debrief, and Agentic-Call
+   Answer Pack (callback timing, transfer rules, the "leave a message" dead end) rather than a
+   one-off reputation task.
+
+**Avoid:** "Our system shows…" (sounds like the robot is still talking), "We're sorry you
+didn't like our new technology" (defensive), and promising to stop using automation unless the
+owner has actually decided that.
+
+**Worked example (2-star, Google):**
+
+> *Review:* "Called at 9pm with water under my sink. Some AI answered, said a plumber would call
+> me back. Nobody did until 11am the next day. Fixed fine but that wait was ridiculous."
+>
+> *Response:* "Thanks for telling us, and we're sorry — a 14-hour wait for a callback with water
+> under the sink isn't the response we promise, whoever answers the phone. Our after-hours line
+> is set up to get an on-call tech to you quickly, and that night it didn't. We're glad the
+> repair held, and we've reviewed how evening leak calls get escalated so they reach a person
+> sooner. If there's anything else we can do, please call [office manager role] directly at
+> [company.phone]. — [company.name]"
+>
+> *Internal note:* 9pm active-leak call, callback at 11am next day → escalation rule gap.
+> Route to After-Hours Call Summary owner.
 
 ## Output Discipline
 

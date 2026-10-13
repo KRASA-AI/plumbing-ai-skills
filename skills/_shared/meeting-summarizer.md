@@ -4,9 +4,10 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.5
-last_eval_score: 8.2
-notes_for_next_eval: "v1.5 (2026-07-28, evaluator): additive. Adds **Monthly Rollup Mode** — the queued next step from 07-20. When the user supplies four or more weeks of recurring-mode summaries (or just their Carried Over blocks) for the same meeting, the skill produces a monthly view: every item that was ever Carried Over gets a total-weeks-tracked count, a resolution status, and a **🔴 Chronic** flag if it was still open in 3+ of the weekly summaries (distinct from the single-week 🔺 Aging flag, which fires per-week). It closes by auto-generating a **Next Meeting Agenda Seed** — the still-open items ranked oldest-first, pulled straight from the latest Carried Over block, so the next meeting opens with them instead of a blank page. Includes a worked four-week rollup extending the water-heater-price / Castillo-invoice saga from the v1.4 example: the water-heater price is now flagged chronic at week 4, Castillo closed at week 3. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, Recurring-Meeting Mode, and both worked examples preserved verbatim. Next: consider having the skill draft the actual next-meeting invite/agenda text from the seed, not just the ranked list."
+version: 1.6
+last_eval_score: 8.4
+notes_for_next_eval: "v1.6 (2026-10-13, evaluator): additive. Adds **Auto-Transcript Input** handling — rules for machine transcripts (truck voice memos, meeting-recorder exports, FSM auto-recordings): speaker labels never become owners, unambiguous plumbing mis-hears are repaired (PEX, P-trap, SharkBite, cleanout, tankless) while part/job-changing ones are flagged, numbers are never auto-corrected, asides with actions are kept and tagged, inaudible mid-decision text becomes Partially captured; plus a Transcript flags line and a worked fragment. A genuinely new input-side gap rather than another output mode. Everything prior preserved verbatim. Next: none queued — re-read fresh."
+notes_for_next_eval_prior_v15: "v1.5 (2026-07-28, evaluator): additive. Adds **Monthly Rollup Mode** — the queued next step from 07-20. When the user supplies four or more weeks of recurring-mode summaries (or just their Carried Over blocks) for the same meeting, the skill produces a monthly view: every item that was ever Carried Over gets a total-weeks-tracked count, a resolution status, and a **🔴 Chronic** flag if it was still open in 3+ of the weekly summaries (distinct from the single-week 🔺 Aging flag, which fires per-week). It closes by auto-generating a **Next Meeting Agenda Seed** — the still-open items ranked oldest-first, pulled straight from the latest Carried Over block, so the next meeting opens with them instead of a blank page. Includes a worked four-week rollup extending the water-heater-price / Castillo-invoice saga from the v1.4 example: the water-heater price is now flagged chronic at week 4, Castillo closed at week 3. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, Recurring-Meeting Mode, and both worked examples preserved verbatim. Next: consider having the skill draft the actual next-meeting invite/agenda text from the seed, not just the ranked list."
 notes_for_next_eval_prior_v14: "v1.4 (2026-07-20, evaluator): additive. Adds **Recurring-Meeting Mode** — when the notes are from a meeting that recurs (weekly ops review, morning huddle), diff against last week's summary: carry every unresolved action item into a **Carried Over** block, tag each with how many weeks it has slipped, auto-close items the notes confirm done, and escalate anything aged 3+ weeks. This is the natural next step now that handoffs and the decision-durability rule exist — it turns the skill from a per-meeting snapshot into a rolling accountability ledger, which is where the actual shop value is (the same three AR invoices sitting open week after week, the stale water-heater price that was flagged last Thursday and still isn't in the pricebook). Includes a worked Carried-Over snippet built on the Example 2 ops review. Strictly additive: meeting-type menu, output structure, output discipline, handoff table, decision-durability rule, and both worked examples preserved verbatim. Next: a monthly rollup mode, or auto-generating next week's agenda from the unresolved carry-over items."
 notes_for_next_eval_prior_v13: "v1.3 (2026-07-13, evaluator): additive. (1) **Expands the cross-skill handoff map from 4 routes to 9** and turns it into a table — adds Pricebook Q&A (a rate/price decision in a huddle is worthless if it never reaches the pricebook: the exact failure the v1.1 worked example already dangles in its Follow-ups line), Dispatch Brief Generator, CSR Performance Debrief, Parts & Materials List, and Estimate Writer (open quotes). (2) Adds a **second worked example — weekly ops review** — the meeting type with the most decisions and the most handoffs, showing the handoff column in use. (3) Adds the **decision-durability rule** (a decision with no owner and no system-of-record entry is a decision that will be re-litigated next week). Strictly additive: the meeting-type menu, fixed output structure, output discipline, and the huddle example preserved verbatim. Next: consider a recurring-meeting mode that diffs this week's summary against last week's open items."
 notes_for_next_eval_prior_v12: "v1.2 (2026-07-06, evaluator): additive, addresses both carried next-steps from 06-29. (1) References the new `_shared/voice-and-config-contract.md` for the config-load block. (2) Adds the queued cross-skill handoff lines — when a meeting surfaces a tracked item, route it to the matching specialized skill (Safety & Compliance Tracker, Technician Performance Debrief, Change Order Tracker, Invoice Follow-Up Sequence). Strictly additive: the meeting-type menu, fixed output structure, owner-and-date discipline, output discipline, and worked huddle example are preserved verbatim. Lowest of the three _shared skills because meeting summarization is the most generic of the trio, but now clearly passing and better integrated with the specialized set."
@@ -203,6 +204,59 @@ The value is item #1 surfacing as 🔴 Chronic: three individual "carry it again
 like normal slippage on their own, but the rollup shows a decision that has now failed to reach
 the pricebook for a full month — the exact pattern the decision-durability rule exists to catch,
 made visible at the scale where an owner actually acts on it.
+
+## Auto-Transcript Input (AI recorders, phone dictation, call-recording exports)
+
+More shops now feed this skill a machine transcript instead of typed notes — a phone voice
+memo from the truck, a meeting-recorder export, or the auto-recording an FSM platform attaches
+to a ride-along. Machine transcripts fail in predictable ways, and every one of them can turn
+into a wrong owner, a wrong part, or a wrong dollar figure in the summary. When the input looks
+like a transcript (speaker labels, timestamps, run-on text with no punctuation, "um/uh"), apply
+these rules before step 2 of the Process:
+
+1. **Speaker labels are not owners.** "Speaker 2" or a wrongly-guessed name is a transcription
+   artifact. Assign an owner only when the words themselves make it clear ("Luis, you grab the
+   expansion tank" → Luis). Otherwise write `[owner? — transcript: Speaker 2]` and list it in
+   the clarifying-questions line at the bottom. Never promote a speaker label into an owner.
+2. **Trade terms get mangled — repair only when unambiguous, and say so.** Common plumbing
+   mis-hears: "pecks" / "pex" → PEX; "pee trap" → P-trap; "shark bite" → SharkBite
+   (push-to-connect); "back flow" / "RPZ" variants → backflow / RPZ; "sweat" stays sweat
+   (soldered copper) — not a typo; "tank less" → tankless; "clean out" → cleanout. Fix the
+   obvious ones silently. If a repair would change *which part or which job*, keep the raw words
+   and add `[verify: transcript said "…"]`.
+3. **Numbers are never auto-corrected.** Pipe sizes, fixture counts, prices, invoice numbers,
+   addresses, and dates are copied exactly as transcribed and flagged `[verify]` if they look
+   off ("three quarter" vs. "three quarters of an inch," "fifteen" vs. "fifty"). A wrong
+   ¾" vs. 1" in a parts action item costs a second trip; a wrong dollar figure ends up in the
+   pricebook via the Pricebook Q&A handoff.
+4. **Crosstalk and side conversations drop out.** Customer-phone interruptions, radio chatter,
+   and jokes are not decisions. If an aside *contains* an action ("oh — and somebody call Mrs.
+   Patel back about the leak"), keep it as an action item and tag it `(aside)` so the owner
+   knows it was never formally agreed.
+5. **Unclear audio stays unclear.** Where the transcript shows `[inaudible]` or garbled text in
+   the middle of a decision, record the decision as `⚠ Partially captured` with the readable
+   portion — never fill the gap with a guess.
+
+Add one line at the end of the normal Output Structure when any of these fired:
+**Transcript flags:** *N owners unconfirmed, N terms/numbers to verify, N asides captured.*
+
+**Worked fragment (transcript input):**
+
+> *Input (excerpt):* `[00:04:12] Speaker 2: yeah so the uh Hendricks job we need the three
+> quarter pecks and two shark bites and somebody's gotta call the supply house about the tank
+> less that's on back order [00:04:30] Speaker 1: I'll do it [00:04:31] Speaker 3: fifteen
+> hundred on that one right [inaudible]`
+>
+> *Action Items (excerpt):*
+> - Pull ¾" PEX + 2 SharkBite push-to-connect fittings for the Hendricks job — **[owner? —
+>   transcript: Speaker 2]** — due **[due?]**
+> - Call the supply house re: back-ordered tankless unit — **[owner? — transcript: Speaker 1
+>   said "I'll do it"]** — due **[due?]**
+>
+> *Decisions:* ⚠ Partially captured — tankless price discussed at "fifteen hundred"
+> `[verify — rest inaudible; do not send to Pricebook Q&A until confirmed]`
+>
+> **Transcript flags:** 2 owners unconfirmed, 1 number to verify, 0 asides captured.
 
 ## Required Input
 
